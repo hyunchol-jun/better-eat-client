@@ -1,0 +1,5 @@
+@use "./breakpoints" as *;
+
+@mixin contain($max-width) {
+    max-width: $max-width;
+}
