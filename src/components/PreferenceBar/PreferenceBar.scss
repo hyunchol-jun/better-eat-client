@@ -1,0 +1,28 @@
+.preference-bar {
+  display: flex;
+  top: 0;
+
+  &__field {
+    width: 100%;
+    display: flex;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__delete {
+    width: 1.5rem;
+    padding: 0;
+    vertical-align: bottom;
+  }
+
+  &__add {
+    width: 1.75rem;
+  }
+
+  &__expand {
+    width: 1.75rem;
+  }
+}
