@@ -1,13 +1,16 @@
 import './App.scss';
 import PageHeader from './components/PageHeader/PageHeader';
 import HomePage from './pages/HomePage/HomePage';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <BrowserRouter>
       <PageHeader /> 
-      <HomePage />
-    </div>
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
