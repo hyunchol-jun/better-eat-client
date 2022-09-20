@@ -2,6 +2,7 @@ import './App.scss';
 import PageHeader from './components/PageHeader/PageHeader';
 import HomePage from './pages/HomePage/HomePage';
 import Sidebar from "./components/Sidebar/Sidebar";
+import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useState} from "react";
 
@@ -18,6 +19,7 @@ function App() {
       {sidebarShown && <Sidebar />}
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
+        <Route path="/recipes/:recipeId" element={<RecipeDetail />}></Route>
       </Routes>
     </BrowserRouter>
   );
