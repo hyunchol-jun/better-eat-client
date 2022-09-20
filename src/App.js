@@ -3,6 +3,7 @@ import menuIcon from "./assets/icons/menu.svg";
 import moreIcon from "./assets/icons/more.svg";
 import closeIcon from "./assets/icons/close.svg";
 import addIcon from "./assets/icons/add.svg";
+import recipeSampleImage from "./assets/images/recipe_sample.jpeg";
 
 function App() {
   return (
@@ -34,9 +35,27 @@ function App() {
           </form>
         </section>
         <section>
-          <div>
-
-          </div>
+          <a className='card'>
+            <img className='card__image' src={recipeSampleImage} alt="food recipe"/>
+            <div className='card__text-container'>
+              <span className='card__title'>Stuffed Por Tenderloin Marsala-Port Sauce</span>
+              <span className='card__cooking-time'>45 Min</span>
+            </div>
+          </a>
+          <a className='card'>
+            <img className='card__image' src={recipeSampleImage} alt="food recipe"/>
+            <div className='card__text-container'>
+              <span className='card__title'>Stuffed Por Tenderloin Marsala-Port Sauce</span>
+              <span className='card__cooking-time'>45 Min</span>
+            </div>
+          </a>
+          <a className='card'>
+            <img className='card__image' src={recipeSampleImage} alt="food recipe"/>
+            <div className='card__text-container'>
+              <span className='card__title'>Stuffed Por Tenderloin Marsala-Port Sauce</span>
+              <span className='card__cooking-time'>45 Min | 4 Ingredients</span>
+            </div>
+          </a>
         </section>
       </main>
     </div>
