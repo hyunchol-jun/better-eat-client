@@ -1,11 +1,11 @@
-import "./HomePage.js";
+import "./HomePage.scss";
 import PreferenceBar from '../../components/PreferenceBar/PreferenceBar';
 import RecipesList from '../../components/RecipesList/RecipesList';
 import Search from '../../components/Search/Search';
 
 function HomePage() {
     return (
-      <main>
+      <main className="home-page">
         <PreferenceBar />
         <Search />
         <RecipesList />
