@@ -1,19 +1,19 @@
 import arrowBackIcon from "../../assets/icons/arrow_back.svg";
 import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const PageMain = styled.main`
-    // position: absolute;
-    // width: 100%;
-    // top: 0;
-    // left: 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
 `;
 
 const ImageDiv = styled.div`
     width: 100%;
-    position: relative;
 `;
 
 const RecipeImage = styled.img`
@@ -21,10 +21,12 @@ const RecipeImage = styled.img`
 `;
 
 const Title = styled.h1`
+    margin: 0;
 `;
 
-const Section = styled.section`
-    margin: 1rem;
+const StyledSection = styled.section`
+    padding: 1rem;
+    background-color: white;
 `;
 
 const SubTitle = styled.h2`
@@ -35,6 +37,10 @@ const BackButton = styled(IconButton)`
     position: absolute;
     top: 1rem;
     left: 1rem;
+`;
+
+const StyledList = styled.ul`
+    list-style: none;
 `;
 
 function RecipeDetail() {
@@ -55,27 +61,22 @@ function RecipeDetail() {
                     handleClick={() => navigate(-1)}
                 ></BackButton>
             </ImageDiv>
-            <Section>
-                <Title>Red Sauce for Pizza</Title>
+            <StyledSection>
+                <Title>{recipe.label}</Title>
                 <SubTitle>Health Labels</SubTitle>
-                <ul>
-                    <li>Keto-Friendly</li>
-                    <li>Vegan</li>
-                    <li>Vegetarian</li>
-                    <li>Pescatarian</li>
-                    <li>Paleo</li>
-                </ul>
+                <StyledList>
+                    {recipe.healthLabels.map((label, index) => <li key={index}>{label}</li>)}
+                </StyledList>
                 <SubTitle>Cuisine Type</SubTitle>
-                <span>Italian</span>
+                <StyledList>
+                    {recipe.cuisineType.map((type, index) => <li key={index}>{type}</li>)}
+                </StyledList>
                 <SubTitle>Ingredients</SubTitle>
-                <ul>
-                    <li>2 garlic cloves, finely grated</li>
-                    <li>1 (28-ounce) can crushed tomatoes</li>
-                    <li>2 tablespoons olive oil</li>
-                    <li>1 1/2 teaspoons fine sea salt</li>
-                </ul>
-                <button>See Instructions</button>
-            </Section>
+                <StyledList>
+                    {recipe.ingredients.map((ingredient, index) => <li key={index}><button>{ingredient.text}</button></li>)}
+                </StyledList>
+                <a href={recipe.url}>See Instructions</a>
+            </StyledSection>
         </PageMain>
     );
 }
