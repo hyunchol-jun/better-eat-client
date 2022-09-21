@@ -1,11 +1,16 @@
 import {Link, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 import { requestLogin } from "../utils/http-helper";
 
 function Login() {
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
+    
+    useEffect(() => {
+        localStorage.removeItem("token");
+    }, []);
+
 
     const handleLogin = (event) => {
         event.preventDefault();

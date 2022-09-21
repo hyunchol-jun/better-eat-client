@@ -8,7 +8,7 @@ function PageHeader({handleClick}) {
       <header className='page-header'>
         <IconButton className="page-header__menu" imgSrc={menuIcon} altText='hamburger icon' handleClick={handleClick}/>
         <span className='page-header__title'>BetterEat</span>
-        <Link className="page-header__auth" to="/login">Login</Link>
+        <Link className="page-header__auth" to="/login">Logout</Link>
       </header>
     );
 }
