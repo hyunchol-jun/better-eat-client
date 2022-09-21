@@ -23,7 +23,8 @@ function Signup() {
         }
 
         if (formValues.password.length < 8) {
-            setErrorMessage("Password must be longer than 7 characters.")
+            setErrorMessage("Password must be longer than 7 characters.");
+            return;
         }
 
         requestSignup(formValues, () => {
