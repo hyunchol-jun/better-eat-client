@@ -1,12 +1,23 @@
 import "./RecipesList.scss";
 import RecipeCard from '../RecipeCard/RecipeCard';
 
-function RecipesList() {
+function RecipesList({recipes}) {
+
+    if (!recipes) {
+      return (
+        <div>Loading...</div>
+      );
+    }
+
     return (
         <section>
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
+          {
+            recipes.map((recipe, index) => {
+              return (
+                <RecipeCard key={index} recipe={recipe.recipe}/>
+              );
+            })
+          }
         </section>
     );
 }

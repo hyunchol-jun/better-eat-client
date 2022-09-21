@@ -15,14 +15,21 @@ const logError = (error) => {
 }
 
 export const getRecipesList = (searchQuery, diets, healths, callback) => {
-    axios.get(
-        BASE_URL
-        + TYPE_PATH
-        + SEARCH_PATH + "chicken"
-        + APP_ID_PATH + REACT_APP_APP_ID
-        + API_KEY_PATH + REACT_APP_API_KEY
-        + DIET_PATH + "balanced"
-        + HEALTH_PATH + "vegan"
-    ).then(callback)
+    let FULL_PATH = BASE_URL + TYPE_PATH
+                    + SEARCH_PATH + searchQuery
+                    + APP_ID_PATH + REACT_APP_APP_ID
+                    + API_KEY_PATH + REACT_APP_API_KEY;
+
+    diets.forEach(diet => {
+        FULL_PATH += (DIET_PATH + diet);
+    });
+
+    healths.forEach(health => {
+        FULL_PATH += (HEALTH_PATH + health);
+    });
+
+    console.log(FULL_PATH);
+
+    axios.get(FULL_PATH).then(callback)
     .catch(logError);
 }
