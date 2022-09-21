@@ -3,11 +3,10 @@
   flex-direction: column;
   border-radius: 5px;
   border: 1px solid #cccccc;
-  width: 100%;
+  cursor: pointer;
   margin: 1rem 0;
-  padding: 0;
-  background-color: white;
-  text-align: left;
+  text-decoration: none;
+  color: black;
 
   &__image {
     width: 100%;

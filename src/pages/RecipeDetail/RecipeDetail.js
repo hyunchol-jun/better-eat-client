@@ -1,12 +1,13 @@
 import arrowBackIcon from "../../assets/icons/arrow_back.svg";
 import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PageMain = styled.main`
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
+    // position: absolute;
+    // width: 100%;
+    // top: 0;
+    // left: 0;
 `;
 
 const ImageDiv = styled.div`
@@ -35,7 +36,10 @@ const BackButton = styled(IconButton)`
     left: 1rem;
 `;
 
-function RecipeDetail({recipe, handleButtonClick}) {
+function RecipeDetail() {
+    const recipe = useLocation().state.recipe;
+    const navigate = useNavigate();
+
     return (
         <PageMain>
             <ImageDiv>
@@ -43,7 +47,7 @@ function RecipeDetail({recipe, handleButtonClick}) {
                 <BackButton 
                     imgSrc={arrowBackIcon} 
                     altText="go back" 
-                    handleClick={handleButtonClick}
+                    handleClick={() => navigate(-1)}
                 ></BackButton>
             </ImageDiv>
             <Section>

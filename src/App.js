@@ -19,7 +19,7 @@ function App() {
       {sidebarShown && <Sidebar />}
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
-        <Route path="/recipes/:recipeId" element={<RecipeDetail />}></Route>
+        <Route path="/recipes" element={<RecipeDetail />}></Route>
       </Routes>
     </BrowserRouter>
   );
