@@ -2,6 +2,7 @@ import arrowBackIcon from "../../assets/icons/arrow_back.svg";
 import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const PageMain = styled.main`
     // position: absolute;
@@ -39,6 +40,10 @@ const BackButton = styled(IconButton)`
 function RecipeDetail() {
     const recipe = useLocation().state.recipe;
     const navigate = useNavigate();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <PageMain>

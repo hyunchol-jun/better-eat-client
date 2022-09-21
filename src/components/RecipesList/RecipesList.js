@@ -1,7 +1,5 @@
 import "./RecipesList.scss";
-import {useState} from "react";
 import RecipeCard from '../RecipeCard/RecipeCard';
-import RecipeDetail from "../../pages/RecipeDetail/RecipeDetail";
 
 function RecipesList({recipes}) {
     if (!recipes) {
