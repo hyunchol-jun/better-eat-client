@@ -6,6 +6,8 @@ import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useState} from "react";
 import {getRecipesList} from "./utils/http-helper";
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 function App() {
   const [sidebarShown, setSidebarShown] = useState(false);
@@ -37,6 +39,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage recipes={recipes} handleSearch={handleSearch}/>}></Route>
         <Route path="/recipes" element={<RecipeDetail />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/login" element={<Login />}></Route>
       </Routes>
     </BrowserRouter>
   );

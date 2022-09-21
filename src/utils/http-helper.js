@@ -10,9 +10,13 @@ const HEALTH_PATH = "&health=";
 
 const {REACT_APP_APP_ID, REACT_APP_API_KEY} = process.env;
 
+const BACKEND_URL = "http://localhost:8080";
+const SIGNUP_PATH = "/signup";
+const LOGIN_PATH = "/login";
+
 const logError = (error) => {
     console.log(error);
-}
+};
 
 export const getRecipesList = (searchQuery, diets, healths, callback) => {
     let FULL_PATH = BASE_URL + TYPE_PATH
@@ -29,5 +33,15 @@ export const getRecipesList = (searchQuery, diets, healths, callback) => {
     });
 
     axios.get(FULL_PATH).then(callback)
+    .catch(logError);
+};
+
+export const requestSignup = (formValues, callback) => {
+    axios.post(BACKEND_URL + SIGNUP_PATH, formValues).then(callback)
+    .catch(logError);
+}
+
+export const requestLogin = (formValues, callback) => {
+    axios.post(BACKEND_URL + LOGIN_PATH, formValues).then(callback)
     .catch(logError);
 }
