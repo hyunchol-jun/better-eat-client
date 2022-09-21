@@ -1,10 +1,10 @@
 import "./Search.scss";
 
-function Search() {
+function Search({handleSearch}) {
     return (
         <section className='search'>
-          <form className='search__form'>
-            <input className='search__textbox'/>
+          <form className='search__form' onSubmit={handleSearch}>
+            <input className='search__textbox' name="textInput"/>
             <button className='search__submit'>Search</button>
           </form>
         </section>
