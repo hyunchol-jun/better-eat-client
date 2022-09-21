@@ -39,19 +39,19 @@ function Signup() {
             <form onSubmit={handleSignup}>
                 <label>
                     Name: 
-                    <input type="text" name="name" required/>
+                    <input type="text" name="name" />
                 </label>
                 <label>
                     Email: 
-                    <input type="text" name="email" required/>
+                    <input type="text" name="email" autoComplete="username"/>
                 </label>
                 <label>
                     Password: 
-                    <input type="password" name="password" required/>
+                    <input type="password" name="password" autoComplete="new-password"/>
                 </label>
                 <label>
                     Confirm password: 
-                    <input type="password" name="confirmPassword" required/>
+                    <input type="password" name="confirmPassword" autoComplete="new-password"/>
                 </label>
                 {errorMessage && <p>{errorMessage}</p>}
                 <button>Sign up</button>
