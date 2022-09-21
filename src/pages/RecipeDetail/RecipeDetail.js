@@ -1,5 +1,18 @@
-import recipeSampleImage from "../../assets/images/recipe_sample.jpeg";
+import arrowBackIcon from "../../assets/icons/arrow_back.svg";
 import styled from "styled-components";
+import IconButton from "../../components/IconButton/IconButton";
+
+const PageMain = styled.main`
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+`;
+
+const ImageDiv = styled.div`
+    width: 100%;
+    position: relative;
+`;
 
 const RecipeImage = styled.img`
     width: 100%;
@@ -14,12 +27,25 @@ const Section = styled.section`
 
 const SubTitle = styled.h2`
     font-size: 1rem;
-`
+`;
 
-function RecipeDetail() {
+const BackButton = styled(IconButton)`
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+`;
+
+function RecipeDetail({recipe, handleButtonClick}) {
     return (
-        <main>
-            <RecipeImage src={recipeSampleImage} alt="food"></RecipeImage>
+        <PageMain>
+            <ImageDiv>
+                <RecipeImage src={recipe.image} alt="food"></RecipeImage>
+                <BackButton 
+                    imgSrc={arrowBackIcon} 
+                    altText="go back" 
+                    handleClick={handleButtonClick}
+                ></BackButton>
+            </ImageDiv>
             <Section>
                 <Title>Red Sauce for Pizza</Title>
                 <SubTitle>Health Labels</SubTitle>
@@ -41,7 +67,7 @@ function RecipeDetail() {
                 </ul>
                 <button>See Instructions</button>
             </Section>
-        </main>
+        </PageMain>
     );
 }
 

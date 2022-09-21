@@ -28,8 +28,6 @@ export const getRecipesList = (searchQuery, diets, healths, callback) => {
         FULL_PATH += (HEALTH_PATH + health);
     });
 
-    console.log(FULL_PATH);
-
     axios.get(FULL_PATH).then(callback)
     .catch(logError);
 }
