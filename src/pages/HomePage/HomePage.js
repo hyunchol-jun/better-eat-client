@@ -14,6 +14,18 @@ function HomePage({handleSearch, recipes}) {
   const [healthTypes, setHealthTypes] = useState(healthTypesFromStorage);
   const [dietTypes, sestDietTypes] = useState(dietTypesFromStorage);
 
+  const handleHealthTypeChange = (typeName) => {
+    const copiedHealthTypes = {...healthTypes};
+    copiedHealthTypes[typeName] = !copiedHealthTypes[typeName];
+    setHealthTypes(copiedHealthTypes)
+  }
+
+  const handleDietTypeChange = (typeName) => {
+    const copiedDietTypes = {...dietTypes};
+    copiedDietTypes[typeName] = !copiedDietTypes[typeName];
+    sestDietTypes(copiedDietTypes);
+  }
+
   if (!healthTypes) {
     setHealthTypes(defaultHealthTypes);
   }
@@ -36,7 +48,12 @@ function HomePage({handleSearch, recipes}) {
 
   return (
     <main className="home-page">
-      <PreferenceBar healthTypes={healthTypes} dietTypes={dietTypes}/>
+      <PreferenceBar 
+        healthTypes={healthTypes} 
+        dietTypes={dietTypes} 
+        handleHealthTypeChange={handleHealthTypeChange}
+        handleDietTypeChange={handleDietTypeChange}
+      />
       <Search handleSearch={handleSearch}/>
       <RecipesList recipes={recipes}/>
     </main>
