@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage/HomePage';
 import Sidebar from "./components/Sidebar/Sidebar";
 import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useState, useRef, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {getRecipesList} from "./utils/http-helper";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -19,10 +19,6 @@ function App() {
   const dietTypesFromStorage = JSON.parse(localStorage.getItem("dietTypes"));
   const [healthTypes, setHealthTypes] = useState(healthTypesFromStorage);
   const [dietTypes, setDietTypes] = useState(dietTypesFromStorage);
-
-  // Reference to state value to get updated data
-  const healthTypesRef = useRef(); 
-  const dietTypesRef = useRef();
 
   const handleHealthTypeChange = (typeName) => {
     setHealthTypes((prevState) => {
@@ -48,9 +44,6 @@ function App() {
     setDietTypes(defaultDietTypes);
   }
 
-  const diets = ["balanced", "low-sodium"];
-  const healths = ["vegan", "celery-free"];
-
   const handleSearch = (event) => {
     event.preventDefault();
 
@@ -59,17 +52,36 @@ function App() {
       setRecipes(response.data.hits);
     };
 
-    getRecipesList(searchQuery, diets, healths, recipeCallback);
+    // Convert the objects to arrays of keys
+    const dietTypesInArray = [];
+    const healthTypesInArray = [];
+
+    for (const type in healthTypes) {
+      if (healthTypes[type]) {
+        healthTypesInArray.push(type);
+      }
+    }
+
+    for (const type in dietTypes) {
+      if (dietTypes[type]) {
+        dietTypesInArray.push(type);
+      }
+    }
+
+    // Call to the external API
+    getRecipesList(
+                  searchQuery, 
+                  dietTypesInArray, 
+                  healthTypesInArray, 
+                  recipeCallback);
   };
 
   // Cache state value to ref
   useEffect(() => {
-    healthTypesRef.current = {...healthTypes};
-    localStorage.setItem("healthTypes", JSON.stringify(healthTypesRef.current));
+    localStorage.setItem("healthTypes", JSON.stringify(healthTypes));
   }, [healthTypes]);
 
   useEffect(() => {
-    dietTypesRef.current = {...dietTypes};
     localStorage.setItem("dietTypes", JSON.stringify(dietTypes));
   }, [dietTypes]);
 
