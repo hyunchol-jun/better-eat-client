@@ -5,6 +5,7 @@
   &__field {
     width: 100%;
     display: flex;
+    flex-direction: column;
   }
 
   &__item {
