@@ -47,6 +47,15 @@ const StyledList = styled.ul`
 
 function RecipeDetail() {
     const navigate = useNavigate();
+
+    // Check if logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+        navigate("/login");
+        }
+    }, []);
+
     const [recipe, setRecipe] = useState(null);
     const params = useParams();
 
