@@ -4,6 +4,7 @@ import IconButton from "../../components/IconButton/IconButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getRecipeDetail } from "../../utils/http-helper";
+import parse from "html-react-parser";
 
 const PageMain = styled.main`
     position: absolute;
@@ -84,7 +85,8 @@ function RecipeDetail() {
                 <StyledList>
                     {recipe.extendedIngredients.map((ingredient, index) => <li key={index}><button>{ingredient.original}</button></li>)}
                 </StyledList>
-                {recipe.instructions}
+                <SubTitle>Instructions</SubTitle>
+                {parse(recipe.instructions)}
             </StyledSection>
         </PageMain>
     );
