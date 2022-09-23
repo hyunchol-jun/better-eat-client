@@ -16,7 +16,9 @@ const {
     REACT_APP_API_KEY,
     REACT_APP_BACKEND_URL,
     REACT_APP_SIGNUP_PATH,
-    REACT_APP_LOGIN_PATH
+    REACT_APP_LOGIN_PATH,
+    REACT_APP_USERS_PATH,
+    REACT_APP_RECIPES_PATH
 } = process.env;
 
 const logError = (error) => {
@@ -60,4 +62,14 @@ export const requestSignup = (formValues, callback) => {
 export const requestLogin = (formValues, callback) => {
     axios.post(REACT_APP_BACKEND_URL + REACT_APP_LOGIN_PATH, formValues).then(callback)
     .catch(logError);
+}
+
+export const addRecipeToUser = (recipeData, headers, callback) => {
+    axios.post(REACT_APP_BACKEND_URL 
+                + REACT_APP_USERS_PATH 
+                + REACT_APP_RECIPES_PATH, 
+            recipeData, headers)
+        .then(callback)
+        .catch(logError);
+        
 }

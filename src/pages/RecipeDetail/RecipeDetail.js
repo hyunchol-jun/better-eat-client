@@ -3,7 +3,7 @@ import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getRecipeDetail } from "../../utils/http-helper";
+import { addRecipeToUser, getRecipeDetail } from "../../utils/http-helper";
 import parse from "html-react-parser";
 
 const PageMain = styled.main`
@@ -46,6 +46,37 @@ const StyledList = styled.ul`
 `;
 
 function RecipeDetail() {
+    const handleClick = () => {
+        const headers = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        };
+
+        const ingredients = recipe.extendedIngredients.map(ingredient => {
+            return {
+                id: ingredient.id,
+                name: ingredient.name,
+                original: ingredient.original
+            };
+        })
+
+        const body = {
+            api_id: recipe.id,
+            title: recipe.title,
+            diets: JSON.stringify(recipe.diets),
+            cuisines: JSON.stringify(recipe.cuisines),
+            instructions: recipe.instructions,
+            image: recipe.image,
+            ready_min: recipe.readyInMinutes,
+            ingredients: JSON.stringify(ingredients)
+        };
+
+        addRecipeToUser(body, headers, (response) => {
+            console.log(response.data);
+        })
+    };
+
     const navigate = useNavigate();
 
     // Check if logged in
@@ -97,6 +128,7 @@ function RecipeDetail() {
                 <SubTitle>Instructions</SubTitle>
                 {parse(recipe.instructions)}
             </StyledSection>
+            <button onClick={handleClick}>Save Recipe</button>
         </PageMain>
     );
 }
