@@ -1,15 +1,18 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.edamam.com/api/recipes/v2";
-const TYPE_PATH = "?type=public";
-const SEARCH_PATH = "&q=";
-const APP_ID_PATH = "&app_id=";
-const API_KEY_PATH = "&app_key=";
+const BASE_URL = "https://api.spoonacular.com/recipes/";
+const SEARCH_PATH = "complexSearch";
+const INFO_PATH = "/information";
+const RANDOM_PATH = "random";
+const API_KEY_PATH = "?apiKey=";
+const QUERY_PATH = "&query=";
+const INSTRUCTION_PATH = "&instructionRequired=true";
 const DIET_PATH = "&diet=";
-const HEALTH_PATH = "&health=";
+const CUISINE_PATH = "&cuisine=";
+const INTOLERANCES_PATH = "&intolerances=";
+const MAXTIME_PATH = "maxReadyTime=";
 
 const {
-    REACT_APP_APP_ID, 
     REACT_APP_API_KEY,
     REACT_APP_BACKEND_URL,
     REACT_APP_SIGNUP_PATH,
@@ -20,24 +23,34 @@ const logError = (error) => {
     console.log(error);
 };
 
-export const getRecipesList = (searchQuery, diets, healths, callback) => {
-    let FULL_PATH = BASE_URL + TYPE_PATH
-                    + SEARCH_PATH + searchQuery
-                    + APP_ID_PATH + REACT_APP_APP_ID
-                    + API_KEY_PATH + REACT_APP_API_KEY;
+export const getRecipesList = (searchQuery, diets, cuisines, intolerances, callback) => {
+    let FULL_PATH = BASE_URL + SEARCH_PATH
+                    + API_KEY_PATH + REACT_APP_API_KEY
+                    + QUERY_PATH + searchQuery
+                    + INSTRUCTION_PATH;
 
-    diets.forEach(diet => {
-        FULL_PATH += (DIET_PATH + diet);
-    });
+    if (diets.length > 0) {
+        FULL_PATH += DIET_PATH + diets.join().toLowerCase();
+    }
 
-    healths.forEach(health => {
-        FULL_PATH += (HEALTH_PATH + health);
-    });
+    if (cuisines.length > 0) {
+        FULL_PATH += CUISINE_PATH + cuisines.join().toLowerCase();
+    }
+
+    if (intolerances.length > 0) {
+        FULL_PATH += INTOLERANCES_PATH + intolerances.join().toLowerCase();
+    }
 
     console.log(FULL_PATH)
     axios.get(FULL_PATH).then(callback)
     .catch(logError);
 };
+
+export const getRecipeDetail = (recipeId, callback) => {
+    const FULL_PATH = BASE_URL + recipeId + INFO_PATH + API_KEY_PATH + REACT_APP_API_KEY;
+    axios.get(FULL_PATH).then(callback)
+    .catch(logError);
+}
 
 export const requestSignup = (formValues, callback) => {
     axios.post(REACT_APP_BACKEND_URL + REACT_APP_SIGNUP_PATH, formValues).then(callback)

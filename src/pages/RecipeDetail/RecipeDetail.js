@@ -1,8 +1,9 @@
 import arrowBackIcon from "../../assets/icons/arrow_back.svg";
 import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getRecipeDetail } from "../../utils/http-helper";
 
 const PageMain = styled.main`
     position: absolute;
@@ -44,12 +45,20 @@ const StyledList = styled.ul`
 `;
 
 function RecipeDetail() {
-    const recipe = useLocation().state.recipe;
     const navigate = useNavigate();
+    const [recipe, setRecipe] = useState(null);
+    const params = useParams();
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        getRecipeDetail(params.recipeId, (response) => {
+            setRecipe(response.data);
+        })
+        // window.scrollTo(0, 0);
     }, []);
+
+    if (!recipe) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <PageMain>
@@ -62,20 +71,20 @@ function RecipeDetail() {
                 ></BackButton>
             </ImageDiv>
             <StyledSection>
-                <Title>{recipe.label}</Title>
-                <SubTitle>Health Labels</SubTitle>
+                <Title>{recipe.title}</Title>
+                <SubTitle>Diets</SubTitle>
                 <StyledList>
-                    {recipe.healthLabels.map((label, index) => <li key={index}>{label}</li>)}
+                    {recipe.diets.map((label, index) => <li key={index}>{label}</li>)}
                 </StyledList>
-                <SubTitle>Cuisine Type</SubTitle>
+                <SubTitle>Cuisines</SubTitle>
                 <StyledList>
-                    {recipe.cuisineType.map((type, index) => <li key={index}>{type}</li>)}
+                    {recipe.cuisines.map((type, index) => <li key={index}>{type}</li>)}
                 </StyledList>
                 <SubTitle>Ingredients</SubTitle>
                 <StyledList>
-                    {recipe.ingredients.map((ingredient, index) => <li key={index}><button>{ingredient.text}</button></li>)}
+                    {recipe.extendedIngredients.map((ingredient, index) => <li key={index}><button>{ingredient.original}</button></li>)}
                 </StyledList>
-                <a href={recipe.url}>See Instructions</a>
+                {recipe.instructions}
             </StyledSection>
         </PageMain>
     );

@@ -13,7 +13,7 @@ function RecipesList({recipes}) {
           {
             recipes.map((recipe, index) => {
               return (
-                <RecipeCard key={index} recipe={recipe.recipe}/>
+                <RecipeCard key={index} recipe={recipe}/>
               );
             })
           }
