@@ -73,3 +73,11 @@ export const addRecipeToUser = (recipeData, headers, callback) => {
         .catch(logError);
         
 }
+
+export const getAllUserRecipes = (headers, callback) => {
+    axios.get(REACT_APP_BACKEND_URL
+                + REACT_APP_USERS_PATH
+                + REACT_APP_RECIPES_PATH, headers)
+        .then(callback)
+        .catch(logError);
+}

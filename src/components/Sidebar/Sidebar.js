@@ -12,7 +12,7 @@ function Sidebar() {
                             <NavLink className="sidebar__link">Search</NavLink>
                         </li>
                         <li className="sidebar__item">
-                            <NavLink className="sidebar__link">My Recipes</NavLink>
+                            <NavLink className="sidebar__link" to="/recipes">My Recipes</NavLink>
                         </li>
                         <li className="sidebar__item">
                             <NavLink className="sidebar__link">Grocery List</NavLink>
