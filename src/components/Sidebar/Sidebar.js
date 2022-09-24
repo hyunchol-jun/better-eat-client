@@ -9,16 +9,16 @@ function Sidebar() {
                 <nav>
                     <ul className="sidebar__list">
                         <li className="sidebar__item">
-                            <NavLink className="sidebar__link">Search</NavLink>
+                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/" end>Search</NavLink>
                         </li>
                         <li className="sidebar__item">
-                            <NavLink className="sidebar__link" to="/recipes">My Recipes</NavLink>
+                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/recipes">My Recipes</NavLink>
                         </li>
                         <li className="sidebar__item">
-                            <NavLink className="sidebar__link">Grocery List</NavLink>
+                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/groceries">Grocery List</NavLink>
                         </li>
                         <li className="sidebar__item">
-                            <NavLink className="sidebar__link">Inventory List</NavLink>
+                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/inventories">Inventory List</NavLink>
                         </li>
                     </ul>
                 </nav>
