@@ -30,7 +30,8 @@ function MyRecipes() {
 
     return (
         <main className="">
-        <RecipesList recipes={recipes}/>
+            <h1>My Recipes</h1>
+            <RecipesList recipes={recipes}/>
         </main>
     );
 }
