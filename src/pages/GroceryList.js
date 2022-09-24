@@ -3,6 +3,17 @@ import { useNavigate } from "react-router-dom";
 import {getAllUserGroceryItems} from "../utils/http-helper";
 
 function GroceryList() {
+    const [groceryItems, setGroceryItems] = useState(null);
+
+    const handleGroceryItemsChange = (itemIndex) => {
+        setGroceryItems((prevState) => {
+            const copiedState = [...prevState];
+            // Deep copy
+            copiedState[itemIndex] = {...copiedState[itemIndex]};
+            copiedState[itemIndex].checked = !copiedState[itemIndex].checked;
+            return copiedState;
+        })
+    }
 
     // Check if logged in
     const navigate = useNavigate();
@@ -13,8 +24,7 @@ function GroceryList() {
         }
     }, []);
 
-    const [groceryItems, setGroceryItems] = useState(null);
-
+    // Get all the items from server upon mounting
     useEffect(() => {
         const headers = {
             headers: {
@@ -23,9 +33,15 @@ function GroceryList() {
         };
 
         getAllUserGroceryItems(headers, (response) => {
-            setGroceryItems(response.data);
+            const userItems = response.data;
+            userItems.forEach(item => {
+                item.checked = false;
+            })
+            setGroceryItems(userItems);
         })
     }, []);
+
+
 
     if (!groceryItems) {
         return (
@@ -41,7 +57,10 @@ function GroceryList() {
                     return (
                         <li key={index}>
                             <label>
-                                <input type="checkbox" />
+                                <input type="checkbox"
+                                    checked={item.checked}
+                                    onChange={() => handleGroceryItemsChange(index)}
+                                />
                                 {item.item_name}
                             </label>
                         </li>
