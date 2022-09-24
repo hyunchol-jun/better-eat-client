@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {getAllUserGroceryItems} from "../utils/http-helper";
+import {getAllUserGroceryItems, removeGroceryItemFromUser} from "../utils/http-helper";
 
 function GroceryList() {
     const [groceryItems, setGroceryItems] = useState(null);
+    const groceryItemsRef = useRef();
 
     const handleGroceryItemsChange = (itemIndex) => {
         setGroceryItems((prevState) => {
@@ -11,8 +12,9 @@ function GroceryList() {
             // Deep copy
             copiedState[itemIndex] = {...copiedState[itemIndex]};
             copiedState[itemIndex].checked = !copiedState[itemIndex].checked;
+            groceryItemsRef.current = copiedState;
             return copiedState;
-        })
+        });
     }
 
     // Check if logged in
@@ -38,10 +40,22 @@ function GroceryList() {
                 item.checked = false;
             })
             setGroceryItems(userItems);
-        })
+        });
+
+        return function cleanUp() {
+            if (groceryItemsRef.current) {
+                groceryItemsRef.current.forEach(item => {
+                    if (item.checked) {
+                        headers.data = {id: item.id};
+                        removeGroceryItemFromUser(headers, 
+                            (response) => {
+                                console.log(response.data);
+                        })
+                    }
+                });
+            }
+        }
     }, []);
-
-
 
     if (!groceryItems) {
         return (

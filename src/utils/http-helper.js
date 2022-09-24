@@ -99,3 +99,12 @@ export const getAllUserGroceryItems = (headers, callback) => {
         .then(callback)
         .catch(logError);
 }
+
+export const removeGroceryItemFromUser = (headers, callback) => {
+    axios.delete(REACT_APP_BACKEND_URL
+                    + REACT_APP_USERS_PATH
+                    + REACT_APP_GROCERIES_PATH,
+                    headers)
+        .then(callback)
+        .catch(logError);
+}
