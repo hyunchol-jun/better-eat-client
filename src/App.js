@@ -12,6 +12,7 @@ import defaultCuisines from "./data/defaultCuisines";
 import defaultDiets from "./data/defaultDiets";
 import defaultIntolerances from "./data/defaultIntolerances";
 import MyRecipes from './pages/MyRecipes';
+import GroceryList from './pages/GroceryList';
 
 function App() {
   const [sidebarShown, setSidebarShown] = useState(false);
@@ -135,6 +136,7 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/recipes" element={<MyRecipes />}></Route>
+        <Route path="/groceries" element={<GroceryList />}></Route>
       </Routes>
     </BrowserRouter>
   );
