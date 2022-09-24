@@ -1,7 +1,16 @@
 import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 
-function InventoryList() {
+function InventoryList({handleSearch}) {
+    // Check if logged in
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+        navigate("/login");
+        }
+    }, []);
+
     const inventoryItemsFromStorage = localStorage.getItem("inventoryList");
     const [inventoryItems, setInventoryItems] = useState(
         inventoryItemsFromStorage
@@ -15,18 +24,21 @@ function InventoryList() {
         event.target.reset();
     };
 
+    const handleDelete = (index) => {
+        const copiedInventoryItems = [...inventoryItems];
+        copiedInventoryItems.splice(index, 1);
+        setInventoryItems(copiedInventoryItems);
+    }
+
+    const handleSearchRecipe = (event, itemName) => {
+        handleSearch(event, itemName);
+
+        navigate("/");
+    }
+
     useEffect(() => {
         localStorage.setItem("inventoryList", JSON.stringify(inventoryItems));
     }, [inventoryItems]);
-
-    // Check if logged in
-    const navigate = useNavigate();
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-        navigate("/login");
-        }
-    }, []);
 
     return (
         <main>
@@ -42,8 +54,8 @@ function InventoryList() {
                     return (
                         <li key={index}>
                             <span>{item}</span>
-                            <button>Delete</button>
-                            <button>Search recipe</button>
+                            <button onClick={() => handleDelete(index)}>Delete</button>
+                            <button onClick={(event) => handleSearchRecipe(event, item)}>Search recipe</button>
                         </li>
                     );
                 })}

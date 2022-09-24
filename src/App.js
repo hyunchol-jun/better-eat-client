@@ -67,10 +67,10 @@ function App() {
     setIntolerances(defaultIntolerances);
   }
 
-  const handleSearch = (event) => {
+  const handleSearch = (event, itemName) => {
     event.preventDefault();
 
-    // Convert the objects to arrays of keys
+    // Convert the objects into arrays of keys
     const dietsInArray = [];
     const cuisinesInArray = [];
     const intolerancesInArray = [];
@@ -93,7 +93,9 @@ function App() {
       }
     }
 
-    const searchQuery = event.target.textInput.value;
+    // If the second argument is provided, use it for the query,
+    // otherwise get it from the form
+    const searchQuery = itemName || event.target.textInput.value;
 
     // Call to the external API
     getRecipesList(
@@ -138,7 +140,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/recipes" element={<MyRecipes />}></Route>
         <Route path="/groceries" element={<GroceryList />}></Route>
-        <Route path="/inventories" element={<InventoryList />}></Route>
+        <Route path="/inventories" element={<InventoryList handleSearch={handleSearch} />}></Route>
       </Routes>
     </BrowserRouter>
   );
