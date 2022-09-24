@@ -9,16 +9,40 @@ function Sidebar() {
                 <nav>
                     <ul className="sidebar__list">
                         <li className="sidebar__item">
-                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/" end>Search</NavLink>
+                            <NavLink className={
+                                    ({ isActive }) => 
+                                        isActive ? "sidebar__link sidebar__link--active" 
+                                                 : "sidebar__link"
+                                } to="/" end>
+                                Search
+                            </NavLink>
                         </li>
                         <li className="sidebar__item">
-                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/recipes">My Recipes</NavLink>
+                            <NavLink className={
+                                    ({ isActive }) => 
+                                        isActive ? "sidebar__link sidebar__link--active" 
+                                                 : "sidebar__link"
+                                } to="/recipes" end>
+                                My Recipes
+                            </NavLink>
                         </li>
                         <li className="sidebar__item">
-                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/groceries">Grocery List</NavLink>
+                            <NavLink className={
+                                    ({ isActive }) => 
+                                        isActive ? "sidebar__link sidebar__link--active" 
+                                                 : "sidebar__link"
+                                } to="/groceries" end>
+                                Grocery List
+                            </NavLink>
                         </li>
                         <li className="sidebar__item">
-                            <NavLink className={({ isActive }) => isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"} to="/inventories">Inventory List</NavLink>
+                            <NavLink className={
+                                    ({ isActive }) => 
+                                        isActive ? "sidebar__link sidebar__link--active" 
+                                                 : "sidebar__link"
+                                } to="/inventories" end>
+                                Inventory List
+                            </NavLink>
                         </li>
                     </ul>
                 </nav>
