@@ -18,7 +18,8 @@ const {
     REACT_APP_SIGNUP_PATH,
     REACT_APP_LOGIN_PATH,
     REACT_APP_USERS_PATH,
-    REACT_APP_RECIPES_PATH
+    REACT_APP_RECIPES_PATH,
+    REACT_APP_GROCERIES_PATH
 } = process.env;
 
 const logError = (error) => {
@@ -71,13 +72,21 @@ export const addRecipeToUser = (recipeData, headers, callback) => {
             recipeData, headers)
         .then(callback)
         .catch(logError);
-        
 }
 
 export const getAllUserRecipes = (headers, callback) => {
     axios.get(REACT_APP_BACKEND_URL
                 + REACT_APP_USERS_PATH
                 + REACT_APP_RECIPES_PATH, headers)
+        .then(callback)
+        .catch(logError);
+}
+
+export const appendGroceryItemToUser = (itemData, headers, callback) => {
+    axios.post(REACT_APP_BACKEND_URL
+                + REACT_APP_USERS_PATH
+                + REACT_APP_GROCERIES_PATH,
+                itemData, headers)
         .then(callback)
         .catch(logError);
 }

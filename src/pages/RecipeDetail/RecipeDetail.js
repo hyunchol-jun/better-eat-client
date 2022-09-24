@@ -3,7 +3,7 @@ import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { addRecipeToUser, getRecipeDetail } from "../../utils/http-helper";
+import { addRecipeToUser, getRecipeDetail,appendGroceryItemToUser } from "../../utils/http-helper";
 import parse from "html-react-parser";
 
 const PageMain = styled.main`
@@ -46,7 +46,7 @@ const StyledList = styled.ul`
 `;
 
 function RecipeDetail() {
-    const handleClick = () => {
+    const handleSaveRecipe = () => {
         const headers = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -76,6 +76,19 @@ function RecipeDetail() {
             console.log(response.data);
         })
     };
+
+    const handleSaveIngredient = (ingredient) => {
+        const headers = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        };
+
+        appendGroceryItemToUser({itemName: ingredient}, headers, (response) => {
+            console.log(response.data);
+        })
+
+    }
 
     const navigate = useNavigate();
 
@@ -123,12 +136,20 @@ function RecipeDetail() {
                 </StyledList>
                 <SubTitle>Ingredients</SubTitle>
                 <StyledList>
-                    {recipe.extendedIngredients.map((ingredient, index) => <li key={index}><button>{ingredient.original}</button></li>)}
+                    {recipe.extendedIngredients.map((ingredient, index) => 
+                            <li key={index}>
+                                <button 
+                                    onClick={() => handleSaveIngredient(ingredient.name)}>
+                                    {ingredient.original}
+                                </button>
+                            </li>
+                        )
+                    }
                 </StyledList>
                 <SubTitle>Instructions</SubTitle>
                 {parse(recipe.instructions)}
             </StyledSection>
-            <button onClick={handleClick}>Save Recipe</button>
+            <button onClick={handleSaveRecipe}>Save Recipe</button>
         </PageMain>
     );
 }
