@@ -3,7 +3,7 @@ import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { addRecipeToUser, getRecipeDetail,appendGroceryItemToUser } from "../../utils/http-helper";
+import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser } from "../../utils/http-helper";
 import parse from "html-react-parser";
 
 const PageMain = styled.main`
@@ -72,7 +72,7 @@ function RecipeDetail() {
             ingredients: JSON.stringify(ingredients)
         };
 
-        addRecipeToUser(body, headers, (response) => {
+        appendRecipeToUser(body, headers, (response) => {
             console.log(response.data);
         })
     };
