@@ -13,6 +13,7 @@ import defaultDiets from "./data/defaultDiets";
 import defaultIntolerances from "./data/defaultIntolerances";
 import MyRecipes from './pages/MyRecipes';
 import GroceryList from './pages/GroceryList';
+import InventoryList from './pages/InventoryList';
 
 function App() {
   const [sidebarShown, setSidebarShown] = useState(false);
@@ -137,6 +138,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/recipes" element={<MyRecipes />}></Route>
         <Route path="/groceries" element={<GroceryList />}></Route>
+        <Route path="/inventories" element={<InventoryList />}></Route>
       </Routes>
     </BrowserRouter>
   );
