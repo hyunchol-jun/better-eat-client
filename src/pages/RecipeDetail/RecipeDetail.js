@@ -62,7 +62,7 @@ function RecipeDetail() {
         })
 
         const body = {
-            api_id: recipe.id,
+            id: recipe.id,
             title: recipe.title,
             diets: JSON.stringify(recipe.diets),
             cuisines: JSON.stringify(recipe.cuisines),
