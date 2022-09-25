@@ -174,7 +174,8 @@ function App() {
     <BrowserRouter>
       <PageHeader handleClick={handleSidebarVisibility} sidebarShown={sidebarShown}/> 
       {sidebarShown && <Sidebar sidebarAnimation={sidebarAnimation} 
-                                backgroundAnimation={backgroundAnimation}/>}
+                                backgroundAnimation={backgroundAnimation}
+                                handleBackgroundClick={handleSidebarVisibility}/>}
       <Routes>
         <Route path="/" element={<HomePage 
                                   recipes={recipes}

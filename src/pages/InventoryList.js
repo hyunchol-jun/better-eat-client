@@ -45,7 +45,7 @@ function InventoryList({handleSearch}) {
             <h1>Inventory List</h1>
             <section>
                 <form onSubmit={handleAdd}>
-                    <input type="text" name="textInput"/>
+                    <input type="text" name="textInput" required/>
                     <button>Add</button>
                 </form>
             </section>
