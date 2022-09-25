@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser } from "../../utils/http-helper";
 import parse from "html-react-parser";
+import "./RecipeDetail.scss";
 
 const PageMain = styled.main`
     position: absolute;
@@ -46,6 +47,16 @@ const StyledList = styled.ul`
 `;
 
 function RecipeDetail() {
+    const navigate = useNavigate();
+
+    // Check if logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+        navigate("/login");
+        }
+    }, []);
+
     const handleSaveRecipe = () => {
         const headers = {
             headers: {
@@ -90,16 +101,6 @@ function RecipeDetail() {
 
     }
 
-    const navigate = useNavigate();
-
-    // Check if logged in
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-        navigate("/login");
-        }
-    }, []);
-
     const [recipe, setRecipe] = useState(null);
     const params = useParams();
 
@@ -109,6 +110,16 @@ function RecipeDetail() {
         })
         window.scrollTo(0, 0);
     }, []);
+
+    const inventoryItemsFromStorage = localStorage.getItem("inventoryList");
+    const inventoryItemsArray = inventoryItemsFromStorage 
+                                ? JSON.parse(inventoryItemsFromStorage) 
+                                : [];
+
+    const returnClassNameIfNameInArray = (name, array, className) => {
+        const foundName = array.find(element => element.toLowerCase() === name.toLowerCase());
+        return foundName ? className : "";
+    }
 
     if (!recipe) {
         return <p>Loading...</p>;
@@ -137,7 +148,10 @@ function RecipeDetail() {
                 <SubTitle>Ingredients</SubTitle>
                 <StyledList>
                     {recipe.extendedIngredients.map((ingredient, index) => 
-                            <li key={index}>
+                            <li 
+                                key={index} 
+                                className={returnClassNameIfNameInArray(ingredient.name, inventoryItemsArray, "ingredient-item--in-inventory")}
+                            >
                                 <button 
                                     onClick={() => handleSaveIngredient(ingredient.name)}>
                                     {ingredient.original}
