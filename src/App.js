@@ -17,9 +17,17 @@ import InventoryList from './pages/InventoryList';
 
 function App() {
   const [sidebarShown, setSidebarShown] = useState(false);
+  const [sidebarAnimation, setSidebarAnimation] = useState("close-animation");
+  const [backgroundAnimation, setBackgroundAnimation] = useState("clear-animation");
 
   const handleSidebarVisibility = () => {
-    setSidebarShown(!sidebarShown);
+    setSidebarAnimation(sidebarShown ? "close-animation" : "open-animation");
+    setBackgroundAnimation(sidebarShown ? "clear-animation" : "opaque-animation");
+    if (sidebarShown) {
+      setTimeout(() => setSidebarShown(!sidebarShown), 300);
+    } else {
+      setSidebarShown(!sidebarShown);
+    }
   }
 
   const [recipes, setRecipes] = useState(null);
@@ -165,7 +173,8 @@ function App() {
   return (
     <BrowserRouter>
       <PageHeader handleClick={handleSidebarVisibility} sidebarShown={sidebarShown}/> 
-      {sidebarShown && <Sidebar />}
+      {sidebarShown && <Sidebar sidebarAnimation={sidebarAnimation} 
+                                backgroundAnimation={backgroundAnimation}/>}
       <Routes>
         <Route path="/" element={<HomePage 
                                   recipes={recipes}

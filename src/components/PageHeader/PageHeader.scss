@@ -5,11 +5,12 @@
   position: sticky;
   top: 0;
   background-color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
 
   &__menu {
     width: 2rem;
     vertical-align: bottom;
+    cursor: pointer;
   }
 
   &__logo-container {
@@ -26,7 +27,6 @@
   &__title {
     font-size: 2rem;
     font-weight: bold;
-    margin-right: 2rem;
   }
 
   &__auth {

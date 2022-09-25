@@ -1,11 +1,48 @@
+@keyframes sidebar-appear {
+    0% {width: 0;}
+    100% {width: 13rem;}
+}
+
+@keyframes sidebar-disappear {
+    0% {width: 13rem;}
+    100% {width: 0;}
+}
+
+@keyframes background-clear {
+    from {background-color: none;}
+    to {background-color: rgba(255, 255, 255, 0.5);}
+}
+
+@keyframes background-opaque {
+    from {background-color: rgba(255, 255, 255, 0.5);}
+    to {background-color: none;}
+}
+
+.open-animation {
+    animation: sidebar-appear 0.3s ease-out 1;
+}
+
+.close-animation {
+    animation: sidebar-disappear 0.3s ease-out 1;
+}
+
+.opaque-animation {
+    animation: background-opaque 0.3s ease-out 1;
+}
+
+.clear-animation {
+    animation: background-clear 0.3s ease-out 1;
+}
+
 .sidebar {
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
+    z-index: 1;
 
     &__container {
-        width: 60%;
+        width: 13rem;
         height: 100%;
         background-color: white;
         display: flex;
@@ -13,26 +50,29 @@
     }
 
     &__list {
+        width: 100%;
         list-style: none;
-        padding: 0 1rem;
         font-size: 1.5rem;
-    }
-
-    &__item {
-        padding: 0.75rem 0;
-
-        &:hover {
-            background-color: #eeeeee;
-        }
-
+        padding: 1rem 0;
+        display: flex;
+        flex-direction: column;
     }
 
     &__link {
+        width: 100%;
         text-decoration: none;
-        color: black;
+        color: #2b2b2b;
+        padding: 0.75rem 1rem;
+        transition: 0.1s;
+        white-space: nowrap;
+        overflow: hidden;
 
         &--active {
-            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+        &:hover {
+            background-color: #eeeeee;
         }
     }
 }
