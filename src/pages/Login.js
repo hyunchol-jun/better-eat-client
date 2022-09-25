@@ -2,8 +2,23 @@ import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import styled from "styled-components";
 import { requestLogin } from "../utils/http-helper";
+import Button from "../components/Button";
+import LabeledInput from "../components/LabeledInput";
+import Message from "../components/Message";
+
+const StyledMain = styled.main`
+    margin: 0 1rem;
+`;
+
+const StyledForm = styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
 
 function Login() {
+    const [isSuccess, setIsSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
     
@@ -21,30 +36,40 @@ function Login() {
         };
 
         requestLogin(formValues, (response) => {
-            console.log(response.data);
+            setIsSuccess(true);
+            setErrorMessage("Successfully logged in!");
             localStorage.setItem("token", response.data.token);
-            navigate("/");
+            setTimeout(() => navigate("/"), 1000);
+        }, (error) => {
+            setIsSuccess(false);
+            setErrorMessage(error.response.data.message);
         })
     }
 
     return (
-        <main>
+        <StyledMain>
             <h1>Log in</h1>
-            <form onSubmit={handleLogin}>
-                <label>
-                    Email: 
-                    <input type="text" name="email" autoComplete="username"/>
-                </label>
-                <label>
-                    Password: 
-                    <input type="password" name="password" autoComplete="current-password"/>
-                </label>
-                <button>Login</button>
-            </form>
-            {errorMessage && <p>{errorMessage}</p>}
-            <span>Don't have an account? </span>
-            <Link to="/signup" >Sign up</Link>
-        </main>
+            <StyledForm onSubmit={handleLogin}>
+                <LabeledInput 
+                    labelText="Email" 
+                    type="email" 
+                    name="email" 
+                    autoComplete="username"
+                />
+                <LabeledInput 
+                    labelText="Password" 
+                    type="password" 
+                    name="password" 
+                    autoComplete="current-password"
+                />
+                <Button buttonText={"Login"}></Button>
+                <span>
+                    Don't have an account? &nbsp;
+                    <Link to="/signup" >Sign up</Link>
+                </span>
+                {errorMessage && <Message message={errorMessage} isSuccess={isSuccess}></Message>}
+            </StyledForm>
+        </StyledMain>
     );
 };
 

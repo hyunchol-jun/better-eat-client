@@ -81,9 +81,9 @@ export const requestSignup = (formValues, callback, errorCallback) => {
     .catch(errorCallback);
 }
 
-export const requestLogin = (formValues, callback) => {
+export const requestLogin = (formValues, callback, errorCallback) => {
     axios.post(REACT_APP_BACKEND_URL + REACT_APP_LOGIN_PATH, formValues).then(callback)
-    .catch(logError);
+    .catch(errorCallback);
 }
 
 export const appendRecipeToUser = (recipeData, headers, callback) => {

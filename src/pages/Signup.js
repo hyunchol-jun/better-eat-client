@@ -59,7 +59,7 @@ function Signup() {
             <h1>Sign Up</h1>
             <StyledForm onSubmit={handleSignup}>
                 <LabeledInput labelText="Name" type="text" name="name" />
-                <LabeledInput labelText="Email" type="text" name="email" autoComplete="username"/>
+                <LabeledInput labelText="Email" type="email" name="email" autoComplete="username"/>
                 <LabeledInput labelText="Password" type="password" name="password" autoComplete="new-password"/>
                 <LabeledInput labelText="Confirm password" type="password" name="confirmPassword" autoComplete="new-password"/>
                 <Button buttonText={"Sign up"}></Button>
