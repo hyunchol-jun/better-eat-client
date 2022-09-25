@@ -9,14 +9,28 @@
 
   &__menu {
     width: 2rem;
+    vertical-align: bottom;
+  }
+
+  &__logo-container {
+    text-decoration: none;
+    color: #2b2b2b;
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    height: 2.5rem;
   }
 
   &__title {
     font-size: 2rem;
     font-weight: bold;
+    margin-right: 2rem;
   }
 
   &__auth {
     text-decoration: none;
+    color: #2b2b2b;
   }
 }

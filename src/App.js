@@ -164,7 +164,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <PageHeader handleClick={handleSidebarVisibility}/> 
+      <PageHeader handleClick={handleSidebarVisibility} sidebarShown={sidebarShown}/> 
       {sidebarShown && <Sidebar />}
       <Routes>
         <Route path="/" element={<HomePage 

@@ -2,14 +2,19 @@ import "./PageHeader.scss";
 import {Link, useLocation} from "react-router-dom"
 import menuIcon from "../../assets/icons/menu.svg";
 import IconButton from "../IconButton/IconButton";
+import logoIcon from "../../assets/icons/logo.svg";
+import backIcon from "../../assets/icons/arrow_back.svg";
 
-function PageHeader({handleClick}) {
+function PageHeader({handleClick, sidebarShown}) {
     const location = useLocation();
 
     return (
       <header className='page-header'>
-        <IconButton className="page-header__menu" imgSrc={menuIcon} altText='hamburger icon' handleClick={handleClick}/>
-        <span className='page-header__title'>BetterEat</span>
+        <IconButton className="page-header__menu" imgSrc={sidebarShown ? backIcon : menuIcon} altText='hamburger icon' handleClick={handleClick}/>
+        <Link className="page-header__logo-container" to="/">
+            <img className="page-header__logo" src={logoIcon} alt="logo icon"/>
+            <span className='page-header__title'>BetterEat</span>
+        </Link>
         <Link className="page-header__auth" to="/login">
             {location.pathname === "/signup" || location.pathname === "/login" ? "Login" : "Logout"}
         </Link>
