@@ -4,10 +4,10 @@ import HomePage from './pages/HomePage/HomePage';
 import Sidebar from "./components/Sidebar/Sidebar";
 import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import {getRecipesList} from "./utils/http-helper";
+import {getRecipesList, getRecipesListRandomly} from "./utils/http-helper";
 import defaultCuisines from "./data/defaultCuisines";
 import defaultDiets from "./data/defaultDiets";
 import defaultIntolerances from "./data/defaultIntolerances";
@@ -30,6 +30,12 @@ function App() {
   const [diets, setDiets] = useState(dietsFromStorage);
   const [cuisines, setCuisines] = useState(cuisinesFromStorage);
   const [intolerances, setIntolerances] = useState(intolerancesFromStorage);
+  const dietsRef = useRef();
+  const cuisinesRef = useRef();
+  const intolerancesRef = useRef();
+  dietsRef.current = dietsFromStorage || defaultDiets;
+  cuisinesRef.current = cuisinesFromStorage || defaultCuisines;
+  intolerancesRef.current = intolerancesFromStorage || defaultIntolerances;
 
   const handleDietChange = (dietName) => {
     setDiets((prevState) => {
@@ -107,6 +113,42 @@ function App() {
                     setRecipes(response.data.results);
                   });
   };
+
+  const randomSearchBasedOnPreference = () => {
+    const dietsInArray = [];
+    const cuisinesInArray = [];
+    const intolerancesInArray = [];
+
+    for (const type in dietsRef.current) {
+      if (dietsRef.current[type]) {
+        dietsInArray.push(type);
+      }
+    }
+
+    for (const type in cuisinesRef.current) {
+      if (cuisinesRef.current[type]) {
+        cuisinesInArray.push(type);
+      }
+    }
+
+    for (const type in intolerancesRef.current) {
+      if (intolerancesRef.current[type]) {
+        intolerancesInArray.push(type);
+      }
+    }
+
+    getRecipesListRandomly(
+                          dietsInArray,
+                          cuisinesInArray,
+                          intolerancesInArray,
+                          (response) => {
+                            setRecipes(response.data.recipes);
+                          });
+  };
+
+  useEffect(() => {
+    randomSearchBasedOnPreference();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("diets", JSON.stringify(diets));

@@ -10,7 +10,9 @@ const INSTRUCTION_PATH = "&instructionRequired=true";
 const DIET_PATH = "&diet=";
 const CUISINE_PATH = "&cuisine=";
 const INTOLERANCES_PATH = "&intolerances=";
-const MAXTIME_PATH = "maxReadyTime=";
+const MAXTIME_PATH = "&maxReadyTime=";
+const NUMBER_PATH = "&number=20";
+const TAGS_PATH = "&tags=";
 
 const {
     REACT_APP_API_KEY,
@@ -30,7 +32,7 @@ export const getRecipesList = (searchQuery, diets, cuisines, intolerances, callb
     let FULL_PATH = BASE_URL + SEARCH_PATH
                     + API_KEY_PATH + REACT_APP_API_KEY
                     + QUERY_PATH + searchQuery
-                    + INSTRUCTION_PATH;
+                    + INSTRUCTION_PATH + NUMBER_PATH;
 
     if (diets.length > 0) {
         FULL_PATH += DIET_PATH + diets.join().toLowerCase();
@@ -48,6 +50,25 @@ export const getRecipesList = (searchQuery, diets, cuisines, intolerances, callb
     axios.get(FULL_PATH).then(callback)
     .catch(logError);
 };
+
+export const getRecipesListRandomly = (diets, cuisines, intolerances, callback) => {
+    let FULL_PATH = BASE_URL + RANDOM_PATH
+                    + API_KEY_PATH + REACT_APP_API_KEY
+                    + NUMBER_PATH;
+    
+    if (diets.length + cuisines.length + intolerances.length > 0)
+        FULL_PATH += TAGS_PATH;
+
+    FULL_PATH += diets.join().toLowerCase();
+    if (diets.length > 0 && cuisines.length > 0) FULL_PATH += ",";
+    FULL_PATH += cuisines.join().toLowerCase();
+    if (cuisines.length > 0 && intolerances.length > 0) FULL_PATH += ",";
+    FULL_PATH += intolerances.join().toLowerCase();
+
+    console.log(FULL_PATH)
+    axios.get(FULL_PATH).then(callback)
+    .catch(logError);
+}
 
 export const getRecipeDetail = (recipeId, callback) => {
     const FULL_PATH = BASE_URL + recipeId + INFO_PATH + API_KEY_PATH + REACT_APP_API_KEY;
