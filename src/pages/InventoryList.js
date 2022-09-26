@@ -40,8 +40,18 @@ const SecondaryButton = styled.button`
 
 const StyledListItem = styled.li`
     display: flex;
+    align-items: center;
     gap: 0.5rem;
-    margin: 0.25rem 0;
+    padding: 0.5rem 0.5rem;
+    border-bottom: 1px solid var(--outline-color);
+
+    &:hover {
+        background-color: var(--outline-color);
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
 `;
 
 const StyledSpan = styled.span`

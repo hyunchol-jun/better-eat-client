@@ -21,6 +21,7 @@ const ImageDiv = styled.div`
 
 const RecipeImage = styled.img`
     width: 100%;
+    object-fit: contain;
 `;
 
 const Title = styled.h1`
@@ -44,6 +45,10 @@ const BackButton = styled(IconButton)`
 
 const StyledList = styled.ul`
     list-style: none;
+`;
+
+const StyledPara = styled.p`
+
 `;
 
 function RecipeDetail() {
@@ -161,9 +166,11 @@ function RecipeDetail() {
                     }
                 </StyledList>
                 <SubTitle>Instructions</SubTitle>
-                {parse(recipe.instructions)}
+                <StyledPara>
+                    {parse(recipe.instructions)}
+                </StyledPara>
+                <button onClick={handleSaveRecipe}>Save Recipe</button>
             </StyledSection>
-            <button onClick={handleSaveRecipe}>Save Recipe</button>
         </PageMain>
     );
 }
