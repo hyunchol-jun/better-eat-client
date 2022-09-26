@@ -13,7 +13,12 @@
         -ms-user-select: none;
         user-select: none;
 
-        & input {
+        &--checked {
+            text-decoration: line-through;
+            color: var(--secondary-text-color);
+        }
+
+        input {
             position: absolute;
             opacity: 0;
             cursor: pointer;

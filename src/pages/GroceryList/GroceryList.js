@@ -71,7 +71,7 @@ function GroceryList() {
                 {groceryItems.map((item, index) => {
                     return (
                         <li key={index} className="grocery-list__item">
-                            <label className="grocery-list__name">
+                            <label className={`grocery-list__name ${item.checked ? "grocery-list__name--checked": ""}`}>
                                 {item.item_name}
                                 <input 
                                     className="grocery-list__checkbox"
