@@ -2,6 +2,7 @@ import "./GroceryList.scss";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {getAllUserGroceryItems, removeGroceryItemFromUser} from "../../utils/http-helper";
+import Loading from "../../components/Loading/Loading";
 
 function GroceryList() {
     const [groceryItems, setGroceryItems] = useState(null);
@@ -60,7 +61,7 @@ function GroceryList() {
 
     if (!groceryItems) {
         return (
-            <p>Loading...</p>
+            <Loading />
         );
     }
 
