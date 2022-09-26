@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser } from "../../utils/http-helper";
 import parse from "html-react-parser";
 import "./RecipeDetail.scss";
+import Loading from "../../components/Loading/Loading";
 
 const PageMain = styled.main`
     position: absolute;
@@ -142,7 +143,7 @@ function RecipeDetail() {
     }
 
     if (!recipe) {
-        return <p>Loading...</p>;
+        return <Loading/>;
     }
 
     return (

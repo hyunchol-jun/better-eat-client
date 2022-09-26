@@ -112,7 +112,7 @@ function InventoryList({handleSearch}) {
                         <StyledListItem key={index}>
                             <StyledSpan>{item}</StyledSpan>
                             <SecondaryButton  onClick={() => handleDelete(index)}>Delete</SecondaryButton>
-                            <SecondaryButton onClick={(event) => handleSearchRecipe(event, item)}>Search recipe</SecondaryButton>
+                            <SecondaryButton onClick={(event) => handleSearchRecipe(event, item)}>Search recipes</SecondaryButton>
                         </StyledListItem>
                     );
                 })}

@@ -1,10 +1,11 @@
 import "./RecipesList.scss";
 import RecipeCard from '../RecipeCard/RecipeCard';
+import Loading from "../Loading/Loading";
 
 function RecipesList({recipes}) {
     if (!recipes) {
       return (
-        <div>Loading...</div>
+        <Loading />
       );
     }
 
