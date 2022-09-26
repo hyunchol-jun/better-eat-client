@@ -24,17 +24,32 @@ const RecipeImage = styled.img`
     object-fit: contain;
 `;
 
+const StyledSection = styled.section`
+    padding: 1rem;
+    background-color: white;
+    position: relative;
+    margin-top: -1rem;
+    border-radius: 1rem 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+`;
+
 const Title = styled.h1`
     margin: 0;
 `;
 
-const StyledSection = styled.section`
-    padding: 1rem;
-    background-color: white;
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--outline-color);
+    border-radius: 0.25rem;
 `;
 
 const SubTitle = styled.h2`
     font-size: 1rem;
+    color: var(--secondary-color);
 `;
 
 const BackButton = styled(IconButton)`
@@ -142,33 +157,41 @@ function RecipeDetail() {
             </ImageDiv>
             <StyledSection>
                 <Title>{recipe.title}</Title>
-                <SubTitle>Diets</SubTitle>
-                <StyledList>
-                    {recipe.diets.map((label, index) => <li key={index}>{label}</li>)}
-                </StyledList>
-                <SubTitle>Cuisines</SubTitle>
-                <StyledList>
-                    {recipe.cuisines.map((type, index) => <li key={index}>{type}</li>)}
-                </StyledList>
-                <SubTitle>Ingredients</SubTitle>
-                <StyledList>
-                    {recipe.extendedIngredients.map((ingredient, index) => 
-                            <li 
-                                key={index} 
-                                className={returnClassNameIfNameInArray(ingredient.name, inventoryItemsArray, "ingredient-item--in-inventory")}
-                            >
-                                <button 
-                                    onClick={() => handleSaveIngredient(ingredient.name)}>
-                                    {ingredient.original}
-                                </button>
-                            </li>
-                        )
-                    }
-                </StyledList>
-                <SubTitle>Instructions</SubTitle>
-                <StyledPara>
-                    {parse(recipe.instructions)}
-                </StyledPara>
+                {recipe.diets.length > 0 && <StyledDiv>
+                    <SubTitle>Diets</SubTitle>
+                    <StyledList>
+                        {recipe.diets.map((label, index) => <li key={index}>{label}</li>)}
+                    </StyledList>
+                </StyledDiv>}
+                {recipe.cuisines.length > 0 && <StyledDiv>
+                    <SubTitle>Cuisines</SubTitle>
+                    <StyledList>
+                        {recipe.cuisines.map((type, index) => <li key={index}>{type}</li>)}
+                    </StyledList>
+                </StyledDiv>}
+                <StyledDiv>
+                    <SubTitle>Ingredients</SubTitle>
+                    <StyledList>
+                        {recipe.extendedIngredients.map((ingredient, index) => 
+                                <li 
+                                    key={index} 
+                                    className={returnClassNameIfNameInArray(ingredient.name, inventoryItemsArray, "ingredient-item--in-inventory")}
+                                >
+                                    <button 
+                                        onClick={() => handleSaveIngredient(ingredient.name)}>
+                                        {ingredient.original}
+                                    </button>
+                                </li>
+                            )
+                        }
+                    </StyledList>
+                </StyledDiv>
+                <StyledDiv>
+                    <SubTitle>Instructions</SubTitle>
+                    <StyledPara>
+                        {parse(recipe.instructions)}
+                    </StyledPara>
+                </StyledDiv>
                 <button onClick={handleSaveRecipe}>Save Recipe</button>
             </StyledSection>
         </PageMain>
