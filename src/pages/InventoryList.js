@@ -1,5 +1,52 @@
 import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Button from "../components/Button";
+
+const StyledMain = styled.main`
+    margin: 0 1rem;
+`;
+
+const StyledForm = styled.form`
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+`;
+
+const StyledInput = styled.input`
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1.5px solid #cccccc;
+    padding: 0.5rem 1rem;
+    font-family: inherit;
+
+    &:focus {
+        outline: none;
+        border: 1.5px solid var(--primary-color);
+    }
+`;
+
+const SecondaryButton = styled.button`
+    font-family: inherit;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--secondary-color);
+    color: white;
+    flex-shrink: 0;
+`;
+
+const StyledListItem = styled.li`
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.25rem 0;
+`;
+
+const StyledSpan = styled.span`
+    width: 100%;
+`;
 
 function InventoryList({handleSearch}) {
     // Check if logged in
@@ -41,26 +88,26 @@ function InventoryList({handleSearch}) {
     }, [inventoryItems]);
 
     return (
-        <main>
+        <StyledMain>
             <h1>Inventory List</h1>
             <section>
-                <form onSubmit={handleAdd}>
-                    <input type="text" name="textInput" required/>
-                    <button>Add</button>
-                </form>
+                <StyledForm onSubmit={handleAdd}>
+                    <StyledInput type="text" name="textInput" required/>
+                    <Button buttonText={"Add"}></Button>
+                </StyledForm>
             </section>
             <ul>
                 {inventoryItems.map((item, index) => {
                     return (
-                        <li key={index}>
-                            <span>{item}</span>
-                            <button onClick={() => handleDelete(index)}>Delete</button>
-                            <button onClick={(event) => handleSearchRecipe(event, item)}>Search recipe</button>
-                        </li>
+                        <StyledListItem key={index}>
+                            <StyledSpan>{item}</StyledSpan>
+                            <SecondaryButton  onClick={() => handleDelete(index)}>Delete</SecondaryButton>
+                            <SecondaryButton onClick={(event) => handleSearchRecipe(event, item)}>Search recipe</SecondaryButton>
+                        </StyledListItem>
                     );
                 })}
             </ul>
-        </main>
+        </StyledMain>
     );
 }
 

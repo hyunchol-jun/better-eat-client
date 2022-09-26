@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { getAllUserRecipes } from "../utils/http-helper";
 import { useNavigate } from "react-router-dom";
 import RecipesList from "../components/RecipesList/RecipesList";
+import styled from "styled-components";
+
+const StyledMain = styled.main`
+    margin: 0 1rem;
+`;
 
 function MyRecipes() {
 
@@ -29,10 +34,10 @@ function MyRecipes() {
     }, []);
 
     return (
-        <main className="">
+        <StyledMain>
             <h1>My Recipes</h1>
             <RecipesList recipes={recipes}/>
-        </main>
+        </StyledMain>
     );
 }
 
