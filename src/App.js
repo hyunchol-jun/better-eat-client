@@ -28,7 +28,7 @@ function App() {
     } else {
       setSidebarShown(!sidebarShown);
     }
-  }
+  };
 
   const [recipes, setRecipes] = useState(null);
 

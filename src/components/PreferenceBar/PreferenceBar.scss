@@ -1,16 +1,60 @@
 .preference-bar {
   display: flex;
-  top: 0;
+  flex-direction: column;
 
   &__field {
     width: 100%;
+    height: 0;
+    transition: height 0.4s ease;
     display: flex;
     flex-direction: column;
+    gap: 0.25rem;
+    overflow: auto;
+
+    &--active {
+      height: 10rem;
+    }
   }
 
-  &__item {
+  &__row {
     display: flex;
     align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__label {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+  }
+
+  &__slider {
+    border-radius: 8.5px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--outline-color);
+    transition: .2s;
+
+    &:before {
+      border-radius: 50%;
+      position: absolute;
+      content: "";
+      height: 13px;
+      width: 13px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .2s;
+    }
+  }
+
+  &__text {
+    font-size: 1rem;
   }
 
   &__delete {
@@ -24,6 +68,34 @@
   }
 
   &__expand {
-    width: 1.75rem;
+    width: 100%;
+    border: none;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-family: inherit;
+    padding: 0;
   }
+
+  &__expand-icon {
+    width: 2rem;
+    transition: transform 0.3s ease;
+
+    &--active {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+input:checked + .preference-bar__slider {
+  background-color: var(--primary-color);
+}
+
+input:focus + .preference-bar__slider {
+  box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .preference-bar__slider:before {
+  transform: translateX(13px);
 }
