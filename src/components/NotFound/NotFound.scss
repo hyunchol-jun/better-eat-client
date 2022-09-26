@@ -1,0 +1,13 @@
+.not-found {
+    padding: 1.5rem 1rem;
+
+    &__title {
+        margin: 0;
+    }
+
+    &__description {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}

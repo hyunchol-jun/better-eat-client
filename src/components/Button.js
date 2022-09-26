@@ -11,9 +11,9 @@ const StyledButton = styled.button`
     color: white;
 `;
 
-function Button({buttonText}) {
+function Button({buttonText, as, to}) {
     return (
-        <StyledButton>{buttonText}</StyledButton>
+        <StyledButton as={as} to={to}>{buttonText}</StyledButton>
     );
 }
 

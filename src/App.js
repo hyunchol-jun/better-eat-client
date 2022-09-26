@@ -14,6 +14,7 @@ import defaultIntolerances from "./data/defaultIntolerances";
 import MyRecipes from './pages/MyRecipes';
 import GroceryList from './pages/GroceryList/GroceryList';
 import InventoryList from './pages/InventoryList';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
   const [sidebarShown, setSidebarShown] = useState(false);
@@ -193,6 +194,7 @@ function App() {
         <Route path="/recipes" element={<MyRecipes />}></Route>
         <Route path="/groceries" element={<GroceryList />}></Route>
         <Route path="/inventories" element={<InventoryList handleSearch={handleSearch} />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );
