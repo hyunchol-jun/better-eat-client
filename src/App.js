@@ -12,7 +12,7 @@ import defaultCuisines from "./data/defaultCuisines";
 import defaultDiets from "./data/defaultDiets";
 import defaultIntolerances from "./data/defaultIntolerances";
 import MyRecipes from './pages/MyRecipes';
-import GroceryList from './pages/GroceryList';
+import GroceryList from './pages/GroceryList/GroceryList';
 import InventoryList from './pages/InventoryList';
 
 function App() {

@@ -1,6 +1,7 @@
+import "./GroceryList.scss";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {getAllUserGroceryItems, removeGroceryItemFromUser} from "../utils/http-helper";
+import {getAllUserGroceryItems, removeGroceryItemFromUser} from "../../utils/http-helper";
 
 function GroceryList() {
     const [groceryItems, setGroceryItems] = useState(null);
@@ -64,18 +65,21 @@ function GroceryList() {
     }
 
     return (
-        <main>
+        <main className="grocery-list">
             <h1>Grocery List</h1>
-            <ul>
+            <ul className="grocery-list__list">
                 {groceryItems.map((item, index) => {
                     return (
-                        <li key={index}>
-                            <label>
-                                <input type="checkbox"
+                        <li key={index} className="grocery-list__item">
+                            <label className="grocery-list__name">
+                                {item.item_name}
+                                <input 
+                                    className="grocery-list__checkbox"
+                                    type="checkbox"
                                     checked={item.checked}
                                     onChange={() => handleGroceryItemsChange(index)}
                                 />
-                                {item.item_name}
+                                <span className="grocery-list__checkmark"></span>
                             </label>
                         </li>
                     )
