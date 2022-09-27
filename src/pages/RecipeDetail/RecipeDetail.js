@@ -111,6 +111,7 @@ const BiggerStyledTooltip = styled(StyledTooltip)`
 
 const StyledButton = styled.button`
     position: relative;
+    cursor: pointer;
 `;
 
 const BiggerStyledButton = styled(StyledButton)`
@@ -123,6 +124,10 @@ const BiggerStyledButton = styled(StyledButton)`
     background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-color)"};
     color: white;
     text-decoration: none;
+
+    &:hover {
+        background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-tonned-down-color)"};
+    }
 `;
 
 function RecipeDetail() {

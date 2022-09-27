@@ -10,6 +10,11 @@ const StyledButton = styled.button`
     background-color: var(--primary-color);
     color: white;
     text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--primary-tonned-down-color);
+    }
 `;
 
 function Button({buttonText, as, to, onClick, tooltip}) {
