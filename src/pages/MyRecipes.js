@@ -3,9 +3,14 @@ import { getAllUserRecipes } from "../utils/http-helper";
 import { useNavigate } from "react-router-dom";
 import RecipesList from "../components/RecipesList/RecipesList";
 import styled from "styled-components";
+import Message from "../components/Message";
 
 const StyledMain = styled.main`
     margin: 0 1rem;
+`;
+
+const MessageWithoutBorder = styled(Message)`
+    border: none;
 `;
 
 function MyRecipes() {
@@ -36,7 +41,13 @@ function MyRecipes() {
     return (
         <StyledMain>
             <h1>My Recipes</h1>
-            <RecipesList recipes={recipes} to={"/users/recipes/"}/>
+            {recipes && recipes.length === 0 
+                ? <MessageWithoutBorder 
+                    message={"You have no recipes saved."} 
+                    isSuccess={true}>
+                  </MessageWithoutBorder>
+                : <RecipesList recipes={recipes} to={"/users/recipes/"}/>
+            }
         </StyledMain>
     );
 }

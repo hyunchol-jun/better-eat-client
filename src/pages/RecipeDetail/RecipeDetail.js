@@ -149,14 +149,19 @@ function RecipeDetail() {
         };
 
         removeUserRecipe(params.recipeId, headers, (response) => {
-            if (response.data > 0) {
-                setIsSuccess(true);
-                setMessage("Recipe deleted");
-            } else {
-                setIsSuccess(false);
-                setMessage("Already deleted");
-            }
-            setTimeout(() => {setMessage("")}, 1000);
+            // if (response.data > 0) {
+            //     setIsSuccess(true);
+            //     setMessage("Recipe deleted");
+            // } else {
+            //     setIsSuccess(false);
+            //     setMessage("Already deleted");
+            // }
+            setIsSuccess(true);
+            setMessage("Recipe deleted");
+            setTimeout(() => {
+                setMessage("");
+                navigate("/recipes");
+            }, 1000);
         }, (error) => {
             setIsSuccess(false);
             setMessage(error.response.data.message);
