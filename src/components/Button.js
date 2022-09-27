@@ -12,9 +12,9 @@ const StyledButton = styled.button`
     text-decoration: none;
 `;
 
-function Button({buttonText, as, to, onClick}) {
+function Button({buttonText, as, to, onClick, tooltip}) {
     return (
-        <StyledButton as={as} to={to} onClick={onClick}>{buttonText}</StyledButton>
+        <StyledButton as={as} to={to} onClick={onClick}>{buttonText} {tooltip}</StyledButton>
     );
 }
 

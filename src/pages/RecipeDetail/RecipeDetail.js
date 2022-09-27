@@ -92,8 +92,31 @@ const StyledTooltip = styled.span`
     }
 `;
 
+const BiggerStyledTooltip = styled(StyledTooltip)`
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border-width: 2px;
+    
+    &:after {
+        margin-left: -1rem;
+        border-width: 1rem;
+    }
+`;
+
 const StyledButton = styled.button`
     position: relative;
+`;
+
+const BiggerStyledButton = styled(StyledButton)`
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
 `;
 
 function RecipeDetail() {
@@ -106,6 +129,16 @@ function RecipeDetail() {
         navigate("/login");
         }
     }, []);
+
+    const [recipe, setRecipe] = useState(null);
+    const [notFound, setNotFound] = useState(false);
+
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messagesArray, setMessagesArray] = useState([]);
+
+    const params = useParams();
+
 
     const location = useLocation();
 
@@ -136,8 +169,14 @@ function RecipeDetail() {
         };
 
         appendRecipeToUser(body, headers, (response) => {
-            console.log(response.data);
-        })
+            setIsSuccess(true);
+            setMessage("Saved to My Recipes");
+            setTimeout(() => {setMessage("")}, 1000);
+        }, (error) => {
+            setIsSuccess(false);
+            setMessage(error.response.data.message);
+            setTimeout(() => {setMessage("")}, 1000);
+        });
     };
 
     const handleSaveIngredient = (ingredient, index) => {
@@ -162,14 +201,6 @@ function RecipeDetail() {
         });
 
     }
-
-    const [recipe, setRecipe] = useState(null);
-    const [notFound, setNotFound] = useState(false);
-
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [messagesArray, setMessagesArray] = useState([]);
-
-    const params = useParams();
 
     useEffect(() => {
         if (location.pathname.includes("/users/recipes/")) {
@@ -209,8 +240,7 @@ function RecipeDetail() {
     }
 
     if (notFound) {
-        return <
-            NotFound />
+        return <NotFound />
     }
 
     if (!recipe) {
@@ -263,7 +293,10 @@ function RecipeDetail() {
                     <SubTitle>Instructions</SubTitle>
                     {parse(recipe.instructions)}
                 </StyledDiv>
-                <Button onClick={handleSaveRecipe} buttonText={"Save Recipe"}></Button>
+                <BiggerStyledButton onClick={handleSaveRecipe} >
+                    Save Recipe
+                    {message && <BiggerStyledTooltip isSuccess={isSuccess}>{message}</BiggerStyledTooltip>}
+                </BiggerStyledButton>
             </StyledSection>
         </PageMain>
     );

@@ -86,13 +86,13 @@ export const requestLogin = (formValues, callback, errorCallback) => {
     .catch(errorCallback);
 }
 
-export const appendRecipeToUser = (recipeData, headers, callback) => {
+export const appendRecipeToUser = (recipeData, headers, callback, errorCallback) => {
     axios.post(REACT_APP_BACKEND_URL 
                 + REACT_APP_USERS_PATH 
                 + REACT_APP_RECIPES_PATH, 
             recipeData, headers)
         .then(callback)
-        .catch(logError);
+        .catch(errorCallback);
 }
 
 export const getAllUserRecipes = (headers, callback) => {
