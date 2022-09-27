@@ -113,7 +113,7 @@ const BiggerStyledButton = styled(StyledButton)`
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 0.5rem;
-    background-color: var(--primary-color);
+    background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-color)"};
     color: white;
     text-decoration: none;
 `;
@@ -135,6 +135,7 @@ function RecipeDetail() {
     const [isSuccess, setIsSuccess] = useState(false);
     const [message, setMessage] = useState("");
     const [messagesArray, setMessagesArray] = useState([]);
+    const [buttonGreyedOut, setButtonGreyedOut] = useState(false);
 
     const params = useParams();
 
@@ -142,6 +143,8 @@ function RecipeDetail() {
     const location = useLocation();
 
     const handleDeleteRecipe = () => {
+        setButtonGreyedOut(true);
+
         const headers = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -163,6 +166,7 @@ function RecipeDetail() {
                 navigate("/recipes");
             }, 1000);
         }, (error) => {
+            setButtonGreyedOut(false);
             setIsSuccess(false);
             setMessage(error.response.data.message);
             setTimeout(() => {setMessage("")}, 1000);
@@ -321,6 +325,8 @@ function RecipeDetail() {
                     {parse(recipe.instructions)}
                 </StyledDiv>
                 <BiggerStyledButton 
+                    buttonGreyedOut={buttonGreyedOut}
+                    disabled={buttonGreyedOut}
                     onClick={location.pathname.includes("/users/recipes/") ? handleDeleteRecipe : handleSaveRecipe} >
                     {location.pathname.includes("/users/recipes/") ? "Delete Recipe" : "Save Recipe"}
                     {message && <BiggerStyledTooltip isSuccess={isSuccess}>{message}</BiggerStyledTooltip>}
