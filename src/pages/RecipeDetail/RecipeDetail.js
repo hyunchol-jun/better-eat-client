@@ -134,6 +134,9 @@ const BiggerStyledButton = styled(StyledButton)`
 function RecipeDetail() {
     const navigate = useNavigate();
 
+    const params = useParams();
+    const location = useLocation();
+
     // Check if logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -165,10 +168,6 @@ function RecipeDetail() {
     const [message, setMessage] = useState("");
     const [messagesArray, setMessagesArray] = useState([]);
     const [buttonGreyedOut, setButtonGreyedOut] = useState(false);
-
-    const params = useParams();
-
-    const location = useLocation();
 
     const handleDeleteRecipe = () => {
         setButtonGreyedOut(true);
