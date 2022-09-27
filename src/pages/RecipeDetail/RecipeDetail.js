@@ -1,12 +1,14 @@
 import arrowBackIcon from "../../assets/icons/arrow_back.svg";
 import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser } from "../../utils/http-helper";
+import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser, getUserRecipeDetail } from "../../utils/http-helper";
 import parse from "html-react-parser";
 import "./RecipeDetail.scss";
 import Loading from "../../components/Loading/Loading";
+import Button from "../../components/Button";
+import NotFound from "../../components/NotFound/NotFound";
 
 const PageMain = styled.main`
     position: absolute;
@@ -43,14 +45,16 @@ const Title = styled.h1`
 const StyledDiv = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     background-color: var(--outline-color);
     border-radius: 0.25rem;
+    padding: 1rem;
+    gap: 1rem;
 `;
 
 const SubTitle = styled.h2`
+    margin: 0;
     font-size: 1rem;
-    color: var(--secondary-color);
+    color: var(--primary-color);
 `;
 
 const BackButton = styled(IconButton)`
@@ -64,7 +68,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledPara = styled.p`
-
+    margin: 0;
 `;
 
 function RecipeDetail() {
@@ -77,6 +81,8 @@ function RecipeDetail() {
         navigate("/login");
         }
     }, []);
+
+    const location = useLocation();
 
     const handleSaveRecipe = () => {
         const headers = {
@@ -101,7 +107,7 @@ function RecipeDetail() {
             instructions: recipe.instructions,
             image: recipe.image,
             ready_min: recipe.readyInMinutes,
-            ingredients: JSON.stringify(ingredients)
+            extendedIngredients: JSON.stringify(ingredients)
         };
 
         appendRecipeToUser(body, headers, (response) => {
@@ -123,12 +129,34 @@ function RecipeDetail() {
     }
 
     const [recipe, setRecipe] = useState(null);
+    const [notFound, setNotFound] = useState(false);
     const params = useParams();
 
     useEffect(() => {
-        getRecipeDetail(params.recipeId, (response) => {
-            setRecipe(response.data);
-        })
+        if (location.pathname.includes("/users/recipes/")) {
+            const headers = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            };
+            getUserRecipeDetail(params.recipeId, headers, (response) => {
+                setRecipe(response.data);
+            }, (error) => {
+                if (error.response.status === 404) {
+                    setNotFound(true);
+                    console.log(location.pathname)
+                }
+            })
+        } else {
+            getRecipeDetail(params.recipeId, (response) => {
+                setRecipe(response.data);
+            }, (error) => {
+                if (error.response.status === 404) {
+                    setNotFound(true);
+                }
+            });
+        }
+
         window.scrollTo(0, 0);
     }, []);
 
@@ -140,6 +168,11 @@ function RecipeDetail() {
     const returnClassNameIfNameInArray = (name, array, className) => {
         const foundName = array.find(element => element.toLowerCase() === name.toLowerCase());
         return foundName ? className : "";
+    }
+
+    if (notFound) {
+        return <
+            NotFound />
     }
 
     if (!recipe) {
@@ -189,11 +222,9 @@ function RecipeDetail() {
                 </StyledDiv>
                 <StyledDiv>
                     <SubTitle>Instructions</SubTitle>
-                    <StyledPara>
-                        {parse(recipe.instructions)}
-                    </StyledPara>
+                    {parse(recipe.instructions)}
                 </StyledDiv>
-                <button onClick={handleSaveRecipe}>Save Recipe</button>
+                <Button onClick={handleSaveRecipe} buttonText={"Save Recipe"}></Button>
             </StyledSection>
         </PageMain>
     );

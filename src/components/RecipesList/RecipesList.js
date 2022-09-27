@@ -2,7 +2,7 @@ import "./RecipesList.scss";
 import RecipeCard from '../RecipeCard/RecipeCard';
 import Loading from "../Loading/Loading";
 
-function RecipesList({recipes}) {
+function RecipesList({recipes, to}) {
     if (!recipes) {
       return (
         <Loading />
@@ -14,7 +14,7 @@ function RecipesList({recipes}) {
           {
             recipes.map((recipe, index) => {
               return (
-                <RecipeCard key={index} recipe={recipe}/>
+                <RecipeCard key={index} recipe={recipe} to={to}/>
               );
             })
           }

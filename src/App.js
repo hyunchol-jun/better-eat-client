@@ -189,6 +189,7 @@ function App() {
                                   handleSearch={handleSearch}
                                 />}></Route>
         <Route path="/recipes/:recipeId" element={<RecipeDetail />}></Route>
+        <Route path="/users/recipes/:recipeId" element={<RecipeDetail />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/recipes" element={<MyRecipes />}></Route>

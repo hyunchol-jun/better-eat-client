@@ -36,7 +36,7 @@ function MyRecipes() {
     return (
         <StyledMain>
             <h1>My Recipes</h1>
-            <RecipesList recipes={recipes}/>
+            <RecipesList recipes={recipes} to={"/users/recipes/"}/>
         </StyledMain>
     );
 }

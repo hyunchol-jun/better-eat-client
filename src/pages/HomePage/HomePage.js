@@ -37,7 +37,7 @@ function HomePage({
         handleIntoleranceChange={handleIntoleranceChange}
       />
       <Search handleSearch={handleSearch}/>
-      <RecipesList recipes={recipes}/>
+      <RecipesList recipes={recipes} to={"/recipes/"}/>
     </main>
   );
 }

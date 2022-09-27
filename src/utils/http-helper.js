@@ -70,10 +70,10 @@ export const getRecipesListRandomly = (diets, cuisines, intolerances, callback) 
     .catch(logError);
 }
 
-export const getRecipeDetail = (recipeId, callback) => {
+export const getRecipeDetail = (recipeId, callback, errorCallback) => {
     const FULL_PATH = BASE_URL + recipeId + INFO_PATH + API_KEY_PATH + REACT_APP_API_KEY;
     axios.get(FULL_PATH).then(callback)
-    .catch(logError);
+    .catch(errorCallback);
 }
 
 export const requestSignup = (formValues, callback, errorCallback) => {
@@ -101,6 +101,14 @@ export const getAllUserRecipes = (headers, callback) => {
                 + REACT_APP_RECIPES_PATH, headers)
         .then(callback)
         .catch(logError);
+}
+
+export const getUserRecipeDetail = (recipeId, headers, callback, errorCallback) => {
+    axios.get(REACT_APP_BACKEND_URL
+                + REACT_APP_USERS_PATH
+                + REACT_APP_RECIPES_PATH + "/" + recipeId, headers)
+        .then(callback)
+        .catch(errorCallback);
 }
 
 export const appendGroceryItemToUser = (itemData, headers, callback) => {
