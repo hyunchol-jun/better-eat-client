@@ -3,23 +3,24 @@
   &__form {
     display: flex;
     gap: 0.5rem;
+    margin: 1rem 0;
   }
 
   &__textbox {
     width: 100%;
     border-radius: 0.5rem;
     border: 1.5px solid #cccccc;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
     background-image: url("../../assets/icons/search.svg");
     background-position: 0.5rem;
     background-repeat: no-repeat;
     background-size: 1.5rem;
     font-family: inherit;
+    font-size: 1rem;
 
     &:focus {
       outline: none;
       border: 1.5px solid var(--primary-color);
-      background-image: none;
     }
   }
 

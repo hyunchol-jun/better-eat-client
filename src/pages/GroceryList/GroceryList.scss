@@ -1,5 +1,6 @@
 .grocery-list {
     margin: 0 1rem;
+    min-height: calc(100vh - 7rem);
 
     &__name {
         display: block;

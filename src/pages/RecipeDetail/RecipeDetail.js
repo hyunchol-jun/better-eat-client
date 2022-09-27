@@ -22,6 +22,7 @@ const PageMain = styled.main`
     top: 0;
     left: 0;
     z-index: 1;
+    min-height: calc(100vh - 7rem);
 `;
 
 const ImageDiv = styled.div`
@@ -51,7 +52,7 @@ const Title = styled.h1`
 const StyledDiv = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: var(--outline-color);
+    background-color: var(--background-color);
     border-radius: 0.25rem;
     padding: 1rem;
     gap: 1rem;
@@ -179,13 +180,6 @@ function RecipeDetail() {
         };
 
         removeUserRecipe(params.recipeId, headers, (response) => {
-            // if (response.data > 0) {
-            //     setIsSuccess(true);
-            //     setMessage("Recipe deleted");
-            // } else {
-            //     setIsSuccess(false);
-            //     setMessage("Already deleted");
-            // }
             setIsSuccess(true);
             setMessage("Recipe deleted");
             setTimeout(() => {

@@ -15,6 +15,7 @@ import MyRecipes from './pages/MyRecipes';
 import GroceryList from './pages/GroceryList/GroceryList';
 import InventoryList from './pages/InventoryList';
 import NotFound from './components/NotFound/NotFound';
+import PageFooter from './components/PageFooter';
 
 function App() {
   const [sidebarShown, setSidebarShown] = useState(false);
@@ -32,6 +33,7 @@ function App() {
   };
 
   const [recipes, setRecipes] = useState(null);
+  const [isRandom, setIsRandom] = useState(null);
 
   const dietsFromStorage = JSON.parse(localStorage.getItem("diets"));
   const cuisinesFromStorage = JSON.parse(localStorage.getItem("cuisines"));
@@ -84,6 +86,8 @@ function App() {
 
   const handleSearch = (event, itemName) => {
     event.preventDefault();
+
+    setIsRandom(false);
 
     // Convert the objects into arrays of keys
     const dietsInArray = [];
@@ -152,6 +156,7 @@ function App() {
                           intolerancesInArray,
                           (response) => {
                             setRecipes(response.data.recipes);
+                            setIsRandom(true);
                           });
   };
 
@@ -187,6 +192,7 @@ function App() {
                                   handleDietChange={handleDietChange}
                                   handleIntoleranceChange={handleIntoleranceChange}
                                   handleSearch={handleSearch}
+                                  isRandom={isRandom}
                                 />}></Route>
         <Route path="/recipes/:recipeId" element={<RecipeDetail />}></Route>
         <Route path="/users/recipes/:recipeId" element={<RecipeDetail />}></Route>
@@ -197,6 +203,7 @@ function App() {
         <Route path="/inventories" element={<InventoryList handleSearch={handleSearch} />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
+      <PageFooter />
     </BrowserRouter>
   );
 }

@@ -5,6 +5,7 @@ import Button from "../components/Button";
 
 const StyledMain = styled.main`
     margin: 0 1rem;
+    min-height: calc(100vh - 7rem);
 `;
 
 const StyledForm = styled.form`

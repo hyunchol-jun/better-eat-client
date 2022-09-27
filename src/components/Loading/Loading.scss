@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     margin-top: 10rem;
+    min-height: calc(100vh - 7rem);
 
     &__spinner {
         border: 0.5rem solid var(--outline-color);

@@ -4,6 +4,12 @@ import RecipesList from '../../components/RecipesList/RecipesList';
 import Search from '../../components/Search/Search';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Message from "../../components/Message";
+import styled from "styled-components";
+
+const MessageWithoutBorder = styled(Message)`
+  border: none;
+`;
 
 function HomePage({
   recipes,
@@ -13,7 +19,8 @@ function HomePage({
   handleCuisineChange,
   handleDietChange,
   handleIntoleranceChange,
-  handleSearch
+  handleSearch,
+  isRandom
 }) {
 
   // Check if logged in
@@ -37,7 +44,19 @@ function HomePage({
         handleIntoleranceChange={handleIntoleranceChange}
       />
       <Search handleSearch={handleSearch}/>
-      <RecipesList recipes={recipes} to={"/recipes/"}/>
+      {recipes && recipes.length === 0
+        ? <MessageWithoutBorder 
+            message={"There are no results."}
+            isSuccess={false}></MessageWithoutBorder>
+        : recipes && recipes.length !== 0 && isRandom
+        ? <>
+            <MessageWithoutBorder 
+              message={"Suggestions based on your food preference."}
+              isSuccess={true}></MessageWithoutBorder> 
+            <RecipesList recipes={recipes} to={"/recipes/"}/>
+          </>
+        : <RecipesList recipes={recipes} to={"/recipes/"}/>
+      }
     </main>
   );
 }
