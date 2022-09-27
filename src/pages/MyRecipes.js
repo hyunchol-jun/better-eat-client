@@ -23,7 +23,7 @@ function MyRecipes() {
         if (!token) {
         navigate("/login");
         }
-    }, []);
+    }, [navigate]);
 
     const [recipes, setRecipes] = useState(null);
 

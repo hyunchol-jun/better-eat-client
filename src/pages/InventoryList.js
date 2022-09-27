@@ -67,7 +67,7 @@ function InventoryList({handleSearch}) {
         if (!token) {
         navigate("/login");
         }
-    }, []);
+    }, [navigate]);
 
     const inventoryItemsFromStorage = localStorage.getItem("inventoryList");
     const [inventoryItems, setInventoryItems] = useState(

@@ -10,7 +10,7 @@ const INSTRUCTION_PATH = "&instructionRequired=true";
 const DIET_PATH = "&diet=";
 const CUISINE_PATH = "&cuisine=";
 const INTOLERANCES_PATH = "&intolerances=";
-const MAXTIME_PATH = "&maxReadyTime=";
+// const MAXTIME_PATH = "&maxReadyTime=";
 const NUMBER_PATH = "&number=20";
 const TAGS_PATH = "&tags=";
 

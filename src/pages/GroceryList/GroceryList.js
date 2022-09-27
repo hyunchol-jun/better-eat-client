@@ -26,7 +26,7 @@ function GroceryList() {
         if (!token) {
         navigate("/login");
         }
-    }, []);
+    }, [navigate]);
 
     // Get all the items from server upon mounting
     useEffect(() => {

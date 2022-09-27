@@ -30,7 +30,7 @@ function HomePage({
     if (!token) {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
 
   return (

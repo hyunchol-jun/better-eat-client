@@ -140,7 +140,7 @@ function RecipeDetail() {
         if (!token) {
         navigate("/login");
         }
-    }, []);
+    }, [navigate]);
 
     useEffect(() => {
         if (!location.pathname.includes("/users/recipes/")) {
@@ -156,7 +156,7 @@ function RecipeDetail() {
                 }
             })
         }
-    }, []);
+    }, [location.pathname, params.recipeId]);
 
     const [recipe, setRecipe] = useState(null);
     const [notFound, setNotFound] = useState(false);
@@ -282,7 +282,7 @@ function RecipeDetail() {
         }
 
         window.scrollTo(0, 0);
-    }, []);
+    }, [location.pathname, params.recipeId]);
 
     const inventoryItemsFromStorage = localStorage.getItem("inventoryList");
     const inventoryItemsArray = inventoryItemsFromStorage 
