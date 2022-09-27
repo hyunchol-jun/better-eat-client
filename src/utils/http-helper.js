@@ -111,6 +111,14 @@ export const getUserRecipeDetail = (recipeId, headers, callback, errorCallback) 
         .catch(errorCallback);
 }
 
+export const removeUserRecipe = (recipeId, headers, callback, errorCallback) => {
+    axios.delete(REACT_APP_BACKEND_URL
+                + REACT_APP_USERS_PATH
+                + REACT_APP_RECIPES_PATH + "/" + recipeId, headers)
+        .then(callback)
+        .catch(errorCallback);
+}
+
 export const appendGroceryItemToUser = (itemData, headers, callback, errorCallback) => {
     axios.post(REACT_APP_BACKEND_URL
                 + REACT_APP_USERS_PATH

@@ -3,11 +3,10 @@ import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser, getUserRecipeDetail } from "../../utils/http-helper";
+import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser, getUserRecipeDetail, removeUserRecipe } from "../../utils/http-helper";
 import parse from "html-react-parser";
 import "./RecipeDetail.scss";
 import Loading from "../../components/Loading/Loading";
-import Button from "../../components/Button";
 import NotFound from "../../components/NotFound/NotFound";
 
 const PageMain = styled.main`
@@ -141,6 +140,29 @@ function RecipeDetail() {
 
 
     const location = useLocation();
+
+    const handleDeleteRecipe = () => {
+        const headers = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        };
+
+        removeUserRecipe(params.recipeId, headers, (response) => {
+            if (response.data > 0) {
+                setIsSuccess(true);
+                setMessage("Recipe deleted");
+            } else {
+                setIsSuccess(false);
+                setMessage("Already deleted");
+            }
+            setTimeout(() => {setMessage("")}, 1000);
+        }, (error) => {
+            setIsSuccess(false);
+            setMessage(error.response.data.message);
+            setTimeout(() => {setMessage("")}, 1000);
+        });
+    };
 
     const handleSaveRecipe = () => {
         const headers = {
@@ -293,8 +315,9 @@ function RecipeDetail() {
                     <SubTitle>Instructions</SubTitle>
                     {parse(recipe.instructions)}
                 </StyledDiv>
-                <BiggerStyledButton onClick={handleSaveRecipe} >
-                    Save Recipe
+                <BiggerStyledButton 
+                    onClick={location.pathname.includes("/users/recipes/") ? handleDeleteRecipe : handleSaveRecipe} >
+                    {location.pathname.includes("/users/recipes/") ? "Delete Recipe" : "Save Recipe"}
                     {message && <BiggerStyledTooltip isSuccess={isSuccess}>{message}</BiggerStyledTooltip>}
                 </BiggerStyledButton>
             </StyledSection>
