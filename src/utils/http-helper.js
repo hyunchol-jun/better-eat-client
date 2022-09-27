@@ -14,9 +14,9 @@ const INTOLERANCES_PATH = "&intolerances=";
 const NUMBER_PATH = "&number=20";
 const TAGS_PATH = "&tags=";
 
-const SIGNUP_PATH="/signup";
-const LOGIN_PATH="/login";
-const USERS_PATH="/users";
+const SIGNUP_PATH="signup";
+const LOGIN_PATH="login";
+const USERS_PATH="users";
 const RECIPES_PATH="/recipes";
 const CHECK_RECIPES_PATH="/checkRecipes";
 const GROCERIES_PATH="/groceries";
