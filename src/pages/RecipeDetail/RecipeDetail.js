@@ -3,7 +3,14 @@ import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { appendRecipeToUser, getRecipeDetail,appendGroceryItemToUser, getUserRecipeDetail, removeUserRecipe } from "../../utils/http-helper";
+import { 
+        appendRecipeToUser, 
+        getRecipeDetail,
+        appendGroceryItemToUser, 
+        getUserRecipeDetail, 
+        removeUserRecipe, 
+        checkUserRecipe
+    } from "../../utils/http-helper";
 import parse from "html-react-parser";
 import "./RecipeDetail.scss";
 import Loading from "../../components/Loading/Loading";
@@ -129,6 +136,22 @@ function RecipeDetail() {
         }
     }, []);
 
+    useEffect(() => {
+        if (!location.pathname.includes("/users/recipes/")) {
+            const headers = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            };
+
+            checkUserRecipe(params.recipeId, headers, (response) => {
+                if (response.data.length > 0) {
+                    setButtonGreyedOut(true);
+                }
+            })
+        }
+    }, []);
+
     const [recipe, setRecipe] = useState(null);
     const [notFound, setNotFound] = useState(false);
 
@@ -138,7 +161,6 @@ function RecipeDetail() {
     const [buttonGreyedOut, setButtonGreyedOut] = useState(false);
 
     const params = useParams();
-
 
     const location = useLocation();
 
@@ -174,6 +196,8 @@ function RecipeDetail() {
     };
 
     const handleSaveRecipe = () => {
+        setButtonGreyedOut(true);
+
         const headers = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -204,6 +228,7 @@ function RecipeDetail() {
             setMessage("Saved to My Recipes");
             setTimeout(() => {setMessage("")}, 1000);
         }, (error) => {
+            setButtonGreyedOut(false);
             setIsSuccess(false);
             setMessage(error.response.data.message);
             setTimeout(() => {setMessage("")}, 1000);

@@ -14,14 +14,16 @@ const MAXTIME_PATH = "&maxReadyTime=";
 const NUMBER_PATH = "&number=20";
 const TAGS_PATH = "&tags=";
 
+const SIGNUP_PATH="/signup";
+const LOGIN_PATH="/login";
+const USERS_PATH="/users";
+const RECIPES_PATH="/recipes";
+const CHECK_RECIPES_PATH="/checkRecipes";
+const GROCERIES_PATH="/groceries";
+
 const {
     REACT_APP_API_KEY,
     REACT_APP_BACKEND_URL,
-    REACT_APP_SIGNUP_PATH,
-    REACT_APP_LOGIN_PATH,
-    REACT_APP_USERS_PATH,
-    REACT_APP_RECIPES_PATH,
-    REACT_APP_GROCERIES_PATH
 } = process.env;
 
 const logError = (error) => {
@@ -77,19 +79,19 @@ export const getRecipeDetail = (recipeId, callback, errorCallback) => {
 }
 
 export const requestSignup = (formValues, callback, errorCallback) => {
-    axios.post(REACT_APP_BACKEND_URL + REACT_APP_SIGNUP_PATH, formValues).then(callback)
+    axios.post(REACT_APP_BACKEND_URL + SIGNUP_PATH, formValues).then(callback)
     .catch(errorCallback);
 }
 
 export const requestLogin = (formValues, callback, errorCallback) => {
-    axios.post(REACT_APP_BACKEND_URL + REACT_APP_LOGIN_PATH, formValues).then(callback)
+    axios.post(REACT_APP_BACKEND_URL + LOGIN_PATH, formValues).then(callback)
     .catch(errorCallback);
 }
 
 export const appendRecipeToUser = (recipeData, headers, callback, errorCallback) => {
     axios.post(REACT_APP_BACKEND_URL 
-                + REACT_APP_USERS_PATH 
-                + REACT_APP_RECIPES_PATH, 
+                + USERS_PATH 
+                + RECIPES_PATH, 
             recipeData, headers)
         .then(callback)
         .catch(errorCallback);
@@ -97,41 +99,49 @@ export const appendRecipeToUser = (recipeData, headers, callback, errorCallback)
 
 export const getAllUserRecipes = (headers, callback) => {
     axios.get(REACT_APP_BACKEND_URL
-                + REACT_APP_USERS_PATH
-                + REACT_APP_RECIPES_PATH, headers)
+                + USERS_PATH
+                + RECIPES_PATH, headers)
         .then(callback)
         .catch(logError);
 }
 
 export const getUserRecipeDetail = (recipeId, headers, callback, errorCallback) => {
     axios.get(REACT_APP_BACKEND_URL
-                + REACT_APP_USERS_PATH
-                + REACT_APP_RECIPES_PATH + "/" + recipeId, headers)
+                + USERS_PATH
+                + RECIPES_PATH + "/" + recipeId, headers)
         .then(callback)
         .catch(errorCallback);
 }
 
 export const removeUserRecipe = (recipeId, headers, callback, errorCallback) => {
     axios.delete(REACT_APP_BACKEND_URL
-                + REACT_APP_USERS_PATH
-                + REACT_APP_RECIPES_PATH + "/" + recipeId, headers)
+                + USERS_PATH
+                + RECIPES_PATH + "/" + recipeId, headers)
         .then(callback)
         .catch(errorCallback);
 }
 
-export const appendGroceryItemToUser = (itemData, headers, callback, errorCallback) => {
-    axios.post(REACT_APP_BACKEND_URL
-                + REACT_APP_USERS_PATH
-                + REACT_APP_GROCERIES_PATH,
-                itemData, headers)
+export const checkUserRecipe = (recipeId, headers, callback, errorCallback) => {
+    axios.get(REACT_APP_BACKEND_URL
+                + USERS_PATH
+                + CHECK_RECIPES_PATH + "/" + recipeId, headers)
         .then(callback)
         .catch(errorCallback);
+}
+
+export const appendGroceryItemToUser = (itemData, headers, callback) => {
+    axios.post(REACT_APP_BACKEND_URL
+                + USERS_PATH
+                + GROCERIES_PATH,
+                itemData, headers)
+        .then(callback)
+        .catch(logError);
 }
 
 export const getAllUserGroceryItems = (headers, callback) => {
     axios.get(REACT_APP_BACKEND_URL
-                + REACT_APP_USERS_PATH
-                + REACT_APP_GROCERIES_PATH,
+                + USERS_PATH
+                + GROCERIES_PATH,
                 headers)
         .then(callback)
         .catch(logError);
@@ -139,8 +149,8 @@ export const getAllUserGroceryItems = (headers, callback) => {
 
 export const removeGroceryItemFromUser = (headers, callback) => {
     axios.delete(REACT_APP_BACKEND_URL
-                    + REACT_APP_USERS_PATH
-                    + REACT_APP_GROCERIES_PATH,
+                    + USERS_PATH
+                    + GROCERIES_PATH,
                     headers)
         .then(callback)
         .catch(logError);
