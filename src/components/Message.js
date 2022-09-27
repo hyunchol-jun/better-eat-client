@@ -7,6 +7,7 @@ const StyledMessage = styled.p`
     border-radius: 0.5rem;
     margin: 0;
     padding: 0.5rem 1rem;
+    background-color: white;
 `;
 
 

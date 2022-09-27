@@ -9,6 +9,7 @@ const StyledButton = styled.button`
     border-radius: 0.5rem;
     background-color: var(--primary-color);
     color: white;
+    text-decoration: none;
 `;
 
 function Button({buttonText, as, to, onClick}) {

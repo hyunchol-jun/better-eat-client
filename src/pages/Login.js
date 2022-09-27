@@ -62,12 +62,12 @@ function Login() {
                     name="password" 
                     autoComplete="current-password"
                 />
+                {errorMessage && <Message message={errorMessage} isSuccess={isSuccess}></Message>}
                 <Button buttonText={"Login"}></Button>
                 <span>
                     Don't have an account? &nbsp;
                     <Link to="/signup" >Sign up</Link>
                 </span>
-                {errorMessage && <Message message={errorMessage} isSuccess={isSuccess}></Message>}
             </StyledForm>
         </StyledMain>
     );

@@ -67,8 +67,33 @@ const StyledList = styled.ul`
     list-style: none;
 `;
 
-const StyledPara = styled.p`
+const StyledTooltip = styled.span`
+    font-size: 0.8rem;
+    color: ${props => props.isSuccess ? "var(--secondary-color)" : "var(--warning-color)"};
+    border: 1px solid ${props => props.isSuccess ? "var(--secondary-color)" : "var(--warning-color)"};
+    border-radius: 0.25rem;
     margin: 0;
+    padding: 0.25rem 0.5rem;
+    background-color: white;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom :100%;
+
+    &:after {
+        content: " ";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -0.5rem;
+        border-width: 0.5rem;
+        border-style: solid;
+        border-color: ${props => props.isSuccess ? "var(--secondary-color)" : "var(--warning-color)"} transparent transparent transparent;
+    }
+`;
+
+const StyledButton = styled.button`
+    position: relative;
 `;
 
 function RecipeDetail() {
@@ -115,7 +140,7 @@ function RecipeDetail() {
         })
     };
 
-    const handleSaveIngredient = (ingredient) => {
+    const handleSaveIngredient = (ingredient, index) => {
         const headers = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -123,13 +148,27 @@ function RecipeDetail() {
         };
 
         appendGroceryItemToUser({itemName: ingredient}, headers, (response) => {
-            console.log(response.data);
-        })
+            setIsSuccess(true);
+            const copiedMessagesArray = [...messagesArray];
+            copiedMessagesArray[index] = "Saved!";
+            setMessagesArray(copiedMessagesArray);
+            setTimeout(() => {setMessagesArray([])}, 1000);
+        }, (error) => {
+            setIsSuccess(false);
+            const copiedMessagesArray = [...messagesArray];
+            copiedMessagesArray[index] = error.response.data.message;
+            setMessagesArray(copiedMessagesArray);
+            setTimeout(() => {setMessagesArray([])}, 1000);
+        });
 
     }
 
     const [recipe, setRecipe] = useState(null);
     const [notFound, setNotFound] = useState(false);
+
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [messagesArray, setMessagesArray] = useState([]);
+
     const params = useParams();
 
     useEffect(() => {
@@ -144,7 +183,6 @@ function RecipeDetail() {
             }, (error) => {
                 if (error.response.status === 404) {
                     setNotFound(true);
-                    console.log(location.pathname)
                 }
             })
         } else {
@@ -211,10 +249,11 @@ function RecipeDetail() {
                                     key={index} 
                                     className={returnClassNameIfNameInArray(ingredient.name, inventoryItemsArray, "ingredient-item--in-inventory")}
                                 >
-                                    <button 
-                                        onClick={() => handleSaveIngredient(ingredient.name)}>
+                                    <StyledButton 
+                                        onClick={() => handleSaveIngredient(ingredient.name, index)}>
                                         {ingredient.original}
-                                    </button>
+                                        {messagesArray[index] && <StyledTooltip isSuccess={isSuccess}>{messagesArray[index]}</StyledTooltip>}
+                                    </StyledButton>
                                 </li>
                             )
                         }

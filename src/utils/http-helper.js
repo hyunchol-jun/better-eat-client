@@ -111,13 +111,13 @@ export const getUserRecipeDetail = (recipeId, headers, callback, errorCallback) 
         .catch(errorCallback);
 }
 
-export const appendGroceryItemToUser = (itemData, headers, callback) => {
+export const appendGroceryItemToUser = (itemData, headers, callback, errorCallback) => {
     axios.post(REACT_APP_BACKEND_URL
                 + REACT_APP_USERS_PATH
                 + REACT_APP_GROCERIES_PATH,
                 itemData, headers)
         .then(callback)
-        .catch(logError);
+        .catch(errorCallback);
 }
 
 export const getAllUserGroceryItems = (headers, callback) => {
