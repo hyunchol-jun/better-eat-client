@@ -30,7 +30,7 @@ function PreferenceBar({
       <section className='preference-bar'>
         <button className="preference-bar__expand" onClick={handleDietsShown}>
           <img className={dietsShown ? "preference-bar__expand-icon preference-bar__expand-icon--active" : "preference-bar__expand-icon"} src={moreIcon} alt=""/>
-          Set diet preference
+          Diet preference
         </button>
         <div className={dietsShown ? 'preference-bar__field preference-bar__field--active' : "preference-bar__field"}>
           {Object.entries(diets).map((type, index) => {
@@ -52,7 +52,7 @@ function PreferenceBar({
         </div>
         <button className="preference-bar__expand" onClick={handleCuisinesShown}>
           <img className={cuisinesShown ? "preference-bar__expand-icon preference-bar__expand-icon--active" : "preference-bar__expand-icon"} src={moreIcon} alt=""/>
-          Set cuisine preference
+          Cuisine preference
         </button>
         <div className={cuisinesShown ? 'preference-bar__field preference-bar__field--active' : "preference-bar__field"}>
           {Object.entries(cuisines).map((type, index) => {
@@ -74,7 +74,7 @@ function PreferenceBar({
         </div>
         <button className="preference-bar__expand" onClick={handleIntolerancesShown}>
           <img className={intolerancesShown ? "preference-bar__expand-icon preference-bar__expand-icon--active" : "preference-bar__expand-icon"} src={moreIcon} alt=""/>
-          Set intolerance preference
+          Intolerance preference
         </button>
         <div className={intolerancesShown ? 'preference-bar__field preference-bar__field--active' : "preference-bar__field"}>
           {Object.entries(intolerances).map((type, index) => {

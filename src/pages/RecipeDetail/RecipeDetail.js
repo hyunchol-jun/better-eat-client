@@ -153,6 +153,7 @@ const StyledButton = styled.button`
     background-color: none;
     font-family: inherit;
     font-size: 1rem;
+    color: var(--primary-text-color);
     text-align: start;
     text-decoration: underline;
 `;
