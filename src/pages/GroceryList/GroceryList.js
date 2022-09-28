@@ -1,8 +1,12 @@
 import "./GroceryList.scss";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {getAllUserGroceryItems, removeGroceryItemFromUser} from "../../utils/http-helper";
+import {getAllUserGroceryItems, 
+        removeGroceryItemFromUser, 
+        appendGroceryItemToUser} 
+    from "../../utils/http-helper";
 import Loading from "../../components/Loading/Loading";
+import SimpleForm from "../../components/SimpleForm";
 
 function GroceryList() {
     const [groceryItems, setGroceryItems] = useState(null);
@@ -17,6 +21,17 @@ function GroceryList() {
             groceryItemsRef.current = copiedState;
             return copiedState;
         });
+    }
+
+    const deleteAllCheckedItemsFromServer = (itemsArray, headers, callback) => {
+        if (itemsArray) {
+            itemsArray.forEach(item => {
+                if (item.checked) {
+                    headers.data = {id: item.id};
+                    removeGroceryItemFromUser(headers, callback);
+                }
+            });
+        }
     }
 
     // Check if logged in
@@ -45,19 +60,40 @@ function GroceryList() {
         });
 
         return function cleanUp() {
-            if (groceryItemsRef.current) {
-                groceryItemsRef.current.forEach(item => {
-                    if (item.checked) {
-                        headers.data = {id: item.id};
-                        removeGroceryItemFromUser(headers, 
-                            (response) => {
-                                console.log(response.data);
-                        })
-                    }
-                });
-            }
+            deleteAllCheckedItemsFromServer(
+                groceryItemsRef.current, 
+                headers, 
+                response => console.log(response)
+            );
         }
     }, []);
+
+    const handleAddGroceryItem = (event) => {
+        // event.preventDefault();
+
+        // const headers = {
+        //     headers: {
+        //         Authorization: `Bearer ${localStorage.getItem("token")}`
+        //     }
+        // };
+
+        // appendGroceryItemToUser({itemName: event.target.textInput.value}, headers, (response) => {
+        //     deleteAllCheckedItemsFromServer(
+        //         groceryItemsRef.current, 
+        //         headers,
+        //         () => {
+        //             getAllUserGroceryItems(headers, (response) => {
+        //                 const userItems = response.data;
+        //                 userItems.forEach(item => {
+        //                     item.checked = false;
+        //                 })
+        //                 setGroceryItems(userItems);
+        //             });
+        //         });
+        // });
+
+        // event.target.reset();
+    }
 
     if (!groceryItems) {
         return (
@@ -68,6 +104,7 @@ function GroceryList() {
     return (
         <main className="grocery-list">
             <h1>Grocery List</h1>
+            <SimpleForm handleSubmit={handleAddGroceryItem} buttonText="Add"></SimpleForm>
             <ul className="grocery-list__list">
                 {groceryItems.map((item, index) => {
                     return (

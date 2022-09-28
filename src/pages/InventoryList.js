@@ -2,30 +2,11 @@ import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
+import SimpleForm from "../components/SimpleForm";
 
 const StyledMain = styled.main`
     margin: 0 1rem;
     min-height: calc(100vh - 7rem);
-`;
-
-const StyledForm = styled.form`
-    width: 100%;
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-`;
-
-const StyledInput = styled.input`
-    width: 100%;
-    border-radius: 0.5rem;
-    border: 1.5px solid #cccccc;
-    padding: 0.5rem 1rem;
-    font-family: inherit;
-
-    &:focus {
-        outline: none;
-        border: 1.5px solid var(--primary-color);
-    }
 `;
 
 const SecondaryButton = styled.button`
@@ -37,6 +18,7 @@ const SecondaryButton = styled.button`
     background-color: var(--secondary-color);
     color: white;
     flex-shrink: 0;
+    cursor: pointer;
 `;
 
 const StyledListItem = styled.li`
@@ -101,12 +83,7 @@ function InventoryList({handleSearch}) {
     return (
         <StyledMain>
             <h1>Inventory List</h1>
-            <section>
-                <StyledForm onSubmit={handleAdd}>
-                    <StyledInput type="text" name="textInput" required/>
-                    <Button buttonText={"Add"}></Button>
-                </StyledForm>
-            </section>
+                <SimpleForm handleSubmit={handleAdd} buttonText="Add"></SimpleForm>
             <ul>
                 {inventoryItems.map((item, index) => {
                     return (
