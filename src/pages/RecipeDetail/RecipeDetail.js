@@ -92,6 +92,23 @@ const StyledList = styled.ul`
     gap: 0.5rem;
 `;
 
+const StyledListItem = styled.li`
+    display: flex;
+    align-items: center;
+    max-width: 80%;
+`;
+
+const StyledBadge = styled.span`
+    font-size: 0.75rem;
+    color: white;
+    background-color: var(--secondary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    position: absolute;
+    z-index: 2;
+    right: 2rem;
+`;
+
 const StyledTooltip = styled.span`
     font-size: 1rem;
     font-weight: bold;
@@ -133,6 +150,7 @@ const StyledButton = styled.button`
     position: relative;
     cursor: pointer;
     border: none;
+    padding: 0;
     background-color: none;
     font-family: inherit;
     font-size: 1rem;
@@ -141,15 +159,13 @@ const StyledButton = styled.button`
 `;
 
 const BiggerStyledButton = styled(StyledButton)`
-    font-family: inherit;
-    font-size: 1rem;
     font-weight: bold;
     padding: 0.5rem 1rem;
-    border: none;
     border-radius: 0.5rem;
     background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-color)"};
     color: white;
     text-decoration: none;
+    text-align: center;
 
     &:hover {
         background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-tonned-down-color)"};
@@ -313,9 +329,9 @@ function RecipeDetail() {
                                 ? JSON.parse(inventoryItemsFromStorage) 
                                 : [];
 
-    const returnClassNameIfNameInArray = (name, array, className) => {
+    const returnBadgeIfNameInArray = (name, array) => {
         const foundName = array.find(element => element.toLowerCase() === name.toLowerCase());
-        return foundName ? className : "";
+        return foundName && <StyledBadge>In Stock</StyledBadge>;
     }
 
     if (notFound) {
@@ -369,16 +385,14 @@ function RecipeDetail() {
                     </SubTitleDiv>
                     <StyledList>
                         {recipe.extendedIngredients.map((ingredient, index) => 
-                                <li 
-                                    key={index} 
-                                    className={returnClassNameIfNameInArray(ingredient.name, inventoryItemsArray, "ingredient-item--in-inventory")}
-                                >
+                                <StyledListItem key={index} >
                                     <StyledButton 
                                         onClick={() => handleSaveIngredient(ingredient.name, index)}>
                                         {ingredient.original}
                                         {messagesArray[index] && <StyledTooltip isSuccess={isSuccess}>{messagesArray[index]}</StyledTooltip>}
                                     </StyledButton>
-                                </li>
+                                    {returnBadgeIfNameInArray(ingredient.name, inventoryItemsArray)}
+                                </StyledListItem>
                             )
                         }
                     </StyledList>
