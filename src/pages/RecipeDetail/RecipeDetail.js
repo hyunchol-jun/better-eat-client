@@ -1,4 +1,9 @@
 import arrowBackIcon from "../../assets/icons/arrow_back.svg";
+import dietIcon from "../../assets/icons/diet.svg";
+import timeIcon from "../../assets/icons/clock.svg";
+import eggIcon from "../../assets/icons/egg.svg";
+import cuisineIcon from "../../assets/icons/cuisine.svg";
+import instructionsIcon from "../../assets/icons/instructions.svg";
 import styled from "styled-components";
 import IconButton from "../../components/IconButton/IconButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -58,10 +63,20 @@ const StyledDiv = styled.div`
     gap: 1rem;
 `;
 
+const SubTitleDiv = styled.div`
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+`;
+
+const StyledIcon = styled.img`
+    width: 1.5rem;
+`;
+
 const SubTitle = styled.h2`
     margin: 0;
     font-size: 1rem;
-    color: var(--primary-color);
+    color: var(--primary-tonned-down-color);
 `;
 
 const BackButton = styled(IconButton)`
@@ -314,23 +329,34 @@ function RecipeDetail() {
             <StyledSection>
                 <Title>{recipe.title}</Title>
                 {recipe.diets.length > 0 && <StyledDiv>
-                    <SubTitle>Diets</SubTitle>
+                    <SubTitleDiv>
+                        <StyledIcon src={dietIcon} alt=""></StyledIcon>
+                        <SubTitle>Diets</SubTitle>
+                    </SubTitleDiv>
                     <StyledList>
                         {recipe.diets.map((label, index) => <li key={index}>{label}</li>)}
                     </StyledList>
                 </StyledDiv>}
                 {recipe.cuisines.length > 0 && <StyledDiv>
-                    <SubTitle>Cuisines</SubTitle>
+                    <SubTitleDiv>
+                        <StyledIcon src={cuisineIcon} alt=""></StyledIcon>
+                        <SubTitle>Cuisines</SubTitle>
+                    </SubTitleDiv>
                     <StyledList>
                         {recipe.cuisines.map((type, index) => <li key={index}>{type}</li>)}
                     </StyledList>
                 </StyledDiv>}
                 <StyledDiv>
-                    <SubTitle>Ready time</SubTitle>
-                    <span>{recipe.ready_min || recipe.readyInMinutes} Min</span>
+                    <SubTitleDiv>
+                        <StyledIcon src={timeIcon} alt=""></StyledIcon>
+                        <span>{recipe.ready_min || recipe.readyInMinutes} Min</span>
+                    </SubTitleDiv>
                 </StyledDiv>
                 <StyledDiv>
-                    <SubTitle>Ingredients</SubTitle>
+                    <SubTitleDiv>
+                        <StyledIcon src={eggIcon} alt=""></StyledIcon>
+                        <SubTitle>Ingredients</SubTitle>
+                    </SubTitleDiv>
                     <StyledList>
                         {recipe.extendedIngredients.map((ingredient, index) => 
                                 <li 
@@ -348,7 +374,10 @@ function RecipeDetail() {
                     </StyledList>
                 </StyledDiv>
                 <StyledDiv>
-                    <SubTitle>Instructions</SubTitle>
+                    <SubTitleDiv>
+                        <StyledIcon src={instructionsIcon} alt=""></StyledIcon>
+                        <SubTitle>Instructions</SubTitle>
+                    </SubTitleDiv>
                     {parse(recipe.instructions)}
                 </StyledDiv>
                 <BiggerStyledButton 
