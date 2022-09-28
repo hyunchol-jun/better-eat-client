@@ -7,9 +7,11 @@ import {getAllUserGroceryItems,
     from "../../utils/http-helper";
 import Loading from "../../components/Loading/Loading";
 import SimpleForm from "../../components/SimpleForm";
+import Message from "../../components/Message";
 
 function GroceryList() {
     const [groceryItems, setGroceryItems] = useState(null);
+    const [message, setMessage] = useState("");
     const groceryItemsRef = useRef();
 
     const handleGroceryItemsChange = (itemIndex) => {
@@ -88,6 +90,9 @@ function GroceryList() {
 
         appendGroceryItemToUser({itemName: event.target.textInput.value}, headers, (response) => {
             appendItemToList(response.data);
+        }, (error) => {
+            setMessage(error.response.data.message);
+            setTimeout(() => setMessage(""), 1000);
         });
 
         event.target.reset();
@@ -103,6 +108,7 @@ function GroceryList() {
         <main className="grocery-list">
             <h1>Grocery List</h1>
             <SimpleForm handleSubmit={handleAddGroceryItem} buttonText="Add"></SimpleForm>
+            {message && <Message message={message} isSuccess={false}></Message>}
             <ul className="grocery-list__list">
                 {groceryItems.map((item, index) => {
                     return (

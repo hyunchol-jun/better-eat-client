@@ -1,7 +1,6 @@
 import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../components/Button";
 import SimpleForm from "../components/SimpleForm";
 
 const StyledMain = styled.main`

@@ -17,7 +17,6 @@ import {
         checkUserRecipe
     } from "../../utils/http-helper";
 import parse from "html-react-parser";
-import "./RecipeDetail.scss";
 import Loading from "../../components/Loading/Loading";
 import NotFound from "../../components/NotFound/NotFound";
 
