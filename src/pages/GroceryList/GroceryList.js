@@ -19,8 +19,17 @@ function GroceryList() {
             copiedState[itemIndex] = {...copiedState[itemIndex]};
             copiedState[itemIndex].checked = !copiedState[itemIndex].checked;
             groceryItemsRef.current = copiedState;
+            console.log(groceryItemsRef.current)
             return copiedState;
         });
+    }
+
+    const appendItemToList = (item) => {
+        setGroceryItems((prevState) => {
+            const copiedState = [...prevState, item];
+            groceryItemsRef.current = copiedState;
+            return copiedState;
+        })
     }
 
     const deleteAllCheckedItemsFromServer = (itemsArray, headers, callback) => {
@@ -69,30 +78,19 @@ function GroceryList() {
     }, []);
 
     const handleAddGroceryItem = (event) => {
-        // event.preventDefault();
+        event.preventDefault();
 
-        // const headers = {
-        //     headers: {
-        //         Authorization: `Bearer ${localStorage.getItem("token")}`
-        //     }
-        // };
+        const headers = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        };
 
-        // appendGroceryItemToUser({itemName: event.target.textInput.value}, headers, (response) => {
-        //     deleteAllCheckedItemsFromServer(
-        //         groceryItemsRef.current, 
-        //         headers,
-        //         () => {
-        //             getAllUserGroceryItems(headers, (response) => {
-        //                 const userItems = response.data;
-        //                 userItems.forEach(item => {
-        //                     item.checked = false;
-        //                 })
-        //                 setGroceryItems(userItems);
-        //             });
-        //         });
-        // });
+        appendGroceryItemToUser({itemName: event.target.textInput.value}, headers, (response) => {
+            appendItemToList(response.data);
+        });
 
-        // event.target.reset();
+        event.target.reset();
     }
 
     if (!groceryItems) {
