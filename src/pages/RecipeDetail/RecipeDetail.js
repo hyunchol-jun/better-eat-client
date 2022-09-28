@@ -87,10 +87,14 @@ const BackButton = styled(IconButton)`
 
 const StyledList = styled.ul`
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 `;
 
 const StyledTooltip = styled.span`
-    font-size: 0.8rem;
+    font-size: 1rem;
+    font-weight: bold;
     color: ${props => props.isSuccess ? "var(--secondary-color)" : "var(--warning-color)"};
     border: 1px solid ${props => props.isSuccess ? "var(--secondary-color)" : "var(--warning-color)"};
     border-radius: 0.25rem;
@@ -115,7 +119,7 @@ const StyledTooltip = styled.span`
 `;
 
 const BiggerStyledTooltip = styled(StyledTooltip)`
-    font-size: 1rem;
+    font-size: 1.25rem;
     border-radius: 0.5rem;
     border-width: 2px;
     
@@ -128,6 +132,12 @@ const BiggerStyledTooltip = styled(StyledTooltip)`
 const StyledButton = styled.button`
     position: relative;
     cursor: pointer;
+    border: none;
+    background-color: none;
+    font-family: inherit;
+    font-size: 1rem;
+    text-align: start;
+    text-decoration: underline;
 `;
 
 const BiggerStyledButton = styled(StyledButton)`
