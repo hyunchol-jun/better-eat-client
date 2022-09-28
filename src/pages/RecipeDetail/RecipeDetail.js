@@ -326,6 +326,10 @@ function RecipeDetail() {
                     </StyledList>
                 </StyledDiv>}
                 <StyledDiv>
+                    <SubTitle>Ready time</SubTitle>
+                    <span>{recipe.ready_min || recipe.readyInMinutes} Min</span>
+                </StyledDiv>
+                <StyledDiv>
                     <SubTitle>Ingredients</SubTitle>
                     <StyledList>
                         {recipe.extendedIngredients.map((ingredient, index) => 
