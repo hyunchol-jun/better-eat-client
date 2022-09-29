@@ -1,3 +1,5 @@
+@use "../../styles/partials/breakpoints" as *;
+
 .preference-bar {
   display: flex;
   flex-direction: column;
@@ -61,6 +63,10 @@
 
   &__text {
     font-size: 1rem;
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
   }
 
   &__delete {
@@ -82,6 +88,10 @@
     font-size: 1rem;
     font-family: inherit;
     padding: 0;
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
   }
 
   &__expand-icon {

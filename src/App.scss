@@ -13,10 +13,18 @@ body {
 
 h1 {
     font-size: 1.5rem;
+
+    @include tablet {
+        font-size: 1.75rem;
+    }
 }
 
 label {
     font-size: 1rem;
+
+    @include tablet {
+        font-size: 1.25rem;
+    }
 }
 
 ol, ul {

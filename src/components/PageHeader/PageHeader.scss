@@ -43,5 +43,9 @@
   &__auth {
     text-decoration: none;
     color: var(--secondary-text-color);
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
   }
 }

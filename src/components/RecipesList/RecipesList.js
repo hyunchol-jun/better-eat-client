@@ -10,7 +10,7 @@ function RecipesList({recipes, to}) {
     }
 
     return (
-        <section>
+        <section className="recipes-list">
           {
             recipes.map((recipe, index) => {
               return (
