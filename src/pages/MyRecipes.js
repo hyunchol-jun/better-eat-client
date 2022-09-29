@@ -7,11 +7,11 @@ import Message from "../components/Message";
 import checkIcon from "../assets/icons/check.svg";
 
 const StyledMain = styled.main`
-    margin: 0 1rem;
+    margin: 0 1rem 1rem;
     min-height: calc(100vh - 7rem);
 
     @media (min-width: 768px) {
-        margin: 0 2rem 0 14rem;
+        margin: 0 2rem 1rem 14rem;
     }
 
     @media (min-width: 1280px) {
