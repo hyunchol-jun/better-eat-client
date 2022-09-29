@@ -1,3 +1,5 @@
+@use "../../styles/partials/breakpoints" as *;
+
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -5,13 +7,38 @@
   position: sticky;
   top: 0;
   background-color: white;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   z-index: 1;
+  height: 4rem;
+
+  @include tablet {
+    padding: 2rem;
+    z-index: 2;
+    height: 5rem;
+  }
+
+  @include desktop {
+    max-width: 64rem;
+    padding: 0;
+    margin: auto;
+  }
 
   &__menu {
+    background: none;
+    border: none;
+    flex-shrink: 0;
+    padding: 0;
     width: 2rem;
     vertical-align: bottom;
     cursor: pointer;
+
+    @include tablet {
+      visibility: hidden;
+    }
+
+    @include desktop {
+      display: none;
+    }
   }
 
   &__logo-container {
@@ -30,8 +57,37 @@
     font-weight: bold;
   }
 
+  &__nav {
+    gap: 2rem;
+    display: none;
+
+    @include desktop {
+      display: flex;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    color: var(--primary-text-color);
+    font-weight: bold;
+    padding: 1rem 0;
+    margin-top: 0.5rem;
+
+    &--active {
+      border-bottom: 0.25rem solid var(--primary-color);
+    }
+
+    &:hover {
+      border-bottom: 0.25rem solid var(--primary-tonned-down-color);
+    }
+  }
+
   &__auth {
     text-decoration: none;
     color: var(--secondary-text-color);
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
   }
 }

@@ -1,0 +1,16 @@
+@use "../../styles/partials/breakpoints" as *;
+
+.recipes-list {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0;
+
+    @include tablet {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @include desktop {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.5rem;
+    }
+}

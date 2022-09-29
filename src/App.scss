@@ -9,14 +9,33 @@ body {
     font-family: "AvenirNextLTPro", sans-serif;
     margin: 0;
     color: #2b2b2b;
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    @include tablet {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
 }
 
 h1 {
     font-size: 1.5rem;
+
+    @include tablet {
+        font-size: 1.75rem;
+    }
+
+    @include desktop {
+        font-size: 2rem;
+    }
 }
 
 label {
     font-size: 1rem;
+
+    @include tablet {
+        font-size: 1.25rem;
+    }
 }
 
 ol, ul {
@@ -28,11 +47,29 @@ ol, ul {
 ol li {
     padding: 0.5rem 0;
     line-height: 1.5rem;
+
+    @include tablet {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
 }
 
 p {
     margin: 0;
     padding: 0;
+
+    @include tablet {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+}
+
+span {
+    font-size: 1rem;
+
+    @include tablet {
+        font-size: 1.25rem;
+    }
 }
 
 :root {

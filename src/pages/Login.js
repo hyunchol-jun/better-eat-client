@@ -9,6 +9,15 @@ import Message from "../components/Message";
 const StyledMain = styled.main`
     margin: 0 1rem;
     min-height: calc(100vh - 7rem);
+
+    @media (min-width: 768px) {
+        margin: 2rem 2rem 2rem 14rem;
+    }
+
+    @media (min-width: 1280px) {
+        max-width: 52rem;
+        margin: 3rem auto 3rem;
+    }
 `;
 
 const StyledForm = styled.form`
@@ -16,6 +25,27 @@ const StyledForm = styled.form`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    @media (min-width: 768px) {
+        gap: 2rem;
+        align-items: flex-end;
+    }
+`;
+
+const StyledButton = styled(Button)`
+    @media (min-width: 768px) {
+        width: fit-content;
+        padding: 0.75rem 2.5rem;
+    }
+
+    @media (min-width: 1280px) {
+        width: fit-content;
+        padding: 1rem 4rem;
+    }
+`;
+
+const StyledSpan = styled.span`
+    width: 100%;
 `;
 
 function Login() {
@@ -64,11 +94,11 @@ function Login() {
                     autoComplete="current-password"
                 />
                 {errorMessage && <Message message={errorMessage} isSuccess={isSuccess}></Message>}
-                <Button buttonText={"Login"}></Button>
-                <span>
+                <StyledButton buttonText={"Login"}></StyledButton>
+                <StyledSpan>
                     Don't have an account? &nbsp;
                     <Link to="/signup" >Sign up</Link>
-                </span>
+                </StyledSpan>
             </StyledForm>
         </StyledMain>
     );

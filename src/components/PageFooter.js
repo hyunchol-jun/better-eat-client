@@ -8,6 +8,12 @@ const StyledFooter = styled.footer`
     justify-content: center;
     align-items: center;
     height: 3.5rem;
+
+    @media (min-width: 768px) {
+        position: relative;
+        z-index: 1;
+        height: 4rem;
+    }
 `;
 
 const StyledA = styled.a`

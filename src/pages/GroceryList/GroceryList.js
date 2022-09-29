@@ -106,7 +106,7 @@ function GroceryList() {
 
     return (
         <main className="grocery-list">
-            <h1>Grocery List</h1>
+            <h1 className="grocery-list__title">Grocery List</h1>
             <SimpleForm handleSubmit={handleAddGroceryItem} buttonText="Add"></SimpleForm>
             {message && <Message message={message} isSuccess={false}></Message>}
             <ul className="grocery-list__list">
