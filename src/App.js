@@ -19,7 +19,9 @@ import PageFooter from './components/PageFooter';
 
 function App() {
   const mediaQuery = useMemo(() => window.matchMedia("(max-width: 767px)"), []);
+  const desktopMediaQuery = useMemo(() => window.matchMedia("(min-width: 1280px)"), []);
   const [isMobile, setIsMobile] = useState(mediaQuery.matches);
+  const [isDesktop, setIsDesktop] = useState(desktopMediaQuery.matches);
   const [sidebarShown, setSidebarShown] = useState(false);
   const [sidebarAnimation, setSidebarAnimation] = useState("close-animation");
   const [backgroundAnimation, setBackgroundAnimation] = useState("clear-animation");
@@ -171,10 +173,17 @@ function App() {
       setIsMobile(event.matches);
     };
 
+    const changeDesktopHandler = (event) => {
+      console.log(event.matches);
+      setIsDesktop(event.matches);
+    }
+
     mediaQuery.addEventListener("change", changeTabletHandler);
+    desktopMediaQuery.addEventListener("change", changeDesktopHandler);
 
     return () => {
       mediaQuery.removeEventListener("change", changeTabletHandler);
+      desktopMediaQuery.removeEventListener("change", changeDesktopHandler);
     }
   }, [mediaQuery]);
 
@@ -193,10 +202,10 @@ function App() {
   return (
     <BrowserRouter>
       <PageHeader handleClick={handleSidebarVisibility} sidebarShown={sidebarShown}/> 
-      {sidebarShown && <Sidebar sidebarAnimation={sidebarAnimation} 
+      {!isDesktop && sidebarShown && <Sidebar sidebarAnimation={sidebarAnimation} 
                                 backgroundAnimation={backgroundAnimation}
                                 handleBackgroundClick={handleSidebarVisibility}/>}
-      {(!sidebarShown && !isMobile) 
+      {(!isDesktop && !sidebarShown && !isMobile) 
         && <Sidebar />
       }
       <Routes>

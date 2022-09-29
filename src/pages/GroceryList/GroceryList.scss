@@ -5,7 +5,11 @@
     min-height: calc(100vh - 7rem);
 
     @include tablet {
-        margin: 0 2rem 0 14rem;
+        margin: 1rem 2rem 1rem 14rem;
+    }
+
+    &__title {
+        display: none;
     }
 
     &__list {

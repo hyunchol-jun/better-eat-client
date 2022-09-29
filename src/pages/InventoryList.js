@@ -8,7 +8,13 @@ const StyledMain = styled.main`
     min-height: calc(100vh - 7rem);
 
     @media (min-width: 768px) {
-        margin: 0 2rem 0 14rem;
+        margin: 1rem 2rem 1rem 14rem;
+    }
+`;
+
+const StyledTitle = styled.h1`
+    @media (min-width: 768px) {
+        display: none;
     }
 `;
 
@@ -103,7 +109,7 @@ function InventoryList({handleSearch}) {
 
     return (
         <StyledMain>
-            <h1>Inventory List</h1>
+            <StyledTitle>Inventory List</StyledTitle>
                 <SimpleForm handleSubmit={handleAdd} buttonText="Add"></SimpleForm>
             <StyledUL>
                 {inventoryItems.map((item, index) => {

@@ -5,6 +5,15 @@
     display: flex;
     gap: 0.5rem;
     margin: 1rem 0;
+
+    @include tablet {
+      gap: 1rem;
+    }
+
+    @include desktop {
+      gap: 2rem;
+      margin: 2rem 0;
+    }
   }
 
   &__textbox {
@@ -47,7 +56,11 @@
 
     @include tablet {
       font-size: 1.25rem;
-      padding: 0.5rem 1.5rem;
+      padding: 0.5rem 2rem;
+    }
+
+    @include desktop {
+      padding: 0.75rem 4rem;
     }
   }
 }

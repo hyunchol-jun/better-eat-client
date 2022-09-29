@@ -10,8 +10,14 @@ const StyledMain = styled.main`
     margin: 0 1rem;
     min-height: calc(100vh - 7rem);
 
-    @media (min-width: 13rem) {
+    @media (min-width: 768px) {
         margin: 0 2rem 0 14rem;
+    }
+`;
+
+const StyledTitle = styled.h1`
+    @media (min-width: 768px) {
+        display: none;
     }
 `;
 
@@ -55,7 +61,7 @@ function MyRecipes() {
 
     return (
         <StyledMain>
-            <h1>My Recipes</h1>
+            <StyledTitle>My Recipes</StyledTitle>
             {recipes && recipes.length === 0 
                 ? <StyledMessageContainer>
                     <StyledIcon src={checkIcon} alt=""></StyledIcon>

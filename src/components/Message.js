@@ -8,6 +8,7 @@ const StyledMessage = styled.p`
     margin: 0;
     padding: 0.5rem 1rem;
     background-color: white;
+    width: 100%;
 
     @media (min-width: 768px) {
         font-size: 1.25rem;

@@ -12,6 +12,7 @@
 
   @include tablet {
     padding: 1rem 2rem;
+    z-index: 2;
   }
 
   &__menu {

@@ -22,6 +22,10 @@
     flex-direction: column;
     gap: 0.5rem;
     padding: 0.5rem;
+
+    @include tablet {
+      padding: 1rem;
+    }
   }
 
   &__title {
@@ -29,6 +33,10 @@
 
     @include tablet {
       font-size: 1.25rem;
+    }
+
+    @include desktop {
+      line-height: 2rem;
     }
   }
 }

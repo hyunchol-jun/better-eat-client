@@ -32,6 +32,12 @@ const PageMain = styled.main`
         margin-left: 13rem;
         width: auto;
     }
+
+    @media (min-width: 1280px) {
+        position: static;
+        margin: auto;
+        max-width: 64rem;
+    }
 `;
 
 const ImageDiv = styled.div`
@@ -57,6 +63,13 @@ const StyledSection = styled.section`
     @media (min-width: 768px) {
         padding: 2rem;
         align-items: flex-end;
+        gap: 2rem;
+    }
+
+    @media (min-width: 1280px) {
+        padding: 2rem 3rem 3rem;
+        align-items: flex-end;
+        gap: 2.5rem;
     }
 `;
 
@@ -73,6 +86,14 @@ const StyledDiv = styled.div`
     padding: 1rem;
     gap: 1rem;
     width: 100%;
+
+    @media (min-width: 768px) {
+        padding: 2rem;
+    }
+
+    @media (min-width: 1280px) {
+        padding: 2.5rem 3.5rem;
+    }
 `;
 
 const SubTitleDiv = styled.div`
@@ -121,6 +142,12 @@ const StyledList = styled.ul`
 
     @media (min-width: 768px) {
         font-size: 1.25rem;
+        gap: 1rem;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 1.5rem;
+        gap: 1.5rem;
     }
 `;
 
@@ -137,13 +164,17 @@ const StyledBadge = styled.span`
     padding: 0 0.5rem;
     border-radius: 0.5rem;
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     right: 2rem;
 
     @media (min-width: 768px) {
-        right: 3rem;
+        right: 4rem;
         font-size: 1rem;
         border-radius: 1rem;
+    }
+
+    @media (min-width: 1280px) {
+        right: 6.5rem;
     }
 `;
 
