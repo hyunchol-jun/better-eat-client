@@ -60,6 +60,14 @@ p {
     }
 }
 
+span {
+    font-size: 1rem;
+
+    @include tablet {
+        font-size: 1.25rem;
+    }
+}
+
 :root {
     --primary-color: #e1ad01;
     --primary-tonned-down-color: #b09231;

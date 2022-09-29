@@ -6,6 +6,10 @@ import SimpleForm from "../components/SimpleForm";
 const StyledMain = styled.main`
     margin: 0 1rem;
     min-height: calc(100vh - 7rem);
+
+    @media (min-width: 768px) {
+        margin: 0 2rem 0 14rem;
+    }
 `;
 
 const SecondaryButton = styled.button`
@@ -18,14 +22,32 @@ const SecondaryButton = styled.button`
     color: white;
     flex-shrink: 0;
     cursor: pointer;
+
+    @media (min-width: 768px) {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+    }
+`;
+
+const StyledUL = styled.ul`
+    padding: 0.5rem 2rem;
+
+    @media (min-width: 768px) {
+        padding: 1rem 2rem;
+    }
 `;
 
 const StyledListItem = styled.li`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
     border-bottom: 1px solid var(--outline-color);
+
+    @media (min-width: 768px) {
+        padding: 0.75rem;
+    }
 
     &:hover {
         background-color: var(--outline-color);
@@ -83,7 +105,7 @@ function InventoryList({handleSearch}) {
         <StyledMain>
             <h1>Inventory List</h1>
                 <SimpleForm handleSubmit={handleAdd} buttonText="Add"></SimpleForm>
-            <ul>
+            <StyledUL>
                 {inventoryItems.map((item, index) => {
                     return (
                         <StyledListItem key={index}>
@@ -93,7 +115,7 @@ function InventoryList({handleSearch}) {
                         </StyledListItem>
                     );
                 })}
-            </ul>
+            </StyledUL>
         </StyledMain>
     );
 }
