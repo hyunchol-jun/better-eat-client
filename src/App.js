@@ -185,7 +185,7 @@ function App() {
       mediaQuery.removeEventListener("change", changeTabletHandler);
       desktopMediaQuery.removeEventListener("change", changeDesktopHandler);
     }
-  }, [mediaQuery]);
+  }, [mediaQuery, desktopMediaQuery]);
 
   useEffect(() => {
     localStorage.setItem("diets", JSON.stringify(diets));
