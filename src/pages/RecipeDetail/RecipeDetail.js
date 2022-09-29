@@ -5,7 +5,6 @@ import eggIcon from "../../assets/icons/egg.svg";
 import cuisineIcon from "../../assets/icons/cuisine.svg";
 import instructionsIcon from "../../assets/icons/instructions.svg";
 import styled from "styled-components";
-import IconButton from "../../components/IconButton/IconButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { 
@@ -27,10 +26,17 @@ const PageMain = styled.main`
     left: 0;
     z-index: 1;
     min-height: calc(100vh - 7rem);
+
+    @media (min-width: 768px) {
+        position: static;
+        margin-left: 13rem;
+        width: auto;
+    }
 `;
 
 const ImageDiv = styled.div`
     width: 100%;
+    position: relative;
 `;
 
 const RecipeImage = styled.img`
@@ -47,10 +53,16 @@ const StyledSection = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        padding: 2rem;
+        align-items: flex-end;
+    }
 `;
 
 const Title = styled.h1`
     margin: 0;
+    width: 100%;
 `;
 
 const StyledDiv = styled.div`
@@ -60,6 +72,7 @@ const StyledDiv = styled.div`
     border-radius: 0.25rem;
     padding: 1rem;
     gap: 1rem;
+    width: 100%;
 `;
 
 const SubTitleDiv = styled.div`
@@ -76,12 +89,28 @@ const SubTitle = styled.h2`
     margin: 0;
     font-size: 1rem;
     color: var(--primary-tonned-down-color);
+    
+    @media (min-width: 768px) {
+        font-size: 1.25rem;
+    }
 `;
 
-const BackButton = styled(IconButton)`
+const BackButton = styled.button`
     position: absolute;
     top: 1rem;
     left: 1rem;
+    background: none;
+    border: none;
+    flex-shrink: 0;
+    padding: 0;
+`;
+
+const StyledBackIcon = styled.img`
+    width: 3.5rem;
+
+    @media (min-width: 768px) {
+        width: 4.5rem;
+    }
 `;
 
 const StyledList = styled.ul`
@@ -89,6 +118,10 @@ const StyledList = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    @media (min-width: 768px) {
+        font-size: 1.25rem;
+    }
 `;
 
 const StyledListItem = styled.li`
@@ -101,11 +134,17 @@ const StyledBadge = styled.span`
     font-size: 0.75rem;
     color: white;
     background-color: var(--secondary-color);
-    padding: 0.25rem 0.5rem;
+    padding: 0 0.5rem;
     border-radius: 0.5rem;
     position: absolute;
     z-index: 2;
     right: 2rem;
+
+    @media (min-width: 768px) {
+        right: 3rem;
+        font-size: 1rem;
+        border-radius: 1rem;
+    }
 `;
 
 const StyledTooltip = styled.span`
@@ -155,6 +194,10 @@ const StyledButton = styled.button`
     font-size: 1rem;
     text-align: start;
     text-decoration: underline;
+
+    @media (min-width: 768px) {
+        font-size: 1.25rem;
+    }
 `;
 
 const BiggerStyledButton = styled(StyledButton)`
@@ -165,6 +208,11 @@ const BiggerStyledButton = styled(StyledButton)`
     color: white;
     text-decoration: none;
     text-align: center;
+
+    @media (min-width: 768px) {
+        padding: 1rem 2rem;
+        width: fit-content;
+    }
 
     &:hover {
         background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-tonned-down-color)"};
@@ -345,11 +393,9 @@ function RecipeDetail() {
         <PageMain>
             <ImageDiv>
                 <RecipeImage src={recipe.image} alt="food"></RecipeImage>
-                <BackButton 
-                    imgSrc={arrowBackIcon} 
-                    altText="go back" 
-                    handleClick={() => navigate(-1)}
-                ></BackButton>
+                <BackButton onClick={() => navigate(-1)}>
+                    <StyledBackIcon src={arrowBackIcon} alt="go back"></StyledBackIcon>
+                </BackButton>
             </ImageDiv>
             <StyledSection>
                 <Title>{recipe.title}</Title>

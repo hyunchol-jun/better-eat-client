@@ -6,6 +6,17 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Message from "../../components/Message";
 import styled from "styled-components";
+import suggestIcon from "../../assets/icons/suggest.svg";
+import warningIcon from "../../assets/icons/warning.svg";
+
+const StyledMessageContainer = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const StyledIcon = styled.img`
+    width: 1.5rem;
+`;
 
 const MessageWithoutBorder = styled(Message)`
   border: none;
@@ -45,14 +56,20 @@ function HomePage({
       />
       <Search handleSearch={handleSearch}/>
       {recipes && recipes.length === 0
-        ? <MessageWithoutBorder 
-            message={"There are no results."}
-            isSuccess={false}></MessageWithoutBorder>
+        ? <StyledMessageContainer>
+            <StyledIcon src={warningIcon} alt=""></StyledIcon>
+            <MessageWithoutBorder 
+              message={"There are no results."}
+              isSuccess={false}></MessageWithoutBorder>
+          </StyledMessageContainer>
         : recipes && recipes.length !== 0 && isRandom
         ? <>
+          <StyledMessageContainer>
+            <StyledIcon src={suggestIcon} alt=""></StyledIcon>
             <MessageWithoutBorder 
               message={"Suggestions based on your food preference."}
               isSuccess={true}></MessageWithoutBorder> 
+          </StyledMessageContainer>
             <RecipesList recipes={recipes} to={"/recipes/"}/>
           </>
         : <RecipesList recipes={recipes} to={"/recipes/"}/>

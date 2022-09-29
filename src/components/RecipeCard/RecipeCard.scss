@@ -1,3 +1,5 @@
+@use "../../styles/partials/breakpoints" as *;
+
 .recipe-card {
   display: flex;
   flex-direction: column;
@@ -24,5 +26,9 @@
 
   &__title {
     font-weight: bold;
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
   }
 }
