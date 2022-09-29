@@ -15,6 +15,10 @@ const StyledInput = styled.input`
     padding: 0.5rem 1rem;
     font-family: inherit;
 
+    @media (min-width: 768px) {
+        font-size: 1.25rem;
+    }
+
     &:focus {
         outline: none;
         border: 1.5px solid var(--primary-color);

@@ -12,6 +12,11 @@ const StyledButton = styled.button`
     text-decoration: none;
     cursor: pointer;
 
+    @media (min-width: 768px) {
+        font-size: 1.25rem;
+        padding: 0.75rem 1.5rem;
+    }
+
     &:hover {
         background-color: var(--primary-tonned-down-color);
     }

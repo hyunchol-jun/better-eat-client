@@ -12,6 +12,7 @@ const StyledFooter = styled.footer`
     @media (min-width: 768px) {
         position: relative;
         z-index: 1;
+        height: 4rem;
     }
 `;
 
