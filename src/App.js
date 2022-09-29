@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage/HomePage';
 import Sidebar from "./components/Sidebar/Sidebar";
 import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useRef, useMemo} from "react";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import {getRecipesList, getRecipesListRandomly} from "./utils/http-helper";
@@ -18,6 +18,8 @@ import NotFound from './components/NotFound/NotFound';
 import PageFooter from './components/PageFooter';
 
 function App() {
+  const mediaQuery = useMemo(() => window.matchMedia("(max-width: 767px)"), []);
+  const [isMobile, setIsMobile] = useState(mediaQuery.matches);
   const [sidebarShown, setSidebarShown] = useState(false);
   const [sidebarAnimation, setSidebarAnimation] = useState("close-animation");
   const [backgroundAnimation, setBackgroundAnimation] = useState("clear-animation");
@@ -165,6 +167,18 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const changeTabletHandler = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", changeTabletHandler);
+
+    return () => {
+      mediaQuery.removeEventListener("change", changeTabletHandler);
+    }
+  }, [mediaQuery]);
+
+  useEffect(() => {
     localStorage.setItem("diets", JSON.stringify(diets));
   }, [diets]);
 
@@ -182,6 +196,9 @@ function App() {
       {sidebarShown && <Sidebar sidebarAnimation={sidebarAnimation} 
                                 backgroundAnimation={backgroundAnimation}
                                 handleBackgroundClick={handleSidebarVisibility}/>}
+      {(!sidebarShown && !isMobile) 
+        && <Sidebar />
+      }
       <Routes>
         <Route path="/" element={<HomePage 
                                   recipes={recipes}

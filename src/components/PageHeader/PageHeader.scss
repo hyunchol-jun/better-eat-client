@@ -1,3 +1,5 @@
+@use "../../styles/partials/breakpoints" as *;
+
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -8,10 +10,18 @@
   padding: 0.5rem 1rem;
   z-index: 1;
 
+  @include tablet {
+    padding: 1rem 2rem;
+  }
+
   &__menu {
     width: 2rem;
     vertical-align: bottom;
     cursor: pointer;
+
+    @include tablet {
+      display: none;
+    }
   }
 
   &__logo-container {

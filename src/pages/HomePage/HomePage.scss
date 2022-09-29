@@ -1,4 +1,10 @@
+@use "../../styles/partials/breakpoints" as *;
+
 .home-page {
     margin: 0 1rem;
     min-height: calc(100vh - 7rem);
+
+    @include tablet {
+        margin: 0 2rem 0 13rem;
+    }
 }
