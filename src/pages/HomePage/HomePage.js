@@ -67,7 +67,7 @@ function HomePage({
           <StyledMessageContainer>
             <StyledIcon src={suggestIcon} alt=""></StyledIcon>
             <MessageWithoutBorder 
-              message={"Suggestions based on your food preference."}
+              message={"Suggestions based on your settings."}
               isSuccess={true}></MessageWithoutBorder> 
           </StyledMessageContainer>
             <RecipesList recipes={recipes} to={"/recipes/"}/>
