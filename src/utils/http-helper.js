@@ -10,6 +10,7 @@ const INSTRUCTION_PATH = "&instructionRequired=true";
 const DIET_PATH = "&diet=";
 const CUISINE_PATH = "&cuisine=";
 const INTOLERANCES_PATH = "&intolerances=";
+const PAGE_NUMBER_PATH = "&offset=";
 // const MAXTIME_PATH = "&maxReadyTime=";
 const NUMBER_PATH = "&number=20";
 const TAGS_PATH = "&tags=";
@@ -30,11 +31,12 @@ const logError = (error) => {
     console.log(error);
 };
 
-export const getRecipesList = (searchQuery, diets, cuisines, intolerances, callback) => {
+export const getRecipesList = (searchQuery, diets, cuisines, pageNumber, intolerances, callback) => {
     let FULL_PATH = BASE_URL + SEARCH_PATH
                     + API_KEY_PATH + REACT_APP_API_KEY
                     + QUERY_PATH + searchQuery
-                    + INSTRUCTION_PATH + NUMBER_PATH;
+                    + INSTRUCTION_PATH + NUMBER_PATH
+                    + PAGE_NUMBER_PATH + pageNumber;
 
     if (diets.length > 0) {
         FULL_PATH += DIET_PATH + diets.join().toLowerCase();

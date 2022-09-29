@@ -37,6 +37,9 @@ function App() {
   };
 
   const [recipes, setRecipes] = useState(null);
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(null);
   const [isRandom, setIsRandom] = useState(null);
 
   const dietsFromStorage = JSON.parse(localStorage.getItem("diets"));
@@ -48,6 +51,7 @@ function App() {
   const dietsRef = useRef();
   const cuisinesRef = useRef();
   const intolerancesRef = useRef();
+  const recipesRef = useRef();
   dietsRef.current = dietsFromStorage || defaultDiets;
   cuisinesRef.current = cuisinesFromStorage || defaultCuisines;
   intolerancesRef.current = intolerancesFromStorage || defaultIntolerances;
@@ -118,16 +122,64 @@ function App() {
 
     // If the second argument is provided, use it for the query,
     // otherwise get it from the form
-    const searchQuery = itemName || event.target.textInput.value;
+    const tempSearchQuery = itemName || event.target.textInput.value;
+    setSearchQuery(tempSearchQuery);
+
+    // Call to the external API
+    getRecipesList(
+                  tempSearchQuery, 
+                  dietsInArray, 
+                  cuisinesInArray,
+                  0,
+                  intolerancesInArray,
+                  (response) => {
+                    recipesRef.current = response.data.results;
+                    setRecipes(response.data.results);
+                    setCurrentOffset(20);
+                    setLoadMoreButtonShown(response.data.results.length === 20);
+                    console.log(response.data.number)
+                    console.log(response.data.offset)
+                  });
+  };
+
+  const handleLoadMore = () => {
+    const dietsInArray = [];
+    const cuisinesInArray = [];
+    const intolerancesInArray = [];
+
+    for (const type in diets) {
+      if (diets[type]) {
+        dietsInArray.push(type);
+      }
+    }
+
+    for (const type in cuisines) {
+      if (cuisines[type]) {
+        cuisinesInArray.push(type);
+      }
+    }
+
+    for (const type in intolerances) {
+      if (intolerances[type]) {
+        intolerancesInArray.push(type);
+      }
+    }
 
     // Call to the external API
     getRecipesList(
                   searchQuery, 
                   dietsInArray, 
-                  cuisinesInArray, 
+                  cuisinesInArray,
+                  currentOffset,
                   intolerancesInArray,
                   (response) => {
-                    setRecipes(response.data.results);
+                    const tempResults = recipesRef.current.concat(response.data.results);
+                    setRecipes(tempResults);
+                    recipesRef.current = tempResults;
+                    setCurrentOffset(currentOffset + 20)
+                    setLoadMoreButtonShown(response.data.results.length === 20);
+                    console.log(response.data.number)
+                    console.log(response.data.offset)
                   });
   };
 
@@ -174,7 +226,6 @@ function App() {
     };
 
     const changeDesktopHandler = (event) => {
-      console.log(event.matches);
       setIsDesktop(event.matches);
     }
 
@@ -218,6 +269,8 @@ function App() {
                                   handleDietChange={handleDietChange}
                                   handleIntoleranceChange={handleIntoleranceChange}
                                   handleSearch={handleSearch}
+                                  handleLoadMore={handleLoadMore}
+                                  loadMoreButtonShown={loadMoreButtonShown}
                                   isRandom={isRandom}
                                 />}></Route>
         <Route path="/recipes/:recipeId" element={<RecipeDetail />}></Route>

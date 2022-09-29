@@ -8,10 +8,12 @@ import Message from "../../components/Message";
 import styled from "styled-components";
 import suggestIcon from "../../assets/icons/suggest.svg";
 import warningIcon from "../../assets/icons/warning.svg";
+import Button from "../../components/Button";
 
 const StyledMessageContainer = styled.div`
     display: flex;
     align-items: center;
+    width: 100%;
 `;
 
 const StyledIcon = styled.img`
@@ -20,6 +22,14 @@ const StyledIcon = styled.img`
 
 const MessageWithoutBorder = styled(Message)`
   border: none;
+`;
+
+const StyledButton = styled(Button)`
+  background-color: var(--secondary-color);
+
+  &:hover {
+    background-color: var(--secondary-text-color);
+  }
 `;
 
 function HomePage({
@@ -31,6 +41,8 @@ function HomePage({
   handleDietChange,
   handleIntoleranceChange,
   handleSearch,
+  handleLoadMore,
+  loadMoreButtonShown,
   isRandom
 }) {
 
@@ -74,6 +86,7 @@ function HomePage({
           </>
         : <RecipesList recipes={recipes} to={"/recipes/"}/>
       }
+      {loadMoreButtonShown && <StyledButton buttonText="Load more" onClick={handleLoadMore}></StyledButton>}
     </main>
   );
 }
