@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const StyledLabel = styled.label`
     font-weight: 600;
+    width: 100%;
 `;
 
 const StyledInput = styled.input`
@@ -14,6 +15,12 @@ const StyledInput = styled.input`
     &:focus {
         outline: none;
         border: 1.5px solid var(--primary-color);
+    }
+
+    @media (min-width: 768px) {
+        font-size: 1.25rem;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.5rem;
     }
 `;
 

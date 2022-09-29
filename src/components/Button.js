@@ -22,9 +22,9 @@ const StyledButton = styled.button`
     }
 `;
 
-function Button({buttonText, as, to, onClick, tooltip}) {
+function Button({buttonText, as, to, onClick, tooltip, className}) {
     return (
-        <StyledButton as={as} to={to} onClick={onClick}>{buttonText} {tooltip}</StyledButton>
+        <StyledButton as={as} to={to} onClick={onClick} className={className}>{buttonText} {tooltip}</StyledButton>
     );
 }
 
