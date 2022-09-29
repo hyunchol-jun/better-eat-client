@@ -6,12 +6,11 @@
     margin: 1rem 0;
 
     @include tablet {
-        grid-template-columns: auto auto;
-        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
     }
 
     @include desktop {
-        grid-template-columns: auto auto auto;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 1.5rem;
     }
 }

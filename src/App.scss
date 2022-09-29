@@ -24,6 +24,10 @@ h1 {
     @include tablet {
         font-size: 1.75rem;
     }
+
+    @include desktop {
+        font-size: 2rem;
+    }
 }
 
 label {

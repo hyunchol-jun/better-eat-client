@@ -10,6 +10,11 @@ const StyledMain = styled.main`
     @media (min-width: 768px) {
         margin: 1rem 2rem 1rem 14rem;
     }
+
+    @media (min-width: 1280px) {
+        max-width: 52rem;
+        margin: 3rem auto 3rem;
+    }
 `;
 
 const StyledTitle = styled.h1`
@@ -41,6 +46,10 @@ const StyledUL = styled.ul`
 
     @media (min-width: 768px) {
         padding: 1rem 2rem;
+    }
+
+    @media (min-width: 1280px) {
+        padding: 1rem 6rem;
     }
 `;
 

@@ -13,6 +13,11 @@ const StyledMain = styled.main`
     @media (min-width: 768px) {
         margin: 0 2rem 0 14rem;
     }
+
+    @media (min-width: 1280px) {
+        max-width: 64rem;
+        margin: 3rem auto;
+    }
 `;
 
 const StyledTitle = styled.h1`

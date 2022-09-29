@@ -67,7 +67,7 @@ const StyledSection = styled.section`
     }
 
     @media (min-width: 1280px) {
-        padding: 2rem 3rem 3rem;
+        padding: 3rem 8rem 3rem;
         align-items: flex-end;
         gap: 2.5rem;
     }
@@ -174,7 +174,7 @@ const StyledBadge = styled.span`
     }
 
     @media (min-width: 1280px) {
-        right: 6.5rem;
+        right: 11.5rem;
     }
 `;
 
