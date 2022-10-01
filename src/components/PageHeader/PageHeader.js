@@ -33,7 +33,7 @@ function PageHeader({handleClick, sidebarShown}) {
                     ({ isActive }) => 
                         isActive ? "page-header__link page-header__link--active" 
                                     : "page-header__link"
-                } to="/recipes">
+                } to="/recipes" end>
                 My Recipes
             </NavLink>
             <NavLink className={

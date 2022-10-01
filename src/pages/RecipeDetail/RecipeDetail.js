@@ -236,7 +236,7 @@ const BiggerStyledButton = styled(StyledButton)`
     font-weight: bold;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-color)"};
+    background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : props.buttonColor};
     color: white;
     text-decoration: none;
     text-align: center;
@@ -247,7 +247,7 @@ const BiggerStyledButton = styled(StyledButton)`
     }
 
     &:hover {
-        background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : "var(--primary-tonned-down-color)"};
+        background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" :props.buttonHoverColor};
     }
 `;
 
@@ -484,6 +484,8 @@ function RecipeDetail() {
                 <BiggerStyledButton 
                     buttonGreyedOut={buttonGreyedOut}
                     disabled={buttonGreyedOut}
+                    buttonColor={location.pathname.includes("/users/recipes/") ? "var(--warning-color)" : "var(--primary-color)"}
+                    buttonHoverColor={location.pathname.includes("/users/recipes/") ? "var(--warning-tonned-down-color)" : "var(--primary-tonned-down-color)"}
                     onClick={location.pathname.includes("/users/recipes/") ? handleDeleteRecipe : handleSaveRecipe} >
                     {location.pathname.includes("/users/recipes/") ? "Delete Recipe" : "Save Recipe"}
                     {message && <BiggerStyledTooltip isSuccess={isSuccess}>{message}</BiggerStyledTooltip>}
