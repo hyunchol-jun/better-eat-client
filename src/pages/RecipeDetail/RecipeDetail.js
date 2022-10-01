@@ -18,6 +18,7 @@ import {
 import parse from "html-react-parser";
 import Loading from "../../components/Loading/Loading";
 import NotFound from "../../components/NotFound/NotFound";
+import Message from "../../components/Message";
 
 const PageMain = styled.main`
     position: absolute;
@@ -218,14 +219,13 @@ const BiggerStyledTooltip = styled(StyledTooltip)`
 const StyledButton = styled.button`
     position: relative;
     cursor: pointer;
-    border: none;
-    padding: 0;
-    background-color: none;
+    border: 0.1rem solid var(--primary-text-color);
+    border-radius: 0.5rem;
+    padding: 0.35rem 1rem;
     font-family: inherit;
     font-size: 1rem;
     color: var(--primary-text-color);
     text-align: start;
-    text-decoration: underline;
 
     @media (min-width: 768px) {
         font-size: 1.25rem;
@@ -234,11 +234,11 @@ const StyledButton = styled.button`
 
 const BiggerStyledButton = styled(StyledButton)`
     font-weight: bold;
+    border: none;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" : props.buttonColor};
     color: white;
-    text-decoration: none;
     text-align: center;
 
     @media (min-width: 768px) {
@@ -249,6 +249,12 @@ const BiggerStyledButton = styled(StyledButton)`
     &:hover {
         background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" :props.buttonHoverColor};
     }
+`;
+
+const MessageWithoutBorder = styled(Message)`
+    border: none;
+    background-color: transparent;
+    padding: 0;
 `;
 
 function RecipeDetail() {
@@ -460,6 +466,10 @@ function RecipeDetail() {
                         <StyledIcon src={eggIcon} alt=""></StyledIcon>
                         <SubTitle>Ingredients</SubTitle>
                     </SubTitleDiv>
+                    <MessageWithoutBorder
+                        message={"(Click items to save to Grocery List.)"}
+                        isSuccess={true}
+                    ></MessageWithoutBorder>
                     <StyledList>
                         {recipe.extendedIngredients.map((ingredient, index) => 
                                 <StyledListItem key={index} >
