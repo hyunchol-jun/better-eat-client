@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# BetterEat Front-end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+BetterEat is a web application that helps users to cook more and eat healther by suggesting new recipes based on their diets and/or food preferences. Users can also manage thier meal plans with stored information such as recipes, inventory and grocery lists.
 
-## Available Scripts
+You can visit the live website at http://better-eat.hyuncholjun.com/.
 
-In the project directory, you can run:
+The recipe data is obtained from [Spoonacular API](https://spoonacular.com/food-api).
 
-### `npm start`
+## Tech stack
+- React
+- React-router-dom
+- Sass
+- Styled-components
+- Axios
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Authentication
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+BetterEat uses an email address for the user ID for the website. It doesn't need to be a valid email address as long as it's in the email format and unique(not duplicate to the one already exist.) The server doesn't store the password, instead it stores the hash with the [bcrypt](https://www.npmjs.com/package/bcrypt) library.
 
-### `npm test`
+## Pages
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Home page
 
-### `npm run build`
+Users can set their food preference such as diet, cuisine, intolerance and search recipes based on it. The settings will be stored in the browser's local storage and will persist unless the user deletes the storage.
+Once set, every time the user visits the website it will recommend random recipes based on the set preference. Users can aslo search recipes with the keywords such as ingredient names.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### My recipes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+All the recipes that the user has saved will appear in this page.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Recipe detail
 
-### `npm run eject`
+When the user clicks one of the recipe cards they will enter the detail page. Here they can save/delete the recipe as well as see the information about the recipe.
+The ingredients on this page are buttons and when clicked will save the item to the Grocery list page.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Grocery list
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+All the grocery items the user has saved will appear on this page. Users can also manually type in grocery items and as long as the item is unigue(checked by MySQL  unique constraint), the items will be added.
+Checked-off items will be deleted from the server when the user leaves the page.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Inventory list
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Here, users can add/delete items. All items are associated with a search recipe button next to it, so that the user can search recipes with the item as a keyword. 
+When users browse through recipes 'In Stock' badge will appear next to the ingredient item in the recipe if the user happens to have the item in their inventory list.
