@@ -4,21 +4,11 @@ import RecipesList from '../../components/RecipesList/RecipesList';
 import Search from '../../components/Search/Search';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import MessageWithoutBorder from "../../components/MessageWithoutBorder";
 import styled from "styled-components";
 import suggestIcon from "../../assets/icons/suggest.svg";
 import warningIcon from "../../assets/icons/warning.svg";
 import Button from "../../components/Button";
-
-const StyledMessageContainer = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-`;
-
-const StyledIcon = styled.img`
-    width: 1.5rem;
-`;
+import MessageWithIcon from "../../components/MessageWithIcon";
 
 const StyledButton = styled(Button)`
   background-color: var(--secondary-color);
@@ -64,20 +54,14 @@ function HomePage({
       />
       <Search handleSearch={handleSearch}/>
       {recipes && recipes.length === 0
-        ? <StyledMessageContainer>
-            <StyledIcon src={warningIcon} alt=""></StyledIcon>
-            <MessageWithoutBorder 
-              message={"There are no results."}
-              isSuccess={false}></MessageWithoutBorder>
-          </StyledMessageContainer>
+        ? <MessageWithIcon iconSrc={warningIcon} isSuccess={false}>
+            There are no results.
+          </MessageWithIcon>
         : recipes && recipes.length !== 0 && isRandom
         ? <>
-          <StyledMessageContainer>
-            <StyledIcon src={suggestIcon} alt=""></StyledIcon>
-            <MessageWithoutBorder isSuccess={true}>
+            <MessageWithIcon iconSrc={suggestIcon} isSuccess={true}>
               Here are some suggestions based on your preference setting.
-            </MessageWithoutBorder> 
-          </StyledMessageContainer>
+            </MessageWithIcon>
             <RecipesList recipes={recipes} to={"/recipes/"}/>
           </>
         : <RecipesList recipes={recipes} to={"/recipes/"}/>
