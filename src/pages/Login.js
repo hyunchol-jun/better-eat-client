@@ -5,20 +5,7 @@ import { requestLogin } from "../utils/http-helper";
 import Button from "../components/Button";
 import LabeledInput from "../components/LabeledInput";
 import Message from "../components/Message";
-
-const StyledMain = styled.main`
-    margin: 0 1rem;
-    min-height: calc(100vh - 7rem);
-
-    @media (min-width: 768px) {
-        margin: 2rem 2rem 2rem 14rem;
-    }
-
-    @media (min-width: 1280px) {
-        max-width: 52rem;
-        margin: 3rem auto 3rem;
-    }
-`;
+import PageMain from "../components/PageMain";
 
 const StyledForm = styled.form`
     width: 100%;
@@ -78,7 +65,7 @@ function Login() {
     }
 
     return (
-        <StyledMain>
+        <PageMain>
             <h1>Log in</h1>
             <StyledForm onSubmit={handleLogin}>
                 <LabeledInput 
@@ -100,7 +87,7 @@ function Login() {
                     <Link to="/signup" >Sign up</Link>
                 </StyledSpan>
             </StyledForm>
-        </StyledMain>
+        </PageMain>
     );
 };
 

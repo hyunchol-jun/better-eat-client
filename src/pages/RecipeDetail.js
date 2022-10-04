@@ -1,9 +1,9 @@
-import arrowBackIcon from "../../assets/icons/arrow_back.svg";
-import dietIcon from "../../assets/icons/diet.svg";
-import timeIcon from "../../assets/icons/clock.svg";
-import eggIcon from "../../assets/icons/egg.svg";
-import cuisineIcon from "../../assets/icons/cuisine.svg";
-import instructionsIcon from "../../assets/icons/instructions.svg";
+import arrowBackIcon from "../assets/icons/arrow_back.svg";
+import dietIcon from "../assets/icons/diet.svg";
+import timeIcon from "../assets/icons/clock.svg";
+import eggIcon from "../assets/icons/egg.svg";
+import cuisineIcon from "../assets/icons/cuisine.svg";
+import instructionsIcon from "../assets/icons/instructions.svg";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -14,11 +14,11 @@ import {
         getUserRecipeDetail, 
         removeUserRecipe, 
         checkUserRecipe
-    } from "../../utils/http-helper";
+    } from "../utils/http-helper";
 import parse from "html-react-parser";
-import Loading from "../../components/Loading/Loading";
-import NotFound from "../../components/NotFound/NotFound";
-import Message from "../../components/Message";
+import Loading from "../components/Loading/Loading";
+import NotFound from "../components/NotFound/NotFound";
+import Message from "../components/Message";
 
 const PageMain = styled.main`
     position: absolute;

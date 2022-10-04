@@ -5,10 +5,10 @@ import RecipesList from "../components/RecipesList/RecipesList";
 import styled from "styled-components";
 import Message from "../components/Message";
 import checkIcon from "../assets/icons/check.svg";
+import PageMain from "../components/PageMain";
 
-const StyledMain = styled.main`
+const StyledMain = styled(PageMain)`
     margin: 0 1rem 1rem;
-    min-height: calc(100vh - 7rem);
 
     @media (min-width: 768px) {
         margin: 0 2rem 1rem 14rem;

@@ -2,7 +2,7 @@ import './App.scss';
 import PageHeader from './components/PageHeader/PageHeader';
 import HomePage from './pages/HomePage/HomePage';
 import Sidebar from "./components/Sidebar/Sidebar";
-import RecipeDetail from "./pages/RecipeDetail/RecipeDetail";
+import RecipeDetail from "./pages/RecipeDetail";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useState, useEffect, useRef, useMemo} from "react";
 import Signup from './pages/Signup';
