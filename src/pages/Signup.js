@@ -5,20 +5,7 @@ import { useNavigate } from "react-router-dom";
 import LabeledInput from "../components/LabeledInput";
 import Message from "../components/Message";
 import Button from "../components/Button";
-
-const StyledMain = styled.main`
-    margin: 0 1rem;
-    min-height: calc(100vh - 7rem);
-
-    @media (min-width: 768px) {
-        margin: 2rem 2rem 2rem 14rem;
-    }
-
-    @media (min-width: 1280px) {
-        max-width: 52rem;
-        margin: 3rem auto 3rem;
-    }
-`;
+import PageMain from "../components/PageMain";
 
 const StyledForm = styled.form`
     width: 100%;
@@ -83,7 +70,7 @@ function Signup() {
     };
 
     return (
-        <StyledMain>
+        <PageMain>
             <h1>Sign Up</h1>
             <StyledForm onSubmit={handleSignup}>
                 <LabeledInput labelText="Name" type="text" name="name" />
@@ -93,7 +80,7 @@ function Signup() {
                 <StyledButton buttonText={"Sign up"}></StyledButton>
                 {errorMessage && <Message message={errorMessage} isSuccess={isSuccess}></Message>}
             </StyledForm>
-        </StyledMain>
+        </PageMain>
     );
 };
 
