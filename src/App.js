@@ -38,7 +38,7 @@ function App() {
 
   const [recipes, setRecipes] = useState(null);
   const [currentOffset, setCurrentOffset] = useState(0);
-  const [loadMoreButtonShown, setLoadMoreButtonShown] = useState(false);
+  const [loadMoreShown, setLoadMoreShown] = useState(false);
   const [searchQuery, setSearchQuery] = useState(null);
   const [isRandom, setIsRandom] = useState(null);
 
@@ -48,13 +48,7 @@ function App() {
   const [diets, setDiets] = useState(dietsFromStorage);
   const [cuisines, setCuisines] = useState(cuisinesFromStorage);
   const [intolerances, setIntolerances] = useState(intolerancesFromStorage);
-  const dietsRef = useRef();
-  const cuisinesRef = useRef();
-  const intolerancesRef = useRef();
   const recipesRef = useRef();
-  dietsRef.current = dietsFromStorage || defaultDiets;
-  cuisinesRef.current = cuisinesFromStorage || defaultCuisines;
-  intolerancesRef.current = intolerancesFromStorage || defaultIntolerances;
 
   const handleDietChange = (dietName) => {
     setDiets((prevState) => {
@@ -136,9 +130,7 @@ function App() {
                     recipesRef.current = response.data.results;
                     setRecipes(response.data.results);
                     setCurrentOffset(20);
-                    setLoadMoreButtonShown(response.data.results.length === 20);
-                    console.log(response.data.number)
-                    console.log(response.data.offset)
+                    setLoadMoreShown(response.data.results.length === 20);
                   });
   };
 
@@ -177,9 +169,7 @@ function App() {
                     setRecipes(tempResults);
                     recipesRef.current = tempResults;
                     setCurrentOffset(currentOffset + 20)
-                    setLoadMoreButtonShown(response.data.results.length === 20);
-                    console.log(response.data.number)
-                    console.log(response.data.offset)
+                    setLoadMoreShown(response.data.results.length === 20);
                   });
   };
 
@@ -188,20 +178,20 @@ function App() {
     const cuisinesInArray = [];
     const intolerancesInArray = [];
 
-    for (const type in dietsRef.current) {
-      if (dietsRef.current[type]) {
+    for (const type in diets) {
+      if (diets[type]) {
         dietsInArray.push(type);
       }
     }
 
-    for (const type in cuisinesRef.current) {
-      if (cuisinesRef.current[type]) {
+    for (const type in cuisines) {
+      if (cuisines[type]) {
         cuisinesInArray.push(type);
       }
     }
 
-    for (const type in intolerancesRef.current) {
-      if (intolerancesRef.current[type]) {
+    for (const type in intolerances) {
+      if (intolerances[type]) {
         intolerancesInArray.push(type);
       }
     }
@@ -270,7 +260,7 @@ function App() {
                                   handleIntoleranceChange={handleIntoleranceChange}
                                   handleSearch={handleSearch}
                                   handleLoadMore={handleLoadMore}
-                                  loadMoreButtonShown={loadMoreButtonShown}
+                                  loadMoreShown={loadMoreShown}
                                   isRandom={isRandom}
                                 />}></Route>
         <Route path="/recipes/:recipeId" element={<RecipeDetail />}></Route>

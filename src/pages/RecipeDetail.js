@@ -466,10 +466,9 @@ function RecipeDetail() {
                         <StyledIcon src={eggIcon} alt=""></StyledIcon>
                         <SubTitle>Ingredients</SubTitle>
                     </SubTitleDiv>
-                    <MessageWithoutBorder
-                        message={"(Click items to save to Grocery List.)"}
-                        isSuccess={true}
-                    ></MessageWithoutBorder>
+                    <MessageWithoutBorder isSuccess={true}>
+                        (Click items to save to Grocery List.)
+                    </MessageWithoutBorder>
                     <StyledList>
                         {recipe.extendedIngredients.map((ingredient, index) => 
                                 <StyledListItem key={index} >
