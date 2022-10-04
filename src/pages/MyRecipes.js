@@ -3,7 +3,7 @@ import { getAllUserRecipes } from "../utils/http-helper";
 import { useNavigate } from "react-router-dom";
 import RecipesList from "../components/RecipesList/RecipesList";
 import styled from "styled-components";
-import Message from "../components/Message";
+import MessageWithoutBorder from "../components/MessageWithoutBorder";
 import checkIcon from "../assets/icons/check.svg";
 import PageMain from "../components/PageMain";
 
@@ -33,10 +33,6 @@ const StyledMessageContainer = styled.div`
 
 const StyledIcon = styled.img`
     width: 1.5rem;
-`;
-
-const MessageWithoutBorder = styled(Message)`
-    border: none;
 `;
 
 function MyRecipes() {
@@ -71,8 +67,8 @@ function MyRecipes() {
                 ? <StyledMessageContainer>
                     <StyledIcon src={checkIcon} alt=""></StyledIcon>
                     <MessageWithoutBorder 
-                        message={"You have no recipes saved."} 
                         isSuccess={true}>
+                        You have no recipes saved.
                     </MessageWithoutBorder>
                 </StyledMessageContainer>
                 : <RecipesList recipes={recipes} to={"/users/recipes/"}/>

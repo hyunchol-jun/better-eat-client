@@ -78,7 +78,7 @@ function Signup() {
                 <LabeledInput labelText="Password" type="password" name="password" autoComplete="new-password"/>
                 <LabeledInput labelText="Confirm password" type="password" name="confirmPassword" autoComplete="new-password"/>
                 <StyledButton buttonText={"Sign up"}></StyledButton>
-                {errorMessage && <Message message={errorMessage} isSuccess={isSuccess}></Message>}
+                {errorMessage && <Message isSuccess={isSuccess}>{errorMessage}</Message>}
             </StyledForm>
         </PageMain>
     );

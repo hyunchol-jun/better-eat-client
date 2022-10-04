@@ -16,10 +16,10 @@ const StyledMessage = styled.p`
 `;
 
 
-function Message ({message, isSuccess, className}){
+function Message ({children, isSuccess, className}){
     return (
         <StyledMessage isSuccess={isSuccess} className={className}>
-            {message}
+            {children}
         </StyledMessage>
     );
 }
