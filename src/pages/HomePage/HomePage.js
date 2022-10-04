@@ -28,7 +28,7 @@ function HomePage({
   handleIntoleranceChange,
   handleSearch,
   handleLoadMore,
-  loadMoreButtonShown,
+  loadMoreShown,
   isRandom
 }) {
 
@@ -66,7 +66,7 @@ function HomePage({
           </>
         : <RecipesList recipes={recipes} to={"/recipes/"}/>
       }
-      {loadMoreButtonShown && <StyledButton buttonText="Load more" onClick={handleLoadMore}></StyledButton>}
+      {loadMoreShown && <StyledButton buttonText="Load more" onClick={handleLoadMore}></StyledButton>}
     </main>
   );
 }

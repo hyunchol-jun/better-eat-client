@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage/HomePage';
 import Sidebar from "./components/Sidebar/Sidebar";
 import RecipeDetail from "./pages/RecipeDetail";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useState, useEffect, useRef, useMemo} from "react";
+import {useState, useEffect, useMemo} from "react";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import {getRecipesList, getRecipesListRandomly} from "./utils/http-helper";
@@ -49,7 +49,6 @@ function App() {
   const [diets, setDiets] = useState(dietsFromStorage);
   const [cuisines, setCuisines] = useState(cuisinesFromStorage);
   const [intolerances, setIntolerances] = useState(intolerancesFromStorage);
-  const recipesRef = useRef();
 
   const handleDietChange = (dietName) => {
     setDiets((prevState) => {
@@ -94,18 +93,17 @@ function App() {
 
     // If the second argument is provided, use it for the query,
     // otherwise get it from the form
-    const tempSearchQuery = itemName || event.target.textInput.value;
-    setSearchQuery(tempSearchQuery);
+    const searchQuery = itemName || event.target.textInput.value;
+    setSearchQuery(searchQuery);
 
     // Call to the external API
     getRecipesList(
-                  tempSearchQuery, 
+                  searchQuery, 
                   convertPreferenceObjectIntoArray(diets), 
                   convertPreferenceObjectIntoArray(cuisines),
                   convertPreferenceObjectIntoArray(intolerances),
                   0,
                   (response) => {
-                    recipesRef.current = response.data.results;
                     setRecipes(response.data.results);
                     setCurrentOffset(20);
                     setLoadMoreShown(response.data.results.length === 20);
@@ -121,9 +119,7 @@ function App() {
                   convertPreferenceObjectIntoArray(intolerances),
                   currentOffset,
                   (response) => {
-                    const tempResults = recipesRef.current.concat(response.data.results);
-                    setRecipes(tempResults);
-                    recipesRef.current = tempResults;
+                    setRecipes([...recipes].concat(response.data.results));
                     setCurrentOffset(currentOffset + 20)
                     setLoadMoreShown(response.data.results.length === 20);
                   });
