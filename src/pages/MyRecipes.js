@@ -3,9 +3,9 @@ import { getAllUserRecipes } from "../utils/http-helper";
 import { useNavigate } from "react-router-dom";
 import RecipesList from "../components/RecipesList/RecipesList";
 import styled from "styled-components";
-import MessageWithoutBorder from "../components/MessageWithoutBorder";
 import checkIcon from "../assets/icons/check.svg";
 import PageMain from "../components/PageMain";
+import MessageWithIcon from "../components/MessageWithIcon";
 
 const StyledMain = styled(PageMain)`
     margin: 0 1rem 1rem;
@@ -24,15 +24,6 @@ const StyledTitle = styled.h1`
     @media (min-width: 768px) {
         display: none;
     }
-`;
-
-const StyledMessageContainer = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-const StyledIcon = styled.img`
-    width: 1.5rem;
 `;
 
 function MyRecipes() {
@@ -64,13 +55,9 @@ function MyRecipes() {
         <StyledMain>
             <StyledTitle>My Recipes</StyledTitle>
             {recipes && recipes.length === 0 
-                ? <StyledMessageContainer>
-                    <StyledIcon src={checkIcon} alt=""></StyledIcon>
-                    <MessageWithoutBorder 
-                        isSuccess={true}>
-                        You have no recipes saved.
-                    </MessageWithoutBorder>
-                </StyledMessageContainer>
+                ? <MessageWithIcon iconSrc={checkIcon} isSuccess={true}>
+                    You have no recipes saved.
+                  </MessageWithIcon>
                 : <RecipesList recipes={recipes} to={"/users/recipes/"}/>
             }
         </StyledMain>
