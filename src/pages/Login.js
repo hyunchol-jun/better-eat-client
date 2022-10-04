@@ -80,7 +80,7 @@ function Login() {
                     name="password" 
                     autoComplete="current-password"
                 />
-                {errorMessage && <Message message={errorMessage} isSuccess={isSuccess}></Message>}
+                {errorMessage && <Message isSuccess={isSuccess}>{errorMessage}</Message>}
                 <StyledButton buttonText={"Login"}></StyledButton>
                 <StyledSpan>
                     Don't have an account? &nbsp;

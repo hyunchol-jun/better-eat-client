@@ -108,7 +108,7 @@ function GroceryList() {
         <main className="grocery-list">
             <h1 className="grocery-list__title">Grocery List</h1>
             <SimpleForm handleSubmit={handleAddGroceryItem} buttonText="Add"></SimpleForm>
-            {message && <Message message={message} isSuccess={false}></Message>}
+            {message && <Message isSuccess={false}>{message}</Message>}
             <ul className="grocery-list__list">
                 {groceryItems.map((item, index) => {
                     return (

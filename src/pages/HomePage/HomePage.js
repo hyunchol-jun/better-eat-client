@@ -4,7 +4,7 @@ import RecipesList from '../../components/RecipesList/RecipesList';
 import Search from '../../components/Search/Search';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Message from "../../components/Message";
+import MessageWithoutBorder from "../../components/MessageWithoutBorder";
 import styled from "styled-components";
 import suggestIcon from "../../assets/icons/suggest.svg";
 import warningIcon from "../../assets/icons/warning.svg";
@@ -18,10 +18,6 @@ const StyledMessageContainer = styled.div`
 
 const StyledIcon = styled.img`
     width: 1.5rem;
-`;
-
-const MessageWithoutBorder = styled(Message)`
-  border: none;
 `;
 
 const StyledButton = styled(Button)`
@@ -78,9 +74,9 @@ function HomePage({
         ? <>
           <StyledMessageContainer>
             <StyledIcon src={suggestIcon} alt=""></StyledIcon>
-            <MessageWithoutBorder 
-              message={"Here are some suggestions based on your preference setting."}
-              isSuccess={true}></MessageWithoutBorder> 
+            <MessageWithoutBorder isSuccess={true}>
+              Here are some suggestions based on your preference setting.
+            </MessageWithoutBorder> 
           </StyledMessageContainer>
             <RecipesList recipes={recipes} to={"/recipes/"}/>
           </>
