@@ -8,6 +8,7 @@ import {useState, useEffect, useRef, useMemo} from "react";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import {getRecipesList, getRecipesListRandomly} from "./utils/http-helper";
+import { convertPreferenceObjectIntoArray } from './utils/object-helper';
 import defaultCuisines from "./data/defaultCuisines";
 import defaultDiets from "./data/defaultDiets";
 import defaultIntolerances from "./data/defaultIntolerances";
@@ -91,29 +92,6 @@ function App() {
 
     setIsRandom(false);
 
-    // Convert the objects into arrays of keys
-    const dietsInArray = [];
-    const cuisinesInArray = [];
-    const intolerancesInArray = [];
-
-    for (const type in diets) {
-      if (diets[type]) {
-        dietsInArray.push(type);
-      }
-    }
-
-    for (const type in cuisines) {
-      if (cuisines[type]) {
-        cuisinesInArray.push(type);
-      }
-    }
-
-    for (const type in intolerances) {
-      if (intolerances[type]) {
-        intolerancesInArray.push(type);
-      }
-    }
-
     // If the second argument is provided, use it for the query,
     // otherwise get it from the form
     const tempSearchQuery = itemName || event.target.textInput.value;
@@ -122,10 +100,10 @@ function App() {
     // Call to the external API
     getRecipesList(
                   tempSearchQuery, 
-                  dietsInArray, 
-                  cuisinesInArray,
+                  convertPreferenceObjectIntoArray(diets), 
+                  convertPreferenceObjectIntoArray(cuisines),
+                  convertPreferenceObjectIntoArray(intolerances),
                   0,
-                  intolerancesInArray,
                   (response) => {
                     recipesRef.current = response.data.results;
                     setRecipes(response.data.results);
@@ -135,35 +113,13 @@ function App() {
   };
 
   const handleLoadMore = () => {
-    const dietsInArray = [];
-    const cuisinesInArray = [];
-    const intolerancesInArray = [];
-
-    for (const type in diets) {
-      if (diets[type]) {
-        dietsInArray.push(type);
-      }
-    }
-
-    for (const type in cuisines) {
-      if (cuisines[type]) {
-        cuisinesInArray.push(type);
-      }
-    }
-
-    for (const type in intolerances) {
-      if (intolerances[type]) {
-        intolerancesInArray.push(type);
-      }
-    }
-
     // Call to the external API
     getRecipesList(
                   searchQuery, 
-                  dietsInArray, 
-                  cuisinesInArray,
+                  convertPreferenceObjectIntoArray(diets), 
+                  convertPreferenceObjectIntoArray(cuisines),
+                  convertPreferenceObjectIntoArray(intolerances),
                   currentOffset,
-                  intolerancesInArray,
                   (response) => {
                     const tempResults = recipesRef.current.concat(response.data.results);
                     setRecipes(tempResults);
@@ -174,32 +130,10 @@ function App() {
   };
 
   const randomSearchBasedOnPreference = () => {
-    const dietsInArray = [];
-    const cuisinesInArray = [];
-    const intolerancesInArray = [];
-
-    for (const type in diets) {
-      if (diets[type]) {
-        dietsInArray.push(type);
-      }
-    }
-
-    for (const type in cuisines) {
-      if (cuisines[type]) {
-        cuisinesInArray.push(type);
-      }
-    }
-
-    for (const type in intolerances) {
-      if (intolerances[type]) {
-        intolerancesInArray.push(type);
-      }
-    }
-
     getRecipesListRandomly(
-                          dietsInArray,
-                          cuisinesInArray,
-                          intolerancesInArray,
+                          convertPreferenceObjectIntoArray(diets),
+                          convertPreferenceObjectIntoArray(cuisines),
+                          convertPreferenceObjectIntoArray(intolerances),
                           (response) => {
                             setRecipes(response.data.recipes);
                             setIsRandom(true);
