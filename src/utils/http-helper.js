@@ -31,12 +31,12 @@ const logError = (error) => {
     console.log(error);
 };
 
-export const getRecipesList = (searchQuery, diets, cuisines, pageNumber, intolerances, callback) => {
+export const getRecipesList = (searchQuery, diets, cuisines, intolerances, currentOffset, callback) => {
     let FULL_PATH = BASE_URL + SEARCH_PATH
                     + API_KEY_PATH + REACT_APP_API_KEY
                     + QUERY_PATH + searchQuery
                     + INSTRUCTION_PATH + NUMBER_PATH
-                    + PAGE_NUMBER_PATH + pageNumber;
+                    + PAGE_NUMBER_PATH + currentOffset;
 
     if (diets.length > 0) {
         FULL_PATH += DIET_PATH + diets.join().toLowerCase();
