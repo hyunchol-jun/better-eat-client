@@ -129,7 +129,7 @@ function App() {
                   });
   };
 
-  const randomSearchBasedOnPreference = () => {
+  useEffect(() => {
     getRecipesListRandomly(
                           convertPreferenceObjectIntoArray(diets),
                           convertPreferenceObjectIntoArray(cuisines),
@@ -138,10 +138,6 @@ function App() {
                             setRecipes(response.data.recipes);
                             setIsRandom(true);
                           });
-  };
-
-  useEffect(() => {
-    randomSearchBasedOnPreference();
   }, []);
 
   useEffect(() => {
