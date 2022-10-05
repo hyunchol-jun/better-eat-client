@@ -21,21 +21,12 @@ import PageFooter from './components/PageFooter';
 function App() {
   const mediaQuery = useMemo(() => window.matchMedia("(max-width: 767px)"), []);
   const desktopMediaQuery = useMemo(() => window.matchMedia("(min-width: 1280px)"), []);
+
   const [isMobile, setIsMobile] = useState(mediaQuery.matches);
   const [isDesktop, setIsDesktop] = useState(desktopMediaQuery.matches);
   const [sidebarShown, setSidebarShown] = useState(false);
   const [sidebarAnimation, setSidebarAnimation] = useState("close-animation");
   const [backgroundAnimation, setBackgroundAnimation] = useState("clear-animation");
-
-  const handleSidebarVisibility = () => {
-    setSidebarAnimation(sidebarShown ? "close-animation" : "open-animation");
-    setBackgroundAnimation(sidebarShown ? "clear-animation" : "opaque-animation");
-    if (sidebarShown) {
-      setTimeout(() => setSidebarShown(!sidebarShown), 300);
-    } else {
-      setSidebarShown(!sidebarShown);
-    }
-  };
 
   const [recipes, setRecipes] = useState(null);
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -50,6 +41,17 @@ function App() {
   const [cuisines, setCuisines] = useState(cuisinesFromStorage || defaultCuisines);
   const [intolerances, setIntolerances] = useState(intolerancesFromStorage || defaultIntolerances);
 
+  const handleSidebarVisibility = () => {
+    setSidebarAnimation(sidebarShown ? "close-animation" : "open-animation");
+    setBackgroundAnimation(sidebarShown ? "clear-animation" : "opaque-animation");
+
+    if (sidebarShown) {
+      setTimeout(() => setSidebarShown(!sidebarShown), 300);
+    } else {
+      setSidebarShown(!sidebarShown);
+    }
+  };
+  
   const handleDietChange = (dietName) => {
     setDiets((prevState) => {
       const copiedDiets = {...prevState};
@@ -81,12 +83,11 @@ function App() {
 
     // If the second argument is provided, use it for the query,
     // otherwise get it from the form
-    const searchQuery = itemName || event.target.textInput.value;
-    setSearchQuery(searchQuery);
+    setSearchQuery(itemName || event.target.textInput.value);
 
     // Call to the external API
     getRecipesList(
-                  searchQuery, 
+                  itemName || event.target.textInput.value, 
                   convertPreferenceObjectIntoArray(diets), 
                   convertPreferenceObjectIntoArray(cuisines),
                   convertPreferenceObjectIntoArray(intolerances),
