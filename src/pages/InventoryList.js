@@ -1,9 +1,10 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SimpleForm from "../components/SimpleForm";
 import PageMain from "../components/PageMain";
 import SecondaryButton from "../components/SecondaryButton";
+import Loading from "../components/Loading/Loading";
 
 const StyledTitle = styled.h1`
     @media (min-width: 768px) {
@@ -26,25 +27,89 @@ const StyledUL = styled.ul`
 const StyledListItem = styled.li`
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.5rem;
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--outline-color);
+    padding: 0.25rem 0;
+    
+`;
+
+const StyledLabel = styled.label`
+    display: flex;
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     @media (min-width: 768px) {
-        padding: 0.75rem;
+        font-size: 1.25rem;
+        padding-left: 2.5rem;
     }
 
-    &:hover {
-        background-color: var(--outline-color);
+    @media (min-width: 1280px) {
+        font-size: 1.5rem;
     }
 
-    &:last-child {
-        border-bottom: none;
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+
+        &:hover ~ .checkmark {
+            background-color: var(--secondary-text-color);
+        }
+    
+        &:checked ~ .checkmark {
+            background-color: var(--primary-color);
+        
+            &:after {
+                display: block;
+            }
+        }
     }
 `;
 
-const StyledSpan = styled.span`
-    width: 100%;
+const StyledCheckmark = styled.span`
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.25rem;
+    width: 1.25rem;
+    background-color: var(--outline-color);
+    border-radius: 3px;
+
+    @media (min-width: 768px) {
+        top: 0.15rem;
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        display: none;
+    
+        left: 0.5rem;
+        top: 0.25rem;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+
+        @media (min-width: 768px) {
+            width: 7.5px;
+            height: 12.5px;
+        }
+    }
 `;
 
 function InventoryList({handleSearch}) {
@@ -57,24 +122,36 @@ function InventoryList({handleSearch}) {
         }
     }, [navigate]);
 
-    const inventoryItemsFromStorage = localStorage.getItem("inventoryList");
-    const [inventoryItems, setInventoryItems] = useState(
-        inventoryItemsFromStorage
-            ? JSON.parse(inventoryItemsFromStorage) : []
-    );
+    const [inventoryItems, setInventoryItems] = useState(null);
+    const inventoryItemsRef = useRef();
 
-    const handleAdd = (event) => {
+    const handleAddItem = (event) => {
         event.preventDefault();
 
-        setInventoryItems([...inventoryItems, event.target.textInput.value]);
+        const newItem = {
+            item_name: event.target.textInput.value,
+            checked: false
+        };
+
+        setInventoryItems((prevState) => {
+
+            const newState = [...prevState, newItem];
+            inventoryItemsRef.current = newState;
+            return newState;
+        })
+
         event.target.reset();
     };
 
-    const handleDelete = (index) => {
-        const copiedInventoryItems = [...inventoryItems];
-        copiedInventoryItems.splice(index, 1);
-        setInventoryItems(copiedInventoryItems);
-    }
+    const handleItemChange = (itemIndex) => {
+        setInventoryItems((prevState) => {
+            const copiedState = [...prevState];
+            copiedState[itemIndex] = {...copiedState[itemIndex]};
+            copiedState[itemIndex].checked = !copiedState[itemIndex].checked;
+            inventoryItemsRef.current = copiedState;
+            return copiedState;
+        })
+    };
 
     const handleSearchRecipe = (event, itemName) => {
         handleSearch(event, itemName);
@@ -83,20 +160,44 @@ function InventoryList({handleSearch}) {
     }
 
     useEffect(() => {
-        localStorage.setItem("inventoryList", JSON.stringify(inventoryItems));
-    }, [inventoryItems]);
+        const inventoryItemsFromStorage = JSON.parse(localStorage.getItem("inventoryList")) || [];
+        inventoryItemsRef.current = inventoryItemsFromStorage;
+        setInventoryItems(inventoryItemsFromStorage);
+        
+        return function cleanUp() {
+            const uncheckedItems = inventoryItemsRef.current.filter(item => !item.checked);
+            console.log(uncheckedItems)
+            localStorage.setItem("inventoryList", JSON.stringify(uncheckedItems));
+        }
+    }, []);
+
+    if (!inventoryItems) {
+        return (
+            <Loading />
+        );
+    }
 
     return (
         <PageMain>
             <StyledTitle>Inventory List</StyledTitle>
-                <SimpleForm handleSubmit={handleAdd} buttonText="Add"></SimpleForm>
+                <SimpleForm handleSubmit={handleAddItem} buttonText="Add"></SimpleForm>
             <StyledUL>
                 {inventoryItems.map((item, index) => {
                     return (
                         <StyledListItem key={index}>
-                            <StyledSpan>{item}</StyledSpan>
-                            <SecondaryButton  onClick={() => handleDelete(index)}>Delete</SecondaryButton>
-                            <SecondaryButton onClick={(event) => handleSearchRecipe(event, item)}>Search recipes</SecondaryButton>
+                            <StyledLabel>
+                                {item.item_name}
+                                <input
+                                    type="checkbox"
+                                    checked={item.checked}
+                                    onChange={() => handleItemChange(index)}
+                                />
+                                <StyledCheckmark className="checkmark"></StyledCheckmark>
+                            </StyledLabel>
+                            <SecondaryButton 
+                                onClick={(event) => handleSearchRecipe(event, item.item_name)}>
+                                Search recipes
+                            </SecondaryButton>
                         </StyledListItem>
                     );
                 })}
