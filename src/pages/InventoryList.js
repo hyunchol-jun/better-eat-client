@@ -5,6 +5,7 @@ import SimpleForm from "../components/SimpleForm";
 import PageMain from "../components/PageMain";
 import SecondaryButton from "../components/SecondaryButton";
 import Loading from "../components/Loading/Loading";
+import CheckBox from "../components/CheckBox";
 
 const StyledTitle = styled.h1`
     @media (min-width: 768px) {
@@ -31,85 +32,6 @@ const StyledListItem = styled.li`
     gap: 0.5rem;
     padding: 0.25rem 0;
     
-`;
-
-const StyledLabel = styled.label`
-    display: flex;
-    position: relative;
-    padding-left: 1.75rem;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    font-size: 1.1rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    @media (min-width: 768px) {
-        font-size: 1.25rem;
-        padding-left: 2.5rem;
-    }
-
-    @media (min-width: 1280px) {
-        font-size: 1.5rem;
-    }
-
-    input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-
-        &:hover ~ .checkmark {
-            background-color: var(--secondary-text-color);
-        }
-    
-        &:checked ~ .checkmark {
-            background-color: var(--primary-color);
-        
-            &:after {
-                display: block;
-            }
-        }
-    }
-`;
-
-const StyledCheckmark = styled.span`
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 1.25rem;
-    width: 1.25rem;
-    background-color: var(--outline-color);
-    border-radius: 3px;
-
-    @media (min-width: 768px) {
-        top: 0.15rem;
-        height: 1.5rem;
-        width: 1.5rem;
-    }
-
-    &:after {
-        content: "";
-        position: absolute;
-        display: none;
-    
-        left: 0.5rem;
-        top: 0.25rem;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        transform: rotate(45deg);
-
-        @media (min-width: 768px) {
-            width: 7.5px;
-            height: 12.5px;
-        }
-    }
 `;
 
 function InventoryList({handleSearch}) {
@@ -166,7 +88,6 @@ function InventoryList({handleSearch}) {
         
         return function cleanUp() {
             const uncheckedItems = inventoryItemsRef.current.filter(item => !item.checked);
-            console.log(uncheckedItems)
             localStorage.setItem("inventoryList", JSON.stringify(uncheckedItems));
         }
     }, []);
@@ -185,15 +106,9 @@ function InventoryList({handleSearch}) {
                 {inventoryItems.map((item, index) => {
                     return (
                         <StyledListItem key={index}>
-                            <StyledLabel>
+                            <CheckBox checked={item.checked} onChange={() => handleItemChange(index)}>
                                 {item.item_name}
-                                <input
-                                    type="checkbox"
-                                    checked={item.checked}
-                                    onChange={() => handleItemChange(index)}
-                                />
-                                <StyledCheckmark className="checkmark"></StyledCheckmark>
-                            </StyledLabel>
+                            </CheckBox>
                             <SecondaryButton 
                                 onClick={(event) => handleSearchRecipe(event, item.item_name)}>
                                 Search recipes
