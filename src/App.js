@@ -46,9 +46,9 @@ function App() {
   const dietsFromStorage = JSON.parse(localStorage.getItem("diets"));
   const cuisinesFromStorage = JSON.parse(localStorage.getItem("cuisines"));
   const intolerancesFromStorage = JSON.parse(localStorage.getItem("intolerances"));
-  const [diets, setDiets] = useState(dietsFromStorage);
-  const [cuisines, setCuisines] = useState(cuisinesFromStorage);
-  const [intolerances, setIntolerances] = useState(intolerancesFromStorage);
+  const [diets, setDiets] = useState(dietsFromStorage || defaultDiets);
+  const [cuisines, setCuisines] = useState(cuisinesFromStorage || defaultCuisines);
+  const [intolerances, setIntolerances] = useState(intolerancesFromStorage || defaultIntolerances);
 
   const handleDietChange = (dietName) => {
     setDiets((prevState) => {
@@ -72,18 +72,6 @@ function App() {
       copiedIntolerances[intoleranceName] = !copiedIntolerances[intoleranceName];
       return copiedIntolerances;
     });
-  }
-
-  if (!diets) {
-    setDiets(defaultDiets);
-  }
-
-  if (!cuisines) {
-    setCuisines(defaultCuisines);
-  }
-
-  if (!intolerances) {
-    setIntolerances(defaultIntolerances);
   }
 
   const handleSearch = (event, itemName) => {
