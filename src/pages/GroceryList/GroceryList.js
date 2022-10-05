@@ -21,7 +21,6 @@ function GroceryList() {
             copiedState[itemIndex] = {...copiedState[itemIndex]};
             copiedState[itemIndex].checked = !copiedState[itemIndex].checked;
             groceryItemsRef.current = copiedState;
-            console.log(groceryItemsRef.current)
             return copiedState;
         });
     }
