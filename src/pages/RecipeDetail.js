@@ -415,7 +415,7 @@ function RecipeDetail() {
                                 : [];
 
     const returnBadgeIfNameInArray = (name, array) => {
-        const foundName = array.find(element => element.toLowerCase() === name.toLowerCase());
+        const foundName = array.find(element => element.item_name.toLowerCase() === name.toLowerCase());
         return foundName && <StyledBadge>In Stock</StyledBadge>;
     }
 
