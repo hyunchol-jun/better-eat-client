@@ -13,7 +13,7 @@ import defaultCuisines from "./data/defaultCuisines";
 import defaultDiets from "./data/defaultDiets";
 import defaultIntolerances from "./data/defaultIntolerances";
 import MyRecipes from './pages/MyRecipes';
-import GroceryList from './pages/GroceryList/GroceryList';
+import GroceryList from './pages/GroceryList';
 import InventoryList from './pages/InventoryList';
 import NotFound from './components/NotFound/NotFound';
 import PageFooter from './components/PageFooter';
