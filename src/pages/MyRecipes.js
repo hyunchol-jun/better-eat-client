@@ -8,10 +8,12 @@ import PageMain from "../components/PageMain";
 import MessageWithIcon from "../components/MessageWithIcon";
 
 const StyledMain = styled(PageMain)`
+    min-height: calc(100vh - 7.5rem);
     margin: 0 1rem 1rem;
 
     @media (min-width: 768px) {
         margin: 0 2rem 1rem 14rem;
+        min-height: calc(100vh - 9rem);
     }
 
     @media (min-width: 1280px) {

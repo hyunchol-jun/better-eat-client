@@ -26,18 +26,20 @@ const PageMain = styled.main`
     top: 0;
     left: 0;
     z-index: 1;
-    min-height: calc(100vh - 7rem);
+    min-height: calc(100vh - 8.5rem);
 
     @media (min-width: 768px) {
         position: static;
         margin-left: 13rem;
         width: auto;
+        min-height: calc(100vh - 11rem);
     }
 
     @media (min-width: 1280px) {
         position: static;
         margin: auto;
         max-width: 64rem;
+        min-height: calc(100vh - 15rem);
     }
 `;
 
