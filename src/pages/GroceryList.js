@@ -1,13 +1,35 @@
-import "./GroceryList.scss";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {getAllUserGroceryItems, 
         removeGroceryItemFromUser, 
         appendGroceryItemToUser} 
-    from "../../utils/http-helper";
-import Loading from "../../components/Loading/Loading";
-import SimpleForm from "../../components/SimpleForm";
-import Message from "../../components/Message";
+    from "../utils/http-helper";
+import Loading from "../components/Loading/Loading";
+import SimpleForm from "../components/SimpleForm";
+import Message from "../components/Message";
+import styled from "styled-components";
+import PageMain from "../components/PageMain";
+import CheckBox from "../components/CheckBox";
+
+const StyledTitle = styled.h1`
+    @media (min-width: 768px) {
+        display: none;
+    }
+`;
+
+const StyledUL = styled.ul`
+    @media (min-width: 768px) {
+        padding: 1rem 2rem;
+    }
+
+    @media (min-width: 1280px) {
+        padding: 1rem 6rem;
+    }
+`;
+
+const StyledListItem = styled.li`
+    padding: 0.25rem 0;
+`;
 
 function GroceryList() {
     const [groceryItems, setGroceryItems] = useState(null);
@@ -104,29 +126,22 @@ function GroceryList() {
     }
 
     return (
-        <main className="grocery-list">
-            <h1 className="grocery-list__title">Grocery List</h1>
+        <PageMain>
+            <StyledTitle>Grocery List</StyledTitle>
             <SimpleForm handleSubmit={handleAddGroceryItem} buttonText="Add"></SimpleForm>
             {message && <Message isSuccess={false}>{message}</Message>}
-            <ul className="grocery-list__list">
+            <StyledUL>
                 {groceryItems.map((item, index) => {
                     return (
-                        <li key={index} className="grocery-list__item">
-                            <label className={`grocery-list__name ${item.checked ? "grocery-list__name--checked": ""}`}>
+                        <StyledListItem key={index}>
+                            <CheckBox checked={item.checked} onChange={() => handleGroceryItemsChange(index)}>
                                 {item.item_name}
-                                <input 
-                                    className="grocery-list__checkbox"
-                                    type="checkbox"
-                                    checked={item.checked}
-                                    onChange={() => handleGroceryItemsChange(index)}
-                                />
-                                <span className="grocery-list__checkmark"></span>
-                            </label>
-                        </li>
+                            </CheckBox>
+                        </StyledListItem>
                     )
                 })}
-            </ul>
-        </main>
+            </StyledUL>
+        </PageMain>
     );
 }
 

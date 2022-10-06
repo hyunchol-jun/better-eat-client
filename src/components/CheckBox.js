@@ -11,6 +11,8 @@ const StyledLabel = styled.label`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    text-decoration: ${props => props.checked ? "line-through" : "none"};
+    color: ${props => props.checked ? "var(--secondary-text-color)" : "inherit"};
 
     @media (min-width: 768px) {
         font-size: 1.25rem;
@@ -81,7 +83,7 @@ const StyledCheckmark = styled.span`
 
 function CheckBox({children, checked, onChange}) {
     return (
-        <StyledLabel>
+        <StyledLabel checked={checked}>
             {children}
             <input type="checkbox" checked={checked} onChange={onChange}/>
             <StyledCheckmark className="checkmark"></StyledCheckmark>

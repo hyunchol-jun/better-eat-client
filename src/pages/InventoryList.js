@@ -27,11 +27,8 @@ const StyledUL = styled.ul`
 
 const StyledListItem = styled.li`
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 0.5rem;
     padding: 0.25rem 0;
-    
 `;
 
 function InventoryList({handleSearch}) {
@@ -101,7 +98,7 @@ function InventoryList({handleSearch}) {
     return (
         <PageMain>
             <StyledTitle>Inventory List</StyledTitle>
-                <SimpleForm handleSubmit={handleAddItem} buttonText="Add"></SimpleForm>
+            <SimpleForm handleSubmit={handleAddItem} buttonText="Add"></SimpleForm>
             <StyledUL>
                 {inventoryItems.map((item, index) => {
                     return (
