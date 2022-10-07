@@ -1,11 +1,16 @@
 import {useState, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
+import {getAllUserInventoryItems, 
+        removeInventoryItemFromUser, 
+        appendInventoryItemToUser} 
+    from "../utils/http-helper";
 import styled from "styled-components";
 import SimpleForm from "../components/SimpleForm";
 import PageMain from "../components/PageMain";
 import SecondaryButton from "../components/SecondaryButton";
 import Loading from "../components/Loading/Loading";
 import CheckBox from "../components/CheckBox";
+import Message from "../components/Message";
 
 const StyledTitle = styled.h1`
     @media (min-width: 768px) {
@@ -42,22 +47,30 @@ function InventoryList({handleSearch}) {
     }, [navigate]);
 
     const [inventoryItems, setInventoryItems] = useState(null);
+    const [message, setMessage] = useState("");
     const inventoryItemsRef = useRef();
 
     const handleAddItem = (event) => {
         event.preventDefault();
 
-        const newItem = {
-            item_name: event.target.textInput.value,
-            checked: false
+        const headers = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
         };
 
-        setInventoryItems((prevState) => {
-
-            const newState = [...prevState, newItem];
-            inventoryItemsRef.current = newState;
-            return newState;
-        })
+        appendInventoryItemToUser({item_name: event.target.textInput.value}, headers, (response) => {
+            const newItem = response.data;
+            newItem.checked = false;
+            setInventoryItems((prevState) => {
+                const newState = [...prevState, newItem];
+                inventoryItemsRef.current = newState;
+                return newState;
+            });
+        }, (error) => {
+            setMessage(error.response.data.message);
+            setTimeout(() => setMessage(""), 1000);
+        });
 
         event.target.reset();
     };
@@ -78,14 +91,39 @@ function InventoryList({handleSearch}) {
         navigate("/");
     }
 
+    const deleteAllCheckedItemsFromServer = (itemsArray, headers, callback) => {
+        if (itemsArray) {
+            itemsArray.forEach(item => {
+                if (item.checked) {
+                    headers.data = {id: item.id};
+                    removeInventoryItemFromUser(headers, callback);
+                }
+            });
+        }
+    }
+
     useEffect(() => {
-        const inventoryItemsFromStorage = JSON.parse(localStorage.getItem("inventoryList")) || [];
-        inventoryItemsRef.current = inventoryItemsFromStorage;
-        setInventoryItems(inventoryItemsFromStorage);
+        const headers = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        };
         
+        getAllUserInventoryItems(headers, (response) => {
+            const userItems = response.data;
+            userItems.forEach(item => {
+                item.checked = false;
+            })
+            inventoryItemsRef.current = userItems;
+            setInventoryItems(userItems);
+        });
+
         return function cleanUp() {
-            const uncheckedItems = inventoryItemsRef.current.filter(item => !item.checked);
-            localStorage.setItem("inventoryList", JSON.stringify(uncheckedItems));
+            deleteAllCheckedItemsFromServer(
+                inventoryItemsRef.current,
+                headers,
+                response => console.log(response)
+            );
         }
     }, []);
 
@@ -99,6 +137,7 @@ function InventoryList({handleSearch}) {
         <PageMain>
             <StyledTitle>Inventory List</StyledTitle>
             <SimpleForm handleSubmit={handleAddItem} buttonText="Add"></SimpleForm>
+            {message && <Message isSuccess={false}>{message}</Message>}
             <StyledUL>
                 {inventoryItems.map((item, index) => {
                     return (

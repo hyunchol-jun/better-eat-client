@@ -47,14 +47,6 @@ function GroceryList() {
         });
     }
 
-    const appendItemToList = (item) => {
-        setGroceryItems((prevState) => {
-            const copiedState = [...prevState, item];
-            groceryItemsRef.current = copiedState;
-            return copiedState;
-        })
-    }
-
     const deleteAllCheckedItemsFromServer = (itemsArray, headers, callback) => {
         if (itemsArray) {
             itemsArray.forEach(item => {
@@ -88,6 +80,7 @@ function GroceryList() {
             userItems.forEach(item => {
                 item.checked = false;
             })
+            groceryItemsRef.current = userItems;
             setGroceryItems(userItems);
         });
 
@@ -109,8 +102,14 @@ function GroceryList() {
             }
         };
 
-        appendGroceryItemToUser({itemName: event.target.textInput.value}, headers, (response) => {
-            appendItemToList(response.data);
+        appendGroceryItemToUser({item_name: event.target.textInput.value}, headers, (response) => {
+            const newItem = response.data;
+            newItem.checked = false;
+            setGroceryItems((prevState) => {
+                const copiedState = [...prevState, newItem];
+                groceryItemsRef.current = copiedState;
+                return copiedState;
+            });
         }, (error) => {
             setMessage(error.response.data.message);
             setTimeout(() => setMessage(""), 1000);
