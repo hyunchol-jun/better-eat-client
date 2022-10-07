@@ -1,6 +1,6 @@
 # BetterEat Front-end
 
-BetterEat is a web application that helps users to cook more and eat healther by suggesting new recipes based on their diets and/or food preferences. Users can also manage thier meal plans with stored information such as recipes, inventory and grocery lists.
+BetterEat is a web application that helps users to cook more and eat healthier by suggesting recipes based on their food preference. Users can also manage their meal plans with stored information such as recipes, inventory and grocery lists.
 
 You can visit the live website at http://better-eat.hyuncholjun.com/.
 
