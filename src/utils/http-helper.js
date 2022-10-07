@@ -21,6 +21,7 @@ const USERS_PATH="users";
 const RECIPES_PATH="/recipes";
 const CHECK_RECIPES_PATH="/checkRecipes";
 const GROCERIES_PATH="/groceries";
+const INVENTORIES_PATH="/inventories";
 
 const {
     REACT_APP_API_KEY,
@@ -153,6 +154,33 @@ export const removeGroceryItemFromUser = (headers, callback) => {
     axios.delete(REACT_APP_BACKEND_URL
                     + USERS_PATH
                     + GROCERIES_PATH,
+                    headers)
+        .then(callback)
+        .catch(logError);
+}
+
+export const appendInventoryItemToUser = (itemData, headers, callback, errorCallback) => {
+    axios.post(REACT_APP_BACKEND_URL
+                + USERS_PATH
+                + INVENTORIES_PATH,
+                itemData, headers)
+        .then(callback)
+        .catch(errorCallback);
+}
+
+export const getAllUserInventoryItems = (headers, callback) => {
+    axios.get(REACT_APP_BACKEND_URL
+                + USERS_PATH
+                + INVENTORIES_PATH,
+                headers)
+        .then(callback)
+        .catch(logError);
+}
+
+export const removeInventoryItemFromUser = (headers, callback) => {
+    axios.delete(REACT_APP_BACKEND_URL
+                    + USERS_PATH
+                    + INVENTORIES_PATH,
                     headers)
         .then(callback)
         .catch(logError);
