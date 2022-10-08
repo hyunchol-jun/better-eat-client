@@ -15,13 +15,14 @@ const PAGE_NUMBER_PATH = "&offset=";
 const NUMBER_PATH = "&number=20";
 const TAGS_PATH = "&tags=";
 
-const SIGNUP_PATH="signup";
-const LOGIN_PATH="login";
-const USERS_PATH="users";
-const RECIPES_PATH="/recipes";
-const CHECK_RECIPES_PATH="/checkRecipes";
-const GROCERIES_PATH="/groceries";
-const INVENTORIES_PATH="/inventories";
+const SIGNUP_PATH = "signup";
+const LOGIN_PATH = "login";
+const USERS_PATH = "users";
+const RECIPES_PATH = "/recipes";
+const CHECK_RECIPES_PATH = "/checkRecipes";
+const GROCERIES_PATH = "/groceries";
+const INVENTORIES_PATH = "/inventories";
+const CHECK_PATH = "/check";
 
 const {
     REACT_APP_API_KEY,
@@ -112,6 +113,15 @@ export const getUserRecipeDetail = (recipeId, headers, callback, errorCallback) 
     axios.get(REACT_APP_BACKEND_URL
                 + USERS_PATH
                 + RECIPES_PATH + "/" + recipeId, headers)
+        .then(callback)
+        .catch(errorCallback);
+}
+
+export const checkIfIngredientsAreInStock = (ingredientsArray, headers, callback, errorCallback) => {
+    axios.post(REACT_APP_BACKEND_URL
+                + USERS_PATH
+                + INVENTORIES_PATH
+                + CHECK_PATH, ingredientsArray, headers)
         .then(callback)
         .catch(errorCallback);
 }
