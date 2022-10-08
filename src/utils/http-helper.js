@@ -76,9 +76,12 @@ export const getRecipesListRandomly = (diets, cuisines, intolerances, callback) 
     .catch(logError);
 }
 
-export const getRecipeDetail = (recipeId, callback, errorCallback) => {
-    const FULL_PATH = BASE_URL + recipeId + INFO_PATH + API_KEY_PATH + REACT_APP_API_KEY;
-    axios.get(FULL_PATH).then(callback)
+export const getRecipeDetail = (recipeId, headers, isMyRecipesPage, callback, errorCallback) => {
+    const FULL_PATH = isMyRecipesPage 
+        ? REACT_APP_BACKEND_URL + USERS_PATH + RECIPES_PATH + "/" + recipeId
+        : BASE_URL + recipeId + INFO_PATH + API_KEY_PATH + REACT_APP_API_KEY;
+    
+    axios.get(FULL_PATH, (isMyRecipesPage ? headers : null)).then(callback)
     .catch(errorCallback);
 }
 
@@ -107,14 +110,6 @@ export const getAllUserRecipes = (headers, callback) => {
                 + RECIPES_PATH, headers)
         .then(callback)
         .catch(logError);
-}
-
-export const getUserRecipeDetail = (recipeId, headers, callback, errorCallback) => {
-    axios.get(REACT_APP_BACKEND_URL
-                + USERS_PATH
-                + RECIPES_PATH + "/" + recipeId, headers)
-        .then(callback)
-        .catch(errorCallback);
 }
 
 export const checkIfIngredientsAreInStock = (ingredientsArray, headers, callback, errorCallback) => {
