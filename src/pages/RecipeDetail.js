@@ -11,7 +11,6 @@ import {
         appendRecipeToUser, 
         getRecipeDetail,
         appendGroceryItemToUser, 
-        getUserRecipeDetail, 
         removeUserRecipe, 
         checkUserRecipe,
         checkIfIngredientsAreInStock
@@ -387,35 +386,27 @@ function RecipeDetail() {
     }
 
     useEffect(() => {
-        if (location.pathname.includes("/users/recipes/")) {
-            const headers = {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
-                }
-            };
-            getUserRecipeDetail(params.recipeId, headers, (response) => {
-                setRecipe(response.data);
-                const ingredients = response.data.extendedIngredients.map(elem => elem.name);
+        const headers = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        };
 
-                checkIfIngredientsAreInStock(ingredients, headers, (response) => {
-                    setIngredientInStockArray(response.data);
-                }, (error) => {
-                    console.log(error);
-                });
+        const isMyRecipesPage = location.pathname.includes("/users/recipes/");
+
+        getRecipeDetail(params.recipeId, headers, isMyRecipesPage, (response) => {
+            setRecipe(response.data);
+            const ingredients = response.data.extendedIngredients.map(elem => elem.name);
+            checkIfIngredientsAreInStock(ingredients, headers, (response) => {
+                setIngredientInStockArray(response.data);
             }, (error) => {
-                if (error.response.status === 404) {
-                    setNotFound(true);
-                }
-            })
-        } else {
-            getRecipeDetail(params.recipeId, (response) => {
-                setRecipe(response.data);
-            }, (error) => {
-                if (error.response.status === 404) {
-                    setNotFound(true);
-                }
+                console.log(error);
             });
-        }
+        }, (error) => {
+            if (error.response.status === 404) {
+                setNotFound(true);
+            }
+        });
 
         window.scrollTo(0, 0);
     }, [location.pathname, params.recipeId]);
