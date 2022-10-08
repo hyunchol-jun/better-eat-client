@@ -13,7 +13,8 @@ import {
         appendGroceryItemToUser, 
         getUserRecipeDetail, 
         removeUserRecipe, 
-        checkUserRecipe
+        checkUserRecipe,
+        checkIfIngredientsAreInStock
     } from "../utils/http-helper";
 import parse from "html-react-parser";
 import Loading from "../components/Loading/Loading";
@@ -290,6 +291,7 @@ function RecipeDetail() {
     }, [location.pathname, params.recipeId]);
 
     const [recipe, setRecipe] = useState(null);
+    const [ingredientsInStockArray, setIngredientInStockArray] = useState([]);
     const [notFound, setNotFound] = useState(false);
 
     const [isSuccess, setIsSuccess] = useState(false);
@@ -368,7 +370,7 @@ function RecipeDetail() {
             }
         };
 
-        appendGroceryItemToUser({itemName: ingredient}, headers, (response) => {
+        appendGroceryItemToUser({item_name: ingredient}, headers, (response) => {
             setIsSuccess(true);
             const copiedMessagesArray = [...messagesArray];
             copiedMessagesArray[index] = "Saved!";
@@ -393,6 +395,13 @@ function RecipeDetail() {
             };
             getUserRecipeDetail(params.recipeId, headers, (response) => {
                 setRecipe(response.data);
+                const ingredients = response.data.extendedIngredients.map(elem => elem.name);
+
+                checkIfIngredientsAreInStock(ingredients, headers, (response) => {
+                    setIngredientInStockArray(response.data);
+                }, (error) => {
+                    console.log(error);
+                });
             }, (error) => {
                 if (error.response.status === 404) {
                     setNotFound(true);
@@ -410,16 +419,6 @@ function RecipeDetail() {
 
         window.scrollTo(0, 0);
     }, [location.pathname, params.recipeId]);
-
-    const inventoryItemsFromStorage = localStorage.getItem("inventoryList");
-    const inventoryItemsArray = inventoryItemsFromStorage 
-                                ? JSON.parse(inventoryItemsFromStorage) 
-                                : [];
-
-    const returnBadgeIfNameInArray = (name, array) => {
-        const foundName = array.find(element => element.item_name.toLowerCase() === name.toLowerCase());
-        return foundName && <StyledBadge>In Stock</StyledBadge>;
-    }
 
     if (notFound) {
         return <NotFound />
@@ -479,7 +478,10 @@ function RecipeDetail() {
                                         {ingredient.original}
                                         {messagesArray[index] && <StyledTooltip isSuccess={isSuccess}>{messagesArray[index]}</StyledTooltip>}
                                     </StyledButton>
-                                    {returnBadgeIfNameInArray(ingredient.name, inventoryItemsArray)}
+                                    {ingredientsInStockArray 
+                                        && ingredientsInStockArray[index] 
+                                        && <StyledBadge>In Stock</StyledBadge>
+                                    }
                                 </StyledListItem>
                             )
                         }
