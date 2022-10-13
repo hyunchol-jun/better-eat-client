@@ -123,7 +123,7 @@ function App() {
                             setRecipes(response.data.recipes);
                             setIsRandom(true);
                           });
-  }, []);
+  }, [diets, cuisines, intolerances]);
 
   useEffect(() => {
     const changeTabletHandler = (event) => {
