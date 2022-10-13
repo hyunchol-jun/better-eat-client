@@ -10,6 +10,8 @@ import Message from "../components/Message";
 import styled from "styled-components";
 import PageMain from "../components/PageMain";
 import CheckBox from "../components/CheckBox";
+import MessageWithIcon from "../components/MessageWithIcon";
+import infoIcon from "../assets/icons/info.svg";
 
 const StyledTitle = styled.h1`
     @media (min-width: 768px) {
@@ -129,6 +131,12 @@ function GroceryList() {
             <StyledTitle>Grocery List</StyledTitle>
             <SimpleForm handleSubmit={handleAddGroceryItem} buttonText="Add"></SimpleForm>
             {message && <Message isSuccess={false}>{message}</Message>}
+            {groceryItems.length === 0 && 
+                <MessageWithIcon iconSrc={infoIcon} isSuccess={true}>
+                    The ingredient items you selected in recipes will appear here. 
+                    You can also manually add items.
+                </MessageWithIcon>
+            }
             <StyledUL>
                 {groceryItems.map((item, index) => {
                     return (
