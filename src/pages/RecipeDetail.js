@@ -127,6 +127,7 @@ const BackButton = styled.button`
     border: none;
     flex-shrink: 0;
     padding: 0;
+    cursor: pointer;
 `;
 
 const StyledBackIcon = styled.img`
