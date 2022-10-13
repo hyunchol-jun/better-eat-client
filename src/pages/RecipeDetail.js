@@ -18,7 +18,7 @@ import {
 import parse from "html-react-parser";
 import Loading from "../components/Loading/Loading";
 import NotFound from "../components/NotFound/NotFound";
-import Message from "../components/Message";
+import Tooltip from "../components/Tooltip";
 
 const PageMain = styled.main`
     position: absolute;
@@ -119,6 +119,15 @@ const SubTitle = styled.h2`
     }
 `;
 
+const TooltipSubTitle = styled(SubTitle)`
+    position: relative;
+    border-bottom: 1px dotted black;
+
+    &:hover #ingredient-tooltip {
+        visibility: visible;
+    }
+`;
+
 const BackButton = styled.button`
     position: absolute;
     top: 1rem;
@@ -127,6 +136,7 @@ const BackButton = styled.button`
     border: none;
     flex-shrink: 0;
     padding: 0;
+    cursor: pointer;
 `;
 
 const StyledBackIcon = styled.img`
@@ -251,12 +261,6 @@ const BiggerStyledButton = styled(StyledButton)`
     &:hover {
         background-color: ${props => props.buttonGreyedOut ? "var(--outline-color)" :props.buttonHoverColor};
     }
-`;
-
-const MessageWithoutBorder = styled(Message)`
-    border: none;
-    background-color: transparent;
-    padding: 0;
 `;
 
 function RecipeDetail() {
@@ -456,11 +460,14 @@ function RecipeDetail() {
                 <StyledDiv>
                     <SubTitleDiv>
                         <StyledIcon src={eggIcon} alt=""></StyledIcon>
-                        <SubTitle>Ingredients</SubTitle>
+                        <TooltipSubTitle>
+                            Ingredients
+                            <Tooltip id="ingredient-tooltip">
+                                You can click items to save to Grocery List.<br></br>
+                                Also, items you have in Inventory List will show an 'In Stock' badge next to them.
+                            </Tooltip>
+                        </TooltipSubTitle>
                     </SubTitleDiv>
-                    <MessageWithoutBorder isSuccess={true}>
-                        (Click items to save to Grocery List.)
-                    </MessageWithoutBorder>
                     <StyledList>
                         {recipe.extendedIngredients.map((ingredient, index) => 
                                 <StyledListItem key={index} >

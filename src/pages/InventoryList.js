@@ -11,6 +11,8 @@ import SecondaryButton from "../components/SecondaryButton";
 import Loading from "../components/Loading/Loading";
 import CheckBox from "../components/CheckBox";
 import Message from "../components/Message";
+import MessageWithIcon from "../components/MessageWithIcon";
+import infoIcon from "../assets/icons/info.svg";
 
 const StyledTitle = styled.h1`
     @media (min-width: 768px) {
@@ -138,6 +140,12 @@ function InventoryList({handleSearch}) {
             <StyledTitle>Inventory List</StyledTitle>
             <SimpleForm handleSubmit={handleAddItem} buttonText="Add"></SimpleForm>
             {message && <Message isSuccess={false}>{message}</Message>}
+            {inventoryItems.length === 0 && 
+                <MessageWithIcon iconSrc={infoIcon} isSuccess={true}>
+                    You can add inventory items here. 
+                    The items you have here will show an 'In Stock' badge next to it inside recipes' ingredient list.
+                </MessageWithIcon>
+            }
             <StyledUL>
                 {inventoryItems.map((item, index) => {
                     return (
