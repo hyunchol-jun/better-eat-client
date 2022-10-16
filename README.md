@@ -17,6 +17,18 @@ The recipe data is obtained from [Spoonacular API](https://spoonacular.com/food-
 
 BetterEat uses an email address as the user ID for the website. It doesn't need to be a valid email address as long as it's in the email format and unique(not already existing.) The server doesn't store the password. Instead, it keeps the hash with the [bcrypt](https://www.npmjs.com/package/bcrypt) library.
 
+## How to Install
+
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Create .env file with the following contents.
+```
+REACT_APP_API_KEY=<YOUR_SPOONACULAR_API_KEY>
+REACT_APP_BACKEND_URL=<YOUR_BACKEND_URL>
+```
+4. Run the [back-end server](https://github.com/hyunchol-jun/better-eat-server).
+5. Run `npm start`.
+
 ## Pages
 
 ### Home page
