@@ -36,9 +36,8 @@ const PageMain = styled.main`
     }
 
     @media (min-width: 1280px) {
-        position: static;
         margin: auto;
-        max-width: 64rem;
+        max-width: 52rem;
         min-height: calc(100vh - 15rem);
     }
 `;
@@ -70,7 +69,7 @@ const StyledSection = styled.section`
     }
 
     @media (min-width: 1280px) {
-        padding: 3rem 8rem 3rem;
+        padding: 3rem 2rem 3rem;
         align-items: flex-end;
         gap: 2.5rem;
     }
