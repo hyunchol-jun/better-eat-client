@@ -241,6 +241,11 @@ const StyledButton = styled.button`
     @media (min-width: 768px) {
         font-size: 1.25rem;
     }
+
+    &:hover {
+        background-color: var(--primary-text-color);
+        color: white;
+    }
 `;
 
 const BiggerStyledButton = styled(StyledButton)`
