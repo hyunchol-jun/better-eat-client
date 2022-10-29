@@ -186,7 +186,7 @@ const StyledBadge = styled.span`
     }
 
     @media (min-width: 1280px) {
-        right: 11.5rem;
+        right: 5.5rem;
     }
 `;
 
