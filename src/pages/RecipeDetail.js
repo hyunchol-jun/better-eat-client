@@ -380,7 +380,7 @@ function RecipeDetail() {
         appendGroceryItemToUser({item_name: ingredient}, headers, (response) => {
             setIsSuccess(true);
             const copiedMessagesArray = [...messagesArray];
-            copiedMessagesArray[index] = "Saved!";
+            copiedMessagesArray[index] = "Saved to Grocery List";
             setMessagesArray(copiedMessagesArray);
             setTimeout(() => {setMessagesArray([])}, 1000);
         }, (error) => {
