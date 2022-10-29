@@ -30,7 +30,7 @@ const {
 } = process.env;
 
 const logError = (error) => {
-    console.log(error);
+    console.error(error);
 };
 
 export const getRecipesList = (searchQuery, diets, cuisines, intolerances, currentOffset, callback) => {
