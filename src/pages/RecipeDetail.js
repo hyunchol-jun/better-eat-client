@@ -4,6 +4,7 @@ import timeIcon from "../assets/icons/clock.svg";
 import eggIcon from "../assets/icons/egg.svg";
 import cuisineIcon from "../assets/icons/cuisine.svg";
 import instructionsIcon from "../assets/icons/instructions.svg";
+import questionIcon from "../assets/icons/question.svg";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -104,8 +105,22 @@ const SubTitleDiv = styled.div`
     align-items: center;
 `;
 
+const SubtitleContainerDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 const StyledIcon = styled.img`
     width: 1.5rem;
+    vertical-align: bottom;
+`;
+
+const DivWithTooltip = styled.div`
+    position: relative;
+
+    &:hover #ingredient-tooltip {
+        visibility: visible;
+    }
 `;
 
 const SubTitle = styled.h2`
@@ -115,15 +130,6 @@ const SubTitle = styled.h2`
     
     @media (min-width: 768px) {
         font-size: 1.25rem;
-    }
-`;
-
-const TooltipSubTitle = styled(SubTitle)`
-    position: relative;
-    border-bottom: 1px dotted black;
-
-    &:hover #ingredient-tooltip {
-        visibility: visible;
     }
 `;
 
@@ -462,16 +468,22 @@ function RecipeDetail() {
                     </SubTitleDiv>
                 </StyledDiv>
                 <StyledDiv>
-                    <SubTitleDiv>
-                        <StyledIcon src={eggIcon} alt=""></StyledIcon>
-                        <TooltipSubTitle>
-                            Ingredients
+                    <SubtitleContainerDiv>
+                        <SubTitleDiv>
+                            <StyledIcon src={eggIcon} alt=""></StyledIcon>
+                            <SubTitle>
+                                Ingredients
+                            </SubTitle>
+                        </SubTitleDiv>
+                        <DivWithTooltip>
+                            <StyledIcon src={questionIcon} alt="">
+                            </StyledIcon>
                             <Tooltip id="ingredient-tooltip">
                                 You can click items to save to Grocery List.<br></br>
                                 Also, items you have in Inventory List will show an 'In Stock' badge next to them.
                             </Tooltip>
-                        </TooltipSubTitle>
-                    </SubTitleDiv>
+                        </DivWithTooltip>
+                    </SubtitleContainerDiv>
                     <StyledList>
                         {recipe.extendedIngredients.map((ingredient, index) => 
                                 <StyledListItem key={index} >

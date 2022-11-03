@@ -12,16 +12,17 @@ const StyledTooltip = styled.span`
     background-color: var(--secondary-text-color);
     position: absolute;
     z-index: 1;
-    left: 0;
+    left: -13rem;
     bottom :100%;
     width: 15rem;
 
     @media (min-width: 768px) {
-        left: -3rem;
+        left: -26.5rem;
         width: 30rem;
     }
 
     @media (min-width: 1280px) {
+        left: -35rem;
         width: 40rem;
     }
 
@@ -29,14 +30,18 @@ const StyledTooltip = styled.span`
         content: " ";
         position: absolute;
         top: 100%;
-        left: 10%;
+        left: 92%;
         margin-left: -0.5rem;
         border-width: 0.5rem;
         border-style: solid;
         border-color: var(--secondary-text-color) transparent transparent transparent;
 
         @media (min-width: 768px) {
-            left: 20%;
+            left: 91%;
+        }
+
+        @media (min-width: 768px) {
+            left: 89.5%;
         }
     }
 `;
