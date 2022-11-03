@@ -11,7 +11,7 @@ const StyledTooltip = styled.span`
     padding: 0.25rem 0.5rem;
     background-color: var(--secondary-text-color);
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     left: 0;
     bottom :100%;
     width: 15rem;
