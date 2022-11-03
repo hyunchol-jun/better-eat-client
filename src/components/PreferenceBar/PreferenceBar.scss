@@ -121,6 +121,7 @@
     font-family: inherit;
     color: var(--primary-text-color);
     padding: 0;
+    cursor: pointer;
 
     @include tablet {
       font-size: 1.25rem;
