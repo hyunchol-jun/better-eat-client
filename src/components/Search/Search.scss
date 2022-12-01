@@ -53,7 +53,7 @@
     cursor: pointer;
 
     &:hover {
-        background-color: var(--primary-tonned-down-color);
+      background-color: var(--primary-tonned-down-color);
     }
 
     @include tablet {

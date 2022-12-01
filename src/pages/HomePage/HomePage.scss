@@ -1,20 +1,20 @@
 @use "../../styles/partials/breakpoints" as *;
 
 .home-page {
-    margin: 0 1rem 1rem;
-    min-height: calc(100vh - 8.5rem);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin: 0 1rem 1rem;
+  min-height: calc(100vh - 8.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    @include tablet {
-        margin: 0 2rem 1rem 14rem;
-        min-height: calc(100vh - 11rem);
-    }
+  @include tablet {
+    margin: 0 2rem 1rem 14rem;
+    min-height: calc(100vh - 11rem);
+  }
 
-    @include desktop {
-        max-width: 64rem;
-        margin: 2rem auto 3rem;
-        min-height: calc(100vh - 15rem);
-    }
+  @include desktop {
+    max-width: 64rem;
+    margin: 2rem auto 3rem;
+    min-height: calc(100vh - 15rem);
+  }
 }

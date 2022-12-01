@@ -1,9 +1,8 @@
 export const convertPreferenceObjectIntoArray = (preferenceObject) => {
-    const outputArray = [];
+  const outputArray = [];
 
-    for (const key in preferenceObject) 
-        if (preferenceObject[key])
-        outputArray.push(key); 
+  for (const key in preferenceObject)
+    if (preferenceObject[key]) outputArray.push(key);
 
-    return outputArray;
-}
+  return outputArray;
+};

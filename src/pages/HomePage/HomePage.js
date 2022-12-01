@@ -1,7 +1,7 @@
 import "./HomePage.scss";
-import PreferenceBar from '../../components/PreferenceBar/PreferenceBar';
-import RecipesList from '../../components/RecipesList/RecipesList';
-import Search from '../../components/Search/Search';
+import PreferenceBar from "../../components/PreferenceBar/PreferenceBar";
+import RecipesList from "../../components/RecipesList/RecipesList";
+import Search from "../../components/Search/Search";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -29,9 +29,8 @@ function HomePage({
   handleSearch,
   handleLoadMore,
   loadMoreShown,
-  isRandom
+  isRandom,
 }) {
-
   // Check if logged in
   const navigate = useNavigate();
   useEffect(() => {
@@ -41,10 +40,9 @@ function HomePage({
     }
   }, [navigate]);
 
-
   return (
     <main className="home-page">
-      <PreferenceBar 
+      <PreferenceBar
         diets={diets}
         cuisines={cuisines}
         intolerances={intolerances}
@@ -52,21 +50,27 @@ function HomePage({
         handleCuisineChange={handleCuisineChange}
         handleIntoleranceChange={handleIntoleranceChange}
       />
-      <Search handleSearch={handleSearch}/>
-      {recipes && recipes.length === 0
-        ? <MessageWithIcon iconSrc={warningIcon} isSuccess={false}>
-            There are no results.
+      <Search handleSearch={handleSearch} />
+      {recipes && recipes.length === 0 ? (
+        <MessageWithIcon iconSrc={warningIcon} isSuccess={false}>
+          There are no results.
+        </MessageWithIcon>
+      ) : recipes && recipes.length !== 0 && isRandom ? (
+        <>
+          <MessageWithIcon iconSrc={suggestIcon} isSuccess={true}>
+            Here are some suggestions based on your preference setting.
           </MessageWithIcon>
-        : recipes && recipes.length !== 0 && isRandom
-        ? <>
-            <MessageWithIcon iconSrc={suggestIcon} isSuccess={true}>
-              Here are some suggestions based on your preference setting.
-            </MessageWithIcon>
-            <RecipesList recipes={recipes} to={"/recipes/"}/>
-          </>
-        : <RecipesList recipes={recipes} to={"/recipes/"}/>
-      }
-      {loadMoreShown && <StyledButton buttonText="Load more" onClick={handleLoadMore}></StyledButton>}
+          <RecipesList recipes={recipes} to={"/recipes/"} />
+        </>
+      ) : (
+        <RecipesList recipes={recipes} to={"/recipes/"} />
+      )}
+      {loadMoreShown && (
+        <StyledButton
+          buttonText="Load more"
+          onClick={handleLoadMore}
+        ></StyledButton>
+      )}
     </main>
   );
 }

@@ -15,7 +15,7 @@
     }
   }
 
-  &__title{
+  &__title {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -78,7 +78,7 @@
     right: 0;
     bottom: 0;
     background-color: var(--outline-color);
-    transition: .2s;
+    transition: 0.2s;
 
     &:before {
       border-radius: 50%;
@@ -89,7 +89,7 @@
       left: 4px;
       bottom: 4px;
       background-color: white;
-      transition: .2s;
+      transition: 0.2s;
     }
   }
 
@@ -126,7 +126,6 @@
     @include tablet {
       font-size: 1.25rem;
     }
-
   }
 
   &__expand-icon {

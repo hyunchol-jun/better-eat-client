@@ -1,85 +1,88 @@
 @use "./styles/partials/fonts" as *;
 @use "./styles/partials/breakpoints" as *;
 
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-    font-family: "AvenirNextLTPro", sans-serif;
-    margin: 0;
-    color: #2b2b2b;
-    font-size: 1rem;
-    line-height: 1.5rem;
+  font-family: "AvenirNextLTPro", sans-serif;
+  margin: 0;
+  color: #2b2b2b;
+  font-size: 1rem;
+  line-height: 1.5rem;
 
-    @include tablet {
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-    }
+  @include tablet {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 h1 {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 
-    @include tablet {
-        font-size: 1.75rem;
-    }
+  @include tablet {
+    font-size: 1.75rem;
+  }
 
-    @include desktop {
-        font-size: 2rem;
-    }
+  @include desktop {
+    font-size: 2rem;
+  }
 }
 
 label {
-    font-size: 1rem;
+  font-size: 1rem;
 
-    @include tablet {
-        font-size: 1.25rem;
-    }
+  @include tablet {
+    font-size: 1.25rem;
+  }
 }
 
-ol, ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 ol li {
-    padding: 0.5rem 0;
-    line-height: 1.5rem;
+  padding: 0.5rem 0;
+  line-height: 1.5rem;
 
-    @include tablet {
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-    }
+  @include tablet {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 
-    @include tablet {
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-    }
+  @include tablet {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 span {
-    font-size: 1rem;
+  font-size: 1rem;
 
-    @include tablet {
-        font-size: 1.25rem;
-    }
+  @include tablet {
+    font-size: 1.25rem;
+  }
 }
 
 :root {
-    --primary-color: #e1ad01;
-    --primary-tonned-down-color: #b09231;
-    --secondary-color: #78910b;
-    --primary-text-color: #2b2b2b;
-    --secondary-text-color: #888888;
-    --outline-color: #cccccc;
-    --background-color: #eeeeee;
-    --warning-color: #842029;
-    --warning-tonned-down-color: #6b393e;
+  --primary-color: #e1ad01;
+  --primary-tonned-down-color: #b09231;
+  --secondary-color: #78910b;
+  --primary-text-color: #2b2b2b;
+  --secondary-text-color: #888888;
+  --outline-color: #cccccc;
+  --background-color: #eeeeee;
+  --warning-color: #842029;
+  --warning-tonned-down-color: #6b393e;
 }

@@ -7,6 +7,7 @@ You can visit the live website at http://better-eat.hyuncholjun.com/.
 The recipe data is obtained from [Spoonacular API](https://spoonacular.com/food-api).
 
 ## Tech stack
+
 - React
 - React-router-dom
 - Sass
@@ -35,10 +36,10 @@ The ingredients on this page are buttons and when clicked will save the item to 
 
 ### Grocery list
 
-All the grocery items the user has saved will appear on this page. Users can also manually type in grocery items and as long as the item is unigue(checked by MySQL  unique constraint), the items will be added.
+All the grocery items the user has saved will appear on this page. Users can also manually type in grocery items and as long as the item is unigue(checked by MySQL unique constraint), the items will be added.
 Checked-off items will be deleted from the server when the user leaves the page.
 
 ### Inventory list
 
-Here, users can add/delete items. All items are associated with a search recipe button next to it, so that the user can search recipes with the item as a keyword. 
+Here, users can add/delete items. All items are associated with a search recipe button next to it, so that the user can search recipes with the item as a keyword.
 When users browse through recipes 'In Stock' badge will appear next to the ingredient item in the recipe if the user happens to have the item in their inventory list.
