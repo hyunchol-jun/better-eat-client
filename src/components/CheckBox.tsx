@@ -1,6 +1,11 @@
+import * as React from "react";
 import styled from "styled-components";
 
-const StyledLabel = styled.label`
+interface StyledLableProps {
+  checked: boolean;
+}
+
+const StyledLabel = styled.label<StyledLableProps>`
   display: flex;
   position: relative;
   padding-left: 1.75rem;
@@ -82,7 +87,13 @@ const StyledCheckmark = styled.span`
   }
 `;
 
-function CheckBox({ children, checked, onChange }) {
+interface CheckboxProps {
+  children?: React.ReactNode;
+  checked: boolean;
+  onChange: () => void;
+}
+
+function CheckBox({ children, checked, onChange }: CheckboxProps) {
   return (
     <StyledLabel checked={checked}>
       {children}

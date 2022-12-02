@@ -1,6 +1,7 @@
+import * as React from "react";
 import "./Loading.scss";
 
-function Loading() {
+function Loading(): JSX.Element {
   return (
     <div className="loading">
       <div className="loading__spinner"></div>

@@ -1,3 +1,4 @@
+import * as React from "react";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
@@ -27,7 +28,23 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ buttonText, as, to, onClick, tooltip, className }) {
+type ButtonProps = {
+  buttonText: string;
+  as?: any;
+  to: string;
+  onClick?: () => void;
+  tooltip?: string;
+  className?: string;
+};
+
+function Button({
+  buttonText,
+  as,
+  to,
+  onClick,
+  tooltip,
+  className,
+}: ButtonProps) {
   return (
     <StyledButton as={as} to={to} onClick={onClick} className={className}>
       {buttonText} {tooltip}
