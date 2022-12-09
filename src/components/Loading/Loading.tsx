@@ -1,4 +1,3 @@
-import * as React from "react";
 import "./Loading.scss";
 
 function Loading(): JSX.Element {
