@@ -28,7 +28,7 @@ interface LabeledInputProps {
   labelText: string;
   type: string;
   name: string;
-  autoComplete: string;
+  autoComplete?: string;
 }
 
 function LabeledInput({

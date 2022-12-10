@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { requestSignup } from "../utils/http-helper";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { requestLogin } from "../utils/http-helper";
+import Button from "../components/Button";
 import LabeledInput from "../components/LabeledInput";
 import Message from "../components/Message";
-import Button from "../components/Button";
 import PageMain from "../components/PageMain";
 
 const StyledForm = styled.form`
@@ -31,39 +31,34 @@ const StyledButton = styled(Button)`
   }
 `;
 
-function Signup() {
-  const [errorMessage, setErrorMessage] = useState(null);
+const StyledSpan = styled.span`
+  width: 100%;
+`;
+
+function Login() {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSignup = (event) => {
+  useEffect(() => {
+    localStorage.removeItem("token");
+  }, []);
+
+  const handleLogin = (event) => {
     event.preventDefault();
 
     const formValues = {
-      name: event.target.name.value,
       email: event.target.email.value,
       password: event.target.password.value,
-      confirmPassword: event.target.confirmPassword.value,
     };
 
-    if (formValues.password !== formValues.confirmPassword) {
-      setIsSuccess(false);
-      setErrorMessage("Passwords don't match.");
-      return;
-    }
-
-    if (formValues.password.length < 8) {
-      setIsSuccess(false);
-      setErrorMessage("Password must be longer than 7 characters.");
-      return;
-    }
-
-    requestSignup(
+    requestLogin(
       formValues,
-      () => {
+      (response) => {
         setIsSuccess(true);
-        setErrorMessage("Successfully signed up!");
-        setTimeout(() => navigate("/login"), 1000);
+        setErrorMessage("Successfully logged in!");
+        localStorage.setItem("token", response.data.token);
+        setTimeout(() => navigate("/"), 1000);
       },
       (error) => {
         setIsSuccess(false);
@@ -74,9 +69,8 @@ function Signup() {
 
   return (
     <PageMain>
-      <h1>Sign Up</h1>
-      <StyledForm onSubmit={handleSignup}>
-        <LabeledInput labelText="Name" type="text" name="name" />
+      <h1>Log in</h1>
+      <StyledForm onSubmit={handleLogin}>
         <LabeledInput
           labelText="Email"
           type="email"
@@ -87,21 +81,19 @@ function Signup() {
           labelText="Password"
           type="password"
           name="password"
-          autoComplete="new-password"
+          autoComplete="current-password"
         />
-        <LabeledInput
-          labelText="Confirm password"
-          type="password"
-          name="confirmPassword"
-          autoComplete="new-password"
-        />
-        <StyledButton buttonText={"Sign up"}></StyledButton>
         {errorMessage && (
           <Message isSuccess={isSuccess}>{errorMessage}</Message>
         )}
+        <StyledButton buttonText={"Login"}></StyledButton>
+        <StyledSpan>
+          Don't have an account? &nbsp;
+          <Link to="/signup">Sign up</Link>
+        </StyledSpan>
       </StyledForm>
     </PageMain>
   );
 }
 
-export default Signup;
+export default Login;

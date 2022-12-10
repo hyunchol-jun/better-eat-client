@@ -6,6 +6,7 @@ import styled from "styled-components";
 import checkIcon from "../assets/icons/check.svg";
 import PageMain from "../components/PageMain";
 import MessageWithIcon from "../components/MessageWithIcon";
+import { Recipe } from "../interfaces";
 
 const StyledMain = styled(PageMain)`
   min-height: calc(100vh - 7.5rem);
@@ -31,6 +32,7 @@ const StyledTitle = styled.h1`
 function MyRecipes() {
   // Check if logged in
   const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -38,7 +40,7 @@ function MyRecipes() {
     }
   }, [navigate]);
 
-  const [recipes, setRecipes] = useState(null);
+  const [recipes, setRecipes] = useState<Recipe[] | null>(null);
 
   useEffect(() => {
     const headers = {
@@ -55,13 +57,14 @@ function MyRecipes() {
   return (
     <StyledMain>
       <StyledTitle>My Recipes</StyledTitle>
-      {recipes && recipes.length === 0 ? (
-        <MessageWithIcon iconSrc={checkIcon} isSuccess={true}>
-          You have no recipes saved.
-        </MessageWithIcon>
-      ) : (
-        <RecipesList recipes={recipes} to={"/users/recipes/"} />
-      )}
+      {recipes &&
+        (recipes.length === 0 ? (
+          <MessageWithIcon iconSrc={checkIcon} isSuccess={true}>
+            You have no recipes saved.
+          </MessageWithIcon>
+        ) : (
+          <RecipesList recipes={recipes} to={"/users/recipes/"} />
+        ))}
     </StyledMain>
   );
 }

@@ -52,14 +52,21 @@ export interface Intolerances {
   Wheat: boolean;
 }
 
+export interface Ingredient {
+  id: number;
+  name: string;
+  original: string;
+}
+
 export interface Recipe {
   id: number;
   image: string;
   title: string;
   cuisines: string[];
   diets: string[];
-  extendedIngredients: {}[];
+  extendedIngredients: Ingredient[];
   readyInMinutes: number;
+  ready_min?: number;
   instructions: string;
 }
 

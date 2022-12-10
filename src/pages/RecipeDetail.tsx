@@ -20,6 +20,7 @@ import parse from "html-react-parser";
 import Loading from "../components/Loading/Loading";
 import NotFound from "../components/NotFound/NotFound";
 import Tooltip from "../components/Tooltip";
+import { Recipe } from "../interfaces";
 
 const PageMain = styled.main`
   position: absolute;
@@ -196,7 +197,7 @@ const StyledBadge = styled.span`
   }
 `;
 
-const StyledTooltip = styled.span`
+const StyledTooltip = styled.span<{ isSuccess: boolean }>`
   font-size: 1rem;
   font-weight: bold;
   color: ${(props) =>
@@ -259,7 +260,12 @@ const StyledButton = styled.button`
   }
 `;
 
-const BiggerStyledButton = styled(StyledButton)`
+interface BiggerStyledButtonProps {
+  buttonGreyedOut: boolean;
+  buttonColor: string;
+  buttonHoverColor: string;
+}
+const BiggerStyledButton = styled(StyledButton)<BiggerStyledButtonProps>`
   font-weight: bold;
   border: none;
   padding: 0.5rem 1rem;
@@ -302,21 +308,28 @@ function RecipeDetail() {
         },
       };
 
-      checkUserRecipe(params.recipeId, headers, (response) => {
-        if (response.data.length > 0) {
-          setButtonGreyedOut(true);
+      checkUserRecipe(
+        params.recipeId,
+        headers,
+        (response) => {
+          if (response.data.length > 0) {
+            setButtonGreyedOut(true);
+          }
+        },
+        (error) => {
+          console.error(error);
         }
-      });
+      );
     }
   }, [location.pathname, params.recipeId]);
 
-  const [recipe, setRecipe] = useState(null);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [ingredientsInStockArray, setIngredientInStockArray] = useState([]);
   const [notFound, setNotFound] = useState(false);
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState("");
-  const [messagesArray, setMessagesArray] = useState([]);
+  const [messagesArray, setMessagesArray] = useState<string[]>([]);
   const [buttonGreyedOut, setButtonGreyedOut] = useState(false);
 
   const handleDeleteRecipe = () => {
@@ -359,7 +372,7 @@ function RecipeDetail() {
       },
     };
 
-    const ingredients = recipe.extendedIngredients.map((ingredient) => {
+    const ingredients = recipe!.extendedIngredients.map((ingredient) => {
       return {
         id: ingredient.id,
         name: ingredient.name,
@@ -368,13 +381,13 @@ function RecipeDetail() {
     });
 
     const body = {
-      id: recipe.id,
-      title: recipe.title,
-      diets: JSON.stringify(recipe.diets),
-      cuisines: JSON.stringify(recipe.cuisines),
-      instructions: recipe.instructions,
-      image: recipe.image,
-      ready_min: recipe.readyInMinutes,
+      id: recipe!.id,
+      title: recipe!.title,
+      diets: JSON.stringify(recipe!.diets),
+      cuisines: JSON.stringify(recipe!.cuisines),
+      instructions: recipe!.instructions,
+      image: recipe!.image,
+      ready_min: recipe!.readyInMinutes,
       extendedIngredients: JSON.stringify(ingredients),
     };
 
