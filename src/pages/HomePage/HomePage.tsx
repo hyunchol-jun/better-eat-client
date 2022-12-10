@@ -9,6 +9,7 @@ import suggestIcon from "../../assets/icons/suggest.svg";
 import warningIcon from "../../assets/icons/warning.svg";
 import Button from "../../components/Button";
 import MessageWithIcon from "../../components/MessageWithIcon";
+import { Cuisines, Diets, Intolerances, Recipe } from "../../interfaces";
 
 const StyledButton = styled(Button)`
   background-color: var(--secondary-color);
@@ -17,6 +18,20 @@ const StyledButton = styled(Button)`
     background-color: var(--secondary-text-color);
   }
 `;
+
+interface HomePageProps {
+  recipes: Recipe[];
+  diets: Diets;
+  cuisines: Cuisines;
+  intolerances: Intolerances;
+  handleCuisineChange: () => void;
+  handleDietChange: () => void;
+  handleIntoleranceChange: () => void;
+  handleSearch: () => void;
+  handleLoadMore: () => void;
+  loadMoreShown: boolean;
+  isRandom: boolean;
+}
 
 function HomePage({
   recipes,
@@ -30,7 +45,7 @@ function HomePage({
   handleLoadMore,
   loadMoreShown,
   isRandom,
-}) {
+}: HomePageProps) {
   // Check if logged in
   const navigate = useNavigate();
   useEffect(() => {
