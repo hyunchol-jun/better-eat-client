@@ -30,7 +30,7 @@ const StyledButton = styled.button`
 type ButtonProps = {
   buttonText: string;
   as?: any;
-  to: string;
+  to?: string;
   onClick?: () => void;
   tooltip?: string;
   className?: string;

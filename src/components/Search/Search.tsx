@@ -1,6 +1,10 @@
 import "./Search.scss";
 
-function Search({ handleSearch }) {
+interface SearchProps {
+  handleSearch: () => void;
+}
+
+function Search({ handleSearch }: SearchProps) {
   return (
     <section className="search">
       <form className="search__form" onSubmit={handleSearch}>

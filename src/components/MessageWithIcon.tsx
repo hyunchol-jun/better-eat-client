@@ -11,7 +11,17 @@ const StyledIcon = styled.img`
   width: 1.5rem;
 `;
 
-function MessageWithIcon({ iconSrc, isSuccess, children }) {
+interface MessageWithIconProps {
+  iconSrc: string;
+  isSuccess: boolean;
+  children: React.ReactNode;
+}
+
+function MessageWithIcon({
+  iconSrc,
+  isSuccess,
+  children,
+}: MessageWithIconProps) {
   return (
     <StyledMessageContainer>
       <StyledIcon src={iconSrc} alt=""></StyledIcon>

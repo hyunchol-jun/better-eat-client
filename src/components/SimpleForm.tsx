@@ -38,7 +38,12 @@ const StyledInput = styled.input`
   }
 `;
 
-function SimpleForm({ handleSubmit, buttonText }) {
+interface SimpleFormProps {
+  handleSubmit: () => void;
+  buttonText: string;
+}
+
+function SimpleForm({ handleSubmit, buttonText }: SimpleFormProps) {
   return (
     <section>
       <StyledForm onSubmit={handleSubmit}>

@@ -4,7 +4,12 @@ import menuIcon from "../../assets/icons/menu.svg";
 import logoIcon from "../../assets/icons/logo.svg";
 import closeIcon from "../../assets/icons/close.svg";
 
-function PageHeader({ handleClick, sidebarShown }) {
+interface PageHeaderProps {
+  handleClick: () => void;
+  sidebarShown: boolean;
+}
+
+function PageHeader({ handleClick, sidebarShown }: PageHeaderProps) {
   const location = useLocation();
 
   return (

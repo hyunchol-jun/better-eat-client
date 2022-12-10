@@ -18,7 +18,11 @@ const StyledButton = styled.button`
   }
 `;
 
-function SecondaryButton({ children, onClick }) {
+interface SecondaryButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+}
+function SecondaryButton({ children, onClick }: SecondaryButtonProps) {
   return <StyledButton onClick={onClick}>{children}</StyledButton>;
 }
 

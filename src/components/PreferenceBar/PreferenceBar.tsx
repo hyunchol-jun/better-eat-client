@@ -2,6 +2,16 @@ import "./PreferenceBar.scss";
 import moreIcon from "../../assets/icons/more.svg";
 import { useState } from "react";
 import toggleIcon from "../../assets/icons/toggle.svg";
+import { Diets, Cuisines, Intolerances } from "../../interfaces";
+
+interface PreferenceBarProps {
+  diets: Diets;
+  cuisines: Cuisines;
+  intolerances: Intolerances;
+  handleDietChange: (arg0: string) => void;
+  handleCuisineChange: (arg0: string) => void;
+  handleIntoleranceChange: (arg0: string) => void;
+}
 
 function PreferenceBar({
   diets,
@@ -10,7 +20,7 @@ function PreferenceBar({
   handleDietChange,
   handleCuisineChange,
   handleIntoleranceChange,
-}) {
+}: PreferenceBarProps) {
   const [dietsShown, setDietsShown] = useState(false);
   const [cuisinesShown, setCuisinesShown] = useState(false);
   const [intolerancesShown, setIntolerancesShown] = useState(false);

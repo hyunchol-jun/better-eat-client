@@ -1,8 +1,14 @@
 import "./RecipesList.scss";
 import RecipeCard from "../RecipeCard/RecipeCard";
 import Loading from "../Loading/Loading";
+import { Recipe } from "../../interfaces";
 
-function RecipesList({ recipes, to }) {
+interface RecipesListProps {
+  recipes: Recipe[];
+  to: string;
+}
+
+function RecipesList({ recipes, to }: RecipesListProps) {
   if (!recipes) {
     return <Loading />;
   }

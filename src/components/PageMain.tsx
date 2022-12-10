@@ -16,7 +16,11 @@ const StyledMain = styled.main`
   }
 `;
 
-function PageMain({ children }) {
+interface PageMainProps {
+  children: React.ReactNode;
+}
+
+function PageMain({ children }: PageMainProps) {
   return <StyledMain>{children}</StyledMain>;
 }
 

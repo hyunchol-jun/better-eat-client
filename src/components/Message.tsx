@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const StyledMessage = styled.p`
+interface StyledMessageProps {
+  isSuccess: boolean;
+}
+
+const StyledMessage = styled.p<StyledMessageProps>`
   font-size: 1rem;
   color: ${(props) =>
     props.isSuccess ? "var(--secondary-color)" : "var(--warning-color)"};
@@ -18,7 +22,13 @@ const StyledMessage = styled.p`
   }
 `;
 
-function Message({ children, isSuccess, className }) {
+interface MessageProps {
+  children: React.ReactNode;
+  isSuccess: boolean;
+  className?: string;
+}
+
+function Message({ children, isSuccess, className }: MessageProps) {
   return (
     <StyledMessage isSuccess={isSuccess} className={className}>
       {children}

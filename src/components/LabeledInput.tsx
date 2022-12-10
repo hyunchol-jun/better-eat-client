@@ -24,7 +24,19 @@ const StyledInput = styled.input`
   }
 `;
 
-function LabeledInput({ labelText, type, name, autoComplete }) {
+interface LabeledInputProps {
+  labelText: string;
+  type: string;
+  name: string;
+  autoComplete: string;
+}
+
+function LabeledInput({
+  labelText,
+  type,
+  name,
+  autoComplete,
+}: LabeledInputProps) {
   return (
     <StyledLabel>
       {labelText}

@@ -47,7 +47,12 @@ const StyledTooltip = styled.span`
   }
 `;
 
-function Tooltip({ children, id }) {
+interface TooltipProps {
+  children: React.ReactNode;
+  id?: string;
+}
+
+function Tooltip({ children, id }: TooltipProps) {
   return <StyledTooltip id={id}>{children}</StyledTooltip>;
 }
 

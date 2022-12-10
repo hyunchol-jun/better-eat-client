@@ -6,7 +6,17 @@ const StyledMessageWithoutBorder = styled(Message)`
   background-color: transparent;
 `;
 
-function MessageWithoutBorder({ children, isSuccess, className }) {
+interface MessageWithoutBorderProps {
+  children: React.ReactNode;
+  isSuccess: boolean;
+  className?: string;
+}
+
+function MessageWithoutBorder({
+  children,
+  isSuccess,
+  className,
+}: MessageWithoutBorderProps) {
   return (
     <StyledMessageWithoutBorder isSuccess={isSuccess} className={className}>
       {children}

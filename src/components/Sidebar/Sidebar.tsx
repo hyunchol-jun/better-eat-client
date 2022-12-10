@@ -1,12 +1,20 @@
 import "./Sidebar.scss";
 import { NavLink } from "react-router-dom";
 
+interface SidebarProps {
+  sidebarAnimation: string;
+  backgroundAnimation: string;
+  handleBackgroundClick: () => void;
+}
+
 function Sidebar({
   sidebarAnimation,
   backgroundAnimation,
   handleBackgroundClick,
-}) {
-  const handleBarClick = (event) => {
+}: SidebarProps) {
+  const handleBarClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     event.preventDefault();
     event.stopPropagation();
   };
