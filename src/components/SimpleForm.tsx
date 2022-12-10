@@ -39,7 +39,7 @@ const StyledInput = styled.input`
 `;
 
 interface SimpleFormProps {
-  handleSubmit: () => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   buttonText: string;
 }
 

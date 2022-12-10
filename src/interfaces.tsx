@@ -62,3 +62,20 @@ export interface Recipe {
   readyInMinutes: number;
   instructions: string;
 }
+
+export interface GroceryItem {
+  checked: boolean;
+  created_at: string;
+  id: number;
+  item_name: string;
+  user_id: number;
+}
+
+export interface Headers {
+  headers: {
+    Authorization: string;
+  };
+  data?: {
+    id: number;
+  };
+}

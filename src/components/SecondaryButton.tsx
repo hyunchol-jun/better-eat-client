@@ -20,7 +20,7 @@ const StyledButton = styled.button`
 
 interface SecondaryButtonProps {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 function SecondaryButton({ children, onClick }: SecondaryButtonProps) {
   return <StyledButton onClick={onClick}>{children}</StyledButton>;

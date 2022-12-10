@@ -13,6 +13,7 @@ import PageMain from "../components/PageMain";
 import CheckBox from "../components/CheckBox";
 import MessageWithIcon from "../components/MessageWithIcon";
 import infoIcon from "../assets/icons/info.svg";
+import { GroceryItem, Headers } from "../interfaces";
 
 const StyledTitle = styled.h1`
   @media (min-width: 768px) {
@@ -35,22 +36,27 @@ const StyledListItem = styled.li`
 `;
 
 function GroceryList() {
-  const [groceryItems, setGroceryItems] = useState(null);
+  const [groceryItems, setGroceryItems] = useState<GroceryItem[] | null>(null);
   const [message, setMessage] = useState("");
-  const groceryItemsRef = useRef();
+  const groceryItemsRef = useRef<GroceryItem[]>();
 
-  const handleGroceryItemsChange = (itemIndex) => {
+  const handleGroceryItemsChange = (itemIndex: number) => {
     setGroceryItems((prevState) => {
-      const copiedState = [...prevState];
+      const copiedState = [...prevState!];
       // Deep copy
       copiedState[itemIndex] = { ...copiedState[itemIndex] };
       copiedState[itemIndex].checked = !copiedState[itemIndex].checked;
       groceryItemsRef.current = copiedState;
       return copiedState;
     });
+    console.log(groceryItems);
   };
 
-  const deleteAllCheckedItemsFromServer = (itemsArray, headers, callback) => {
+  const deleteAllCheckedItemsFromServer = (
+    itemsArray: GroceryItem[],
+    headers: Headers,
+    callback: Function
+  ) => {
     if (itemsArray) {
       itemsArray.forEach((item) => {
         if (item.checked) {
@@ -78,7 +84,7 @@ function GroceryList() {
       },
     };
 
-    getAllUserGroceryItems(headers, (response) => {
+    getAllUserGroceryItems(headers, (response: { data: GroceryItem[] }) => {
       const userItems = response.data;
       userItems.forEach((item) => {
         item.checked = false;
@@ -89,7 +95,7 @@ function GroceryList() {
 
     return function cleanUp() {
       deleteAllCheckedItemsFromServer(
-        groceryItemsRef.current,
+        groceryItemsRef.current!,
         headers,
         (response) => console.log(response)
       );
@@ -112,7 +118,7 @@ function GroceryList() {
         const newItem = response.data;
         newItem.checked = false;
         setGroceryItems((prevState) => {
-          const copiedState = [...prevState, newItem];
+          const copiedState = [...prevState!, newItem];
           groceryItemsRef.current = copiedState;
           return copiedState;
         });

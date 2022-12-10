@@ -14,6 +14,7 @@ import CheckBox from "../components/CheckBox";
 import Message from "../components/Message";
 import MessageWithIcon from "../components/MessageWithIcon";
 import infoIcon from "../assets/icons/info.svg";
+import { Headers } from "../interfaces";
 
 const StyledTitle = styled.h1`
   @media (min-width: 768px) {
@@ -39,7 +40,22 @@ const StyledListItem = styled.li`
   padding: 0.25rem 0;
 `;
 
-function InventoryList({ handleSearch }) {
+interface InventoryItem {
+  checked: boolean;
+  created_at: string;
+  id: number;
+  item_name: string;
+  user_id: 1;
+}
+
+interface InventoryListProps {
+  handleSearch: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    itemName: string
+  ) => void;
+}
+
+function InventoryList({ handleSearch }: InventoryListProps) {
   // Check if logged in
   const navigate = useNavigate();
   useEffect(() => {
@@ -49,9 +65,11 @@ function InventoryList({ handleSearch }) {
     }
   }, [navigate]);
 
-  const [inventoryItems, setInventoryItems] = useState(null);
+  const [inventoryItems, setInventoryItems] = useState<InventoryItem[] | null>(
+    null
+  );
   const [message, setMessage] = useState("");
-  const inventoryItemsRef = useRef();
+  const inventoryItemsRef = useRef<InventoryItem[]>();
 
   const handleAddItem = (event) => {
     event.preventDefault();
@@ -69,7 +87,7 @@ function InventoryList({ handleSearch }) {
         const newItem = response.data;
         newItem.checked = false;
         setInventoryItems((prevState) => {
-          const newState = [...prevState, newItem];
+          const newState = [...prevState!, newItem];
           inventoryItemsRef.current = newState;
           return newState;
         });
@@ -81,11 +99,12 @@ function InventoryList({ handleSearch }) {
     );
 
     event.target.reset();
+    console.log(inventoryItems);
   };
 
   const handleItemChange = (itemIndex) => {
     setInventoryItems((prevState) => {
-      const copiedState = [...prevState];
+      const copiedState = [...prevState!];
       copiedState[itemIndex] = { ...copiedState[itemIndex] };
       copiedState[itemIndex].checked = !copiedState[itemIndex].checked;
       inventoryItemsRef.current = copiedState;
@@ -99,7 +118,11 @@ function InventoryList({ handleSearch }) {
     navigate("/");
   };
 
-  const deleteAllCheckedItemsFromServer = (itemsArray, headers, callback) => {
+  const deleteAllCheckedItemsFromServer = (
+    itemsArray: InventoryItem[],
+    headers: Headers,
+    callback: Function
+  ) => {
     if (itemsArray) {
       itemsArray.forEach((item) => {
         if (item.checked) {
@@ -119,7 +142,7 @@ function InventoryList({ handleSearch }) {
 
     getAllUserInventoryItems(headers, (response) => {
       const userItems = response.data;
-      userItems.forEach((item) => {
+      userItems.forEach((item: InventoryItem) => {
         item.checked = false;
       });
       inventoryItemsRef.current = userItems;
@@ -128,7 +151,7 @@ function InventoryList({ handleSearch }) {
 
     return function cleanUp() {
       deleteAllCheckedItemsFromServer(
-        inventoryItemsRef.current,
+        inventoryItemsRef.current!,
         headers,
         (response) => console.log(response)
       );
