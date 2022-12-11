@@ -43,6 +43,7 @@ function Sidebar({
               isActive ? "sidebar__link sidebar__link--active" : "sidebar__link"
             }
             to="/recipes"
+            end
           >
             My Recipes
           </NavLink>
