@@ -146,10 +146,10 @@ const BackButton = styled.button`
 `;
 
 const StyledBackIcon = styled.img`
-  width: 3.5rem;
+  width: 2.5rem;
 
   @media (min-width: 768px) {
-    width: 4.5rem;
+    width: 3rem;
   }
 `;
 
