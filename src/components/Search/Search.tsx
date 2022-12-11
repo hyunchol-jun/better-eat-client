@@ -1,7 +1,7 @@
 import "./Search.scss";
 
 interface SearchProps {
-  handleSearch: () => void;
+  handleSearch: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 function Search({ handleSearch }: SearchProps) {

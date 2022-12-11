@@ -4,7 +4,7 @@ import Loading from "../Loading/Loading";
 import { Recipe } from "../../interfaces";
 
 interface RecipesListProps {
-  recipes: Recipe[];
+  recipes: Recipe[] | null;
   to: string;
 }
 

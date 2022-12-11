@@ -9,14 +9,15 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { getRecipesList, getRecipesListRandomly } from "./utils/http-helper";
 import { convertPreferenceObjectIntoArray } from "./utils/object-helper";
-import defaultCuisines from "./data/defaultCuisines";
-import defaultDiets from "./data/defaultDiets";
-import defaultIntolerances from "./data/defaultIntolerances";
+import defaultCuisines from "./data/defaultCuisines.json";
+import defaultDiets from "./data/defaultDiets.json";
+import defaultIntolerances from "./data/defaultIntolerances.json";
 import MyRecipes from "./pages/MyRecipes";
 import GroceryList from "./pages/GroceryList";
 import InventoryList from "./pages/InventoryList";
 import NotFound from "./components/NotFound/NotFound";
 import PageFooter from "./components/PageFooter";
+import { Recipe } from "./interfaces";
 
 function App() {
   const mediaQuery = useMemo(() => window.matchMedia("(max-width: 767px)"), []);
@@ -32,23 +33,25 @@ function App() {
   const [backgroundAnimation, setBackgroundAnimation] =
     useState("clear-animation");
 
-  const [recipes, setRecipes] = useState(null);
+  const [recipes, setRecipes] = useState<Recipe[] | null>(null);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [loadMoreShown, setLoadMoreShown] = useState(false);
   const [searchQuery, setSearchQuery] = useState(null);
-  const [isRandom, setIsRandom] = useState(null);
+  const [isRandom, setIsRandom] = useState(true);
 
-  const dietsFromStorage = JSON.parse(localStorage.getItem("diets"));
-  const cuisinesFromStorage = JSON.parse(localStorage.getItem("cuisines"));
-  const intolerancesFromStorage = JSON.parse(
-    localStorage.getItem("intolerances")
+  const dietsFromStorage = localStorage.getItem("diets");
+  const cuisinesFromStorage = localStorage.getItem("cuisines");
+  const intolerancesFromStorage = localStorage.getItem("intolerances");
+  const [diets, setDiets] = useState(
+    dietsFromStorage ? JSON.parse(dietsFromStorage) : defaultDiets
   );
-  const [diets, setDiets] = useState(dietsFromStorage || defaultDiets);
   const [cuisines, setCuisines] = useState(
-    cuisinesFromStorage || defaultCuisines
+    cuisinesFromStorage ? JSON.parse(cuisinesFromStorage) : defaultCuisines
   );
   const [intolerances, setIntolerances] = useState(
-    intolerancesFromStorage || defaultIntolerances
+    intolerancesFromStorage
+      ? JSON.parse(intolerancesFromStorage)
+      : defaultIntolerances
   );
 
   const handleSidebarVisibility = () => {
@@ -89,7 +92,7 @@ function App() {
     });
   };
 
-  const handleSearch = (event, itemName) => {
+  const handleSearch = (event: any, itemName: string | null = null) => {
     event.preventDefault();
 
     setIsRandom(false);
@@ -122,7 +125,7 @@ function App() {
       convertPreferenceObjectIntoArray(intolerances),
       currentOffset,
       (response) => {
-        setRecipes([...recipes].concat(response.data.results));
+        setRecipes([...recipes!].concat(response.data.results));
         setCurrentOffset(currentOffset + 20);
         setLoadMoreShown(response.data.results.length === 20);
       }

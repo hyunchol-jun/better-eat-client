@@ -2,9 +2,9 @@ import "./Sidebar.scss";
 import { NavLink } from "react-router-dom";
 
 interface SidebarProps {
-  sidebarAnimation: string;
-  backgroundAnimation: string;
-  handleBackgroundClick: () => void;
+  sidebarAnimation?: string;
+  backgroundAnimation?: string;
+  handleBackgroundClick?: () => void;
 }
 
 function Sidebar({

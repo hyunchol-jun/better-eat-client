@@ -20,14 +20,14 @@ const StyledButton = styled(Button)`
 `;
 
 interface HomePageProps {
-  recipes: Recipe[];
+  recipes: Recipe[] | null;
   diets: Diets;
   cuisines: Cuisines;
   intolerances: Intolerances;
-  handleCuisineChange: () => void;
-  handleDietChange: () => void;
-  handleIntoleranceChange: () => void;
-  handleSearch: () => void;
+  handleCuisineChange: (cuisineName: string) => void;
+  handleDietChange: (dietName: string) => void;
+  handleIntoleranceChange: (intoleranceName: string) => void;
+  handleSearch: (event: React.FormEvent<HTMLFormElement>) => void;
   handleLoadMore: () => void;
   loadMoreShown: boolean;
   isRandom: boolean;
