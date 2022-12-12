@@ -17,7 +17,14 @@ import GroceryList from "./pages/GroceryList";
 import InventoryList from "./pages/InventoryList";
 import NotFound from "./components/NotFound/NotFound";
 import PageFooter from "./components/PageFooter";
-import { Recipe } from "./interfaces";
+import {
+  Cuisines,
+  Diets,
+  Intolerances,
+  Recipe,
+  GetRecipesResponse,
+  GetRandomRecipesResponse,
+} from "./interfaces";
 
 function App() {
   const mediaQuery = useMemo(() => window.matchMedia("(max-width: 767px)"), []);
@@ -67,24 +74,24 @@ function App() {
     }
   };
 
-  const handleDietChange = (dietName) => {
-    setDiets((prevState) => {
+  const handleDietChange = (dietName: string) => {
+    setDiets((prevState: Diets) => {
       const copiedDiets = { ...prevState };
       copiedDiets[dietName] = !copiedDiets[dietName];
       return copiedDiets;
     });
   };
 
-  const handleCuisineChange = (cuisineName) => {
-    setCuisines((prevState) => {
+  const handleCuisineChange = (cuisineName: string) => {
+    setCuisines((prevState: Cuisines) => {
       const copiedCuisines = { ...prevState };
       copiedCuisines[cuisineName] = !copiedCuisines[cuisineName];
       return copiedCuisines;
     });
   };
 
-  const handleIntoleranceChange = (intoleranceName) => {
-    setIntolerances((prevState) => {
+  const handleIntoleranceChange = (intoleranceName: string) => {
+    setIntolerances((prevState: Intolerances) => {
       const copiedIntolerances = { ...prevState };
       copiedIntolerances[intoleranceName] =
         !copiedIntolerances[intoleranceName];
@@ -108,7 +115,7 @@ function App() {
       convertPreferenceObjectIntoArray(cuisines),
       convertPreferenceObjectIntoArray(intolerances),
       0,
-      (response) => {
+      (response: GetRecipesResponse) => {
         setRecipes(response.data.results);
         setCurrentOffset(20);
         setLoadMoreShown(response.data.results.length === 20);
@@ -124,7 +131,7 @@ function App() {
       convertPreferenceObjectIntoArray(cuisines),
       convertPreferenceObjectIntoArray(intolerances),
       currentOffset,
-      (response) => {
+      (response: GetRecipesResponse) => {
         setRecipes([...recipes!].concat(response.data.results));
         setCurrentOffset(currentOffset + 20);
         setLoadMoreShown(response.data.results.length === 20);
@@ -137,7 +144,7 @@ function App() {
       convertPreferenceObjectIntoArray(diets),
       convertPreferenceObjectIntoArray(cuisines),
       convertPreferenceObjectIntoArray(intolerances),
-      (response) => {
+      (response: GetRandomRecipesResponse) => {
         setRecipes(response.data.recipes);
         setIsRandom(true);
       }
@@ -145,20 +152,16 @@ function App() {
   }, [diets, cuisines, intolerances]);
 
   useEffect(() => {
-    const changeTabletHandler = (event) => {
-      setIsMobile(event.matches);
-    };
-
-    const changeDesktopHandler = (event) => {
-      setIsDesktop(event.matches);
-    };
-
-    mediaQuery.addEventListener("change", changeTabletHandler);
-    desktopMediaQuery.addEventListener("change", changeDesktopHandler);
+    mediaQuery.addEventListener("change", (e) => setIsMobile(e.matches));
+    desktopMediaQuery.addEventListener("change", (e) =>
+      setIsDesktop(e.matches)
+    );
 
     return () => {
-      mediaQuery.removeEventListener("change", changeTabletHandler);
-      desktopMediaQuery.removeEventListener("change", changeDesktopHandler);
+      mediaQuery.removeEventListener("change", (e) => setIsMobile(e.matches));
+      desktopMediaQuery.removeEventListener("change", (e) =>
+        setIsDesktop(e.matches)
+      );
     };
   }, [mediaQuery, desktopMediaQuery]);
 

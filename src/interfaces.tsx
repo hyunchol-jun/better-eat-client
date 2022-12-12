@@ -86,3 +86,15 @@ export interface Headers {
     id: number;
   };
 }
+
+export interface GetRecipesResponse {
+  data: {
+    results: Recipe[];
+  };
+}
+
+export interface GetRandomRecipesResponse {
+  data: {
+    recipes: Recipe[];
+  };
+}
