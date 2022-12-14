@@ -6,6 +6,7 @@ import LabeledInput from "../components/LabeledInput";
 import Message from "../components/Message";
 import Button from "../components/Button";
 import PageMain from "../components/PageMain";
+import axios from "axios";
 
 const StyledForm = styled.form`
   width: 100%;
@@ -36,14 +37,14 @@ function Signup() {
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = (event) => {
+  const handleSignup = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formValues = {
-      name: event.target.name.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
-      confirmPassword: event.target.confirmPassword.value,
+      name: (event.target as HTMLFormElement).username.value,
+      email: (event.target as HTMLFormElement).email.value,
+      password: (event.target as HTMLFormElement).password.value,
+      confirmPassword: (event.target as HTMLFormElement).confirmPassword.value,
     };
 
     if (formValues.password !== formValues.confirmPassword) {
@@ -67,7 +68,8 @@ function Signup() {
       },
       (error) => {
         setIsSuccess(false);
-        setErrorMessage(error.response.data.message);
+        if (axios.isAxiosError(error) && error.response)
+          setErrorMessage(error.response.data?.["message"]);
       }
     );
   };
@@ -76,7 +78,7 @@ function Signup() {
     <PageMain>
       <h1>Sign Up</h1>
       <StyledForm onSubmit={handleSignup}>
-        <LabeledInput labelText="Name" type="text" name="name" />
+        <LabeledInput labelText="Name" type="text" name="username" />
         <LabeledInput
           labelText="Email"
           type="email"

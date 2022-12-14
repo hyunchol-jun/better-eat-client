@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import LabeledInput from "../components/LabeledInput";
 import Message from "../components/Message";
 import PageMain from "../components/PageMain";
+import axios from "axios";
 
 const StyledForm = styled.form`
   width: 100%;
@@ -44,12 +45,12 @@ function Login() {
     localStorage.removeItem("token");
   }, []);
 
-  const handleLogin = (event) => {
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formValues = {
-      email: event.target.email.value,
-      password: event.target.password.value,
+      email: (event.target as HTMLFormElement).email.value,
+      password: (event.target as HTMLFormElement).password.value,
     };
 
     requestLogin(
@@ -62,7 +63,8 @@ function Login() {
       },
       (error) => {
         setIsSuccess(false);
-        setErrorMessage(error.response.data.message);
+        if (axios.isAxiosError(error) && error.response)
+          setErrorMessage(error.response.data?.["message"]);
       }
     );
   };
