@@ -1,3 +1,4 @@
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -55,7 +56,7 @@ function GroceryList() {
   const deleteAllCheckedItemsFromServer = (
     itemsArray: GroceryItem[],
     headers: Headers,
-    callback: Function
+    callback: (value: AxiosResponse) => void
   ) => {
     if (itemsArray) {
       itemsArray.forEach((item) => {
@@ -124,7 +125,8 @@ function GroceryList() {
         });
       },
       (error) => {
-        setMessage(error.response.data.message);
+        if (axios.isAxiosError(error) && error.response)
+          setMessage(error.response.data?.["message"]);
         setTimeout(() => setMessage(""), 1000);
       }
     );

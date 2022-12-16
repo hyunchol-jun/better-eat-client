@@ -1,3 +1,4 @@
+import axios, { AxiosResponse } from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -71,7 +72,7 @@ function InventoryList({ handleSearch }: InventoryListProps) {
   const [message, setMessage] = useState("");
   const inventoryItemsRef = useRef<InventoryItem[]>();
 
-  const handleAddItem = (event) => {
+  const handleAddItem = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const headers = {
@@ -81,7 +82,7 @@ function InventoryList({ handleSearch }: InventoryListProps) {
     };
 
     appendInventoryItemToUser(
-      { item_name: event.target.textInput.value },
+      { item_name: (event.target as HTMLFormElement).textInput.value },
       headers,
       (response) => {
         const newItem = response.data;
@@ -93,16 +94,16 @@ function InventoryList({ handleSearch }: InventoryListProps) {
         });
       },
       (error) => {
-        setMessage(error.response.data.message);
+        if (axios.isAxiosError(error) && error.response)
+          setMessage(error.response.data?.["message"]);
         setTimeout(() => setMessage(""), 1000);
       }
     );
 
-    event.target.reset();
-    console.log(inventoryItems);
+    (event.target as HTMLFormElement).reset();
   };
 
-  const handleItemChange = (itemIndex) => {
+  const handleItemChange = (itemIndex: number) => {
     setInventoryItems((prevState) => {
       const copiedState = [...prevState!];
       copiedState[itemIndex] = { ...copiedState[itemIndex] };
@@ -112,7 +113,10 @@ function InventoryList({ handleSearch }: InventoryListProps) {
     });
   };
 
-  const handleSearchRecipe = (event, itemName) => {
+  const handleSearchRecipe = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    itemName: string
+  ) => {
     handleSearch(event, itemName);
 
     navigate("/");
@@ -121,7 +125,7 @@ function InventoryList({ handleSearch }: InventoryListProps) {
   const deleteAllCheckedItemsFromServer = (
     itemsArray: InventoryItem[],
     headers: Headers,
-    callback: Function
+    callback: (value: AxiosResponse) => void
   ) => {
     if (itemsArray) {
       itemsArray.forEach((item) => {
