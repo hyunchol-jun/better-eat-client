@@ -98,3 +98,10 @@ export interface GetRandomRecipesResponse {
     recipes: Recipe[];
   };
 }
+
+export interface AuthenticationFormValues {
+  name?: string;
+  email: string;
+  password: string;
+  confrimPassword?: string;
+}

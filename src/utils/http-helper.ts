@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { AuthenticationFormValues, GetRecipesResponse } from "../interfaces";
 
 const BASE_URL = "https://api.spoonacular.com/recipes/";
 const SEARCH_PATH = "complexSearch";
@@ -26,17 +27,17 @@ const CHECK_PATH = "/check";
 
 const { REACT_APP_API_KEY, REACT_APP_BACKEND_URL } = process.env;
 
-const logError = (error) => {
+const logError = (error: Error) => {
   console.error(error);
 };
 
 export const getRecipesList = (
-  searchQuery,
-  diets,
-  cuisines,
-  intolerances,
-  currentOffset,
-  callback
+  searchQuery: string | null,
+  diets: string[],
+  cuisines: string[],
+  intolerances: string[],
+  currentOffset: number,
+  callback: (value: AxiosResponse) => void
 ) => {
   let FULL_PATH =
     BASE_URL +
@@ -62,15 +63,14 @@ export const getRecipesList = (
     FULL_PATH += INTOLERANCES_PATH + intolerances.join().toLowerCase();
   }
 
-  console.log(FULL_PATH);
-  axios.get(FULL_PATH).then(callback).catch(logError);
+  axios.get<GetRecipesResponse>(FULL_PATH).then(callback).catch(logError);
 };
 
 export const getRecipesListRandomly = (
-  diets,
-  cuisines,
-  intolerances,
-  callback
+  diets: string[],
+  cuisines: string[],
+  intolerances: string[],
+  callback: (value: AxiosResponse) => void
 ) => {
   let FULL_PATH =
     BASE_URL + RANDOM_PATH + API_KEY_PATH + REACT_APP_API_KEY + NUMBER_PATH;
@@ -84,35 +84,42 @@ export const getRecipesListRandomly = (
   if (cuisines.length > 0 && intolerances.length > 0) FULL_PATH += ",";
   FULL_PATH += intolerances.join().toLowerCase();
 
-  console.log(FULL_PATH);
   axios.get(FULL_PATH).then(callback).catch(logError);
 };
 
 export const getRecipeDetail = (
-  recipeId,
-  headers,
-  isMyRecipesPage,
-  callback,
-  errorCallback
+  recipeId: string,
+  headers: AxiosRequestConfig,
+  isMyRecipesPage: boolean,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
 ) => {
   const FULL_PATH = isMyRecipesPage
     ? REACT_APP_BACKEND_URL + USERS_PATH + RECIPES_PATH + "/" + recipeId
     : BASE_URL + recipeId + INFO_PATH + API_KEY_PATH + REACT_APP_API_KEY;
 
   axios
-    .get(FULL_PATH, isMyRecipesPage ? headers : null)
+    .get(FULL_PATH, isMyRecipesPage ? headers : undefined)
     .then(callback)
     .catch(errorCallback);
 };
 
-export const requestSignup = (formValues, callback, errorCallback) => {
+export const requestSignup = (
+  formValues: AuthenticationFormValues,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
+) => {
   axios
     .post(REACT_APP_BACKEND_URL + SIGNUP_PATH, formValues)
     .then(callback)
     .catch(errorCallback);
 };
 
-export const requestLogin = (formValues, callback, errorCallback) => {
+export const requestLogin = (
+  formValues: AuthenticationFormValues,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
+) => {
   axios
     .post(REACT_APP_BACKEND_URL + LOGIN_PATH, formValues)
     .then(callback)
@@ -120,10 +127,10 @@ export const requestLogin = (formValues, callback, errorCallback) => {
 };
 
 export const appendRecipeToUser = (
-  recipeData,
-  headers,
-  callback,
-  errorCallback
+  recipeData: {},
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
 ) => {
   axios
     .post(
@@ -135,7 +142,10 @@ export const appendRecipeToUser = (
     .catch(errorCallback);
 };
 
-export const getAllUserRecipes = (headers, callback) => {
+export const getAllUserRecipes = (
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void
+) => {
   axios
     .get(REACT_APP_BACKEND_URL + USERS_PATH + RECIPES_PATH, headers)
     .then(callback)
@@ -143,10 +153,10 @@ export const getAllUserRecipes = (headers, callback) => {
 };
 
 export const checkIfIngredientsAreInStock = (
-  ingredientsArray,
-  headers,
-  callback,
-  errorCallback
+  ingredientsArray: string[],
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
 ) => {
   axios
     .post(
@@ -159,10 +169,10 @@ export const checkIfIngredientsAreInStock = (
 };
 
 export const removeUserRecipe = (
-  recipeId,
-  headers,
-  callback,
-  errorCallback
+  recipeId: string,
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError<any, any>) => void
 ) => {
   axios
     .delete(
@@ -173,7 +183,12 @@ export const removeUserRecipe = (
     .catch(errorCallback);
 };
 
-export const checkUserRecipe = (recipeId, headers, callback, errorCallback) => {
+export const checkUserRecipe = (
+  recipeId: string,
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
+) => {
   axios
     .get(
       REACT_APP_BACKEND_URL + USERS_PATH + CHECK_RECIPES_PATH + "/" + recipeId,
@@ -184,10 +199,10 @@ export const checkUserRecipe = (recipeId, headers, callback, errorCallback) => {
 };
 
 export const appendGroceryItemToUser = (
-  itemData,
-  headers,
-  callback,
-  errorCallback
+  itemData: {},
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
 ) => {
   axios
     .post(
@@ -199,14 +214,20 @@ export const appendGroceryItemToUser = (
     .catch(errorCallback);
 };
 
-export const getAllUserGroceryItems = (headers, callback) => {
+export const getAllUserGroceryItems = (
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void
+) => {
   axios
     .get(REACT_APP_BACKEND_URL + USERS_PATH + GROCERIES_PATH, headers)
     .then(callback)
     .catch(logError);
 };
 
-export const removeGroceryItemFromUser = (headers, callback) => {
+export const removeGroceryItemFromUser = (
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void
+) => {
   axios
     .delete(REACT_APP_BACKEND_URL + USERS_PATH + GROCERIES_PATH, headers)
     .then(callback)
@@ -214,10 +235,10 @@ export const removeGroceryItemFromUser = (headers, callback) => {
 };
 
 export const appendInventoryItemToUser = (
-  itemData,
-  headers,
-  callback,
-  errorCallback
+  itemData: {},
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void,
+  errorCallback: (error: Error | AxiosError) => void
 ) => {
   axios
     .post(
@@ -229,14 +250,20 @@ export const appendInventoryItemToUser = (
     .catch(errorCallback);
 };
 
-export const getAllUserInventoryItems = (headers, callback) => {
+export const getAllUserInventoryItems = (
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void
+) => {
   axios
     .get(REACT_APP_BACKEND_URL + USERS_PATH + INVENTORIES_PATH, headers)
     .then(callback)
     .catch(logError);
 };
 
-export const removeInventoryItemFromUser = (headers, callback) => {
+export const removeInventoryItemFromUser = (
+  headers: AxiosRequestConfig,
+  callback: (value: AxiosResponse) => void
+) => {
   axios
     .delete(REACT_APP_BACKEND_URL + USERS_PATH + INVENTORIES_PATH, headers)
     .then(callback)

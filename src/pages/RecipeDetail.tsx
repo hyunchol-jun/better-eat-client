@@ -1,3 +1,4 @@
+import axios from "axios";
 import arrowBackIcon from "../assets/icons/arrow_back.svg";
 import dietIcon from "../assets/icons/diet.svg";
 import timeIcon from "../assets/icons/clock.svg";
@@ -20,7 +21,7 @@ import parse from "html-react-parser";
 import Loading from "../components/Loading/Loading";
 import NotFound from "../components/NotFound/NotFound";
 import Tooltip from "../components/Tooltip";
-import { Recipe } from "../interfaces";
+import { Ingredient, Recipe } from "../interfaces";
 
 const PageMain = styled.main`
   position: absolute;
@@ -309,7 +310,7 @@ function RecipeDetail() {
       };
 
       checkUserRecipe(
-        params.recipeId,
+        params.recipeId!,
         headers,
         (response) => {
           if (response.data.length > 0) {
@@ -342,9 +343,9 @@ function RecipeDetail() {
     };
 
     removeUserRecipe(
-      params.recipeId,
+      params.recipeId!,
       headers,
-      (response) => {
+      (_) => {
         setIsSuccess(true);
         setMessage("Recipe deleted");
         setTimeout(() => {
@@ -355,7 +356,8 @@ function RecipeDetail() {
       (error) => {
         setButtonGreyedOut(false);
         setIsSuccess(false);
-        setMessage(error.response.data.message);
+        if (axios.isAxiosError(error) && error.response)
+          setMessage(error.response.data?.["message"]);
         setTimeout(() => {
           setMessage("");
         }, 1000);
@@ -394,7 +396,7 @@ function RecipeDetail() {
     appendRecipeToUser(
       body,
       headers,
-      (response) => {
+      (_) => {
         setIsSuccess(true);
         setMessage("Saved to My Recipes");
         setTimeout(() => {
@@ -404,7 +406,8 @@ function RecipeDetail() {
       (error) => {
         setButtonGreyedOut(false);
         setIsSuccess(false);
-        setMessage(error.response.data.message);
+        if (axios.isAxiosError(error) && error.response)
+          setMessage(error.response.data?.["message"]);
         setTimeout(() => {
           setMessage("");
         }, 1000);
@@ -412,7 +415,7 @@ function RecipeDetail() {
     );
   };
 
-  const handleSaveIngredient = (ingredient, index) => {
+  const handleSaveIngredient = (ingredient: string, index: number) => {
     const headers = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -422,7 +425,7 @@ function RecipeDetail() {
     appendGroceryItemToUser(
       { item_name: ingredient },
       headers,
-      (response) => {
+      (_) => {
         setIsSuccess(true);
         const copiedMessagesArray = [...messagesArray];
         copiedMessagesArray[index] = "Saved to Grocery List";
@@ -434,7 +437,8 @@ function RecipeDetail() {
       (error) => {
         setIsSuccess(false);
         const copiedMessagesArray = [...messagesArray];
-        copiedMessagesArray[index] = error.response.data.message;
+        if (axios.isAxiosError(error) && error.response)
+          copiedMessagesArray[index] = error.response.data?.["message"];
         setMessagesArray(copiedMessagesArray);
         setTimeout(() => {
           setMessagesArray([]);
@@ -453,13 +457,13 @@ function RecipeDetail() {
     const isMyRecipesPage = location.pathname.includes("/users/recipes/");
 
     getRecipeDetail(
-      params.recipeId,
+      params.recipeId!,
       headers,
       isMyRecipesPage,
       (response) => {
         setRecipe(response.data);
         const ingredients = response.data.extendedIngredients.map(
-          (elem) => elem.name
+          (ingredient: Ingredient) => ingredient.name
         );
         checkIfIngredientsAreInStock(
           ingredients,
@@ -473,8 +477,10 @@ function RecipeDetail() {
         );
       },
       (error) => {
-        if (error.response.status === 404) {
-          setNotFound(true);
+        if (axios.isAxiosError(error) && error.response) {
+          if (error.response.status === 404) {
+            setNotFound(true);
+          }
         }
       }
     );
